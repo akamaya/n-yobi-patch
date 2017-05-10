@@ -182,7 +182,7 @@ class ScreenShotCarousel {
         var popupCanvas = $('#popupCanvas');
         var videoComponent = $('.component-lesson-player-controller');
         popupCanvas.attr('width', videoComponent.width()).attr('height', videoComponent.height());
-        popupCanvas.css('top', $('.component-lesson-interaction-bar').height());
+        popupCanvas.css('top', $('.component-lesson-interaction-bar').height()).css('left', 0);
 
         popupCanvas.get(0).getContext("2d").drawImage(this, 0, 0, this.width, this.height, 0, 0, popupCanvas.width(), popupCanvas.height());
 
@@ -197,14 +197,10 @@ class ScreenShotCarousel {
 
         var currentTime = videoElement.currentTime;
 
-        // videoの縦横サイズの比率から、スクショの縦幅を計算
-        var configWidth = 608;// 設定されたスクショ横幅
-        var configHeight = Math.ceil(videoElement.videoHeight * configWidth / videoElement.videoWidth);
-
         // canvas要素を作成してvideoの表示中画面をキャプチャ
-        var canvas = $('<canvas>').attr('height', configHeight).attr('width', configWidth).get(0);
+        var canvas = $('<canvas>').attr('height', videoElement.videoHeight).attr('width', videoElement.videoWidth).get(0);
         var ctx = canvas.getContext("2d");
-        ctx.drawImage(videoElement, 0, 0, videoElement.videoWidth, videoElement.videoHeight, 0, 0, configWidth, configHeight);
+        ctx.drawImage(videoElement, 0, 0, videoElement.videoWidth, videoElement.videoHeight, 0, 0, videoElement.videoWidth, videoElement.videoHeight);
 
         return canvas;
     }

@@ -1,6 +1,6 @@
 {
   "name": "N予備校パッチ",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "N予備校で放送画面サイズの変更、スクショボタン追加など",
   "manifest_version": 2,
   "icons": {
