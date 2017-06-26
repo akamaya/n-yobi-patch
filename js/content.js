@@ -125,8 +125,9 @@ function changeScreenShot() {
         carousel.hide();
         return;
     }
+    carousel.autoSave = screenShotData.autoSave;
     carousel.show();
-
+    carousel.resize(screenShotData.size);
 }
 
 

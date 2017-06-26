@@ -70,7 +70,6 @@ function setVideoSizeEvent() {
         pressVideoSizeInitButton();
     })
 
-
     // 割合サイズを入力したときの処理
     $('#videoSizeRatio').change(function () {
         changeVideoSizeRatio();
@@ -131,7 +130,11 @@ function refScreenShotConfig() {
     $('#screenShotPower').prop('disabled', false);
     $('#screenShotPower').prop('checked', screenShotData.power);
 
+    $('input[name="screenShotCarouselSize"][value="' + screenShotData.size + '"]').prop('checked', true);
+    $('input[name="screenShotAutoSave"]').prop('checked', screenShotData.autoSave);
+
     changeScreenShotPower();
+    changeScreenShotCarouselSize();
 }
 
 
@@ -139,6 +142,16 @@ function setScreenShotEvent() {
     // on:offボタンを切り替えたときの処理
     $('#screenShotPower').change(function () {
         changeScreenShotPower();
+    });
+
+    // カルーセルサイズを切り替えたときの処理
+    $('input[name="screenShotCarouselSize"]:radio').change(function () {
+        changeScreenShotCarouselSize();
+    });
+
+    // 自動保存を切り替えたときの処理
+    $('input[name="screenShotAutoSave"]:checkbox').change(function () {
+        changeScreenShotAutoSave();
     });
 }
 
@@ -155,6 +168,19 @@ function changeScreenShotPower() {
         boxRight.find('input').prop('disabled', true);
     }
     screenShotData.power = power;
+}
+
+// カルーセルサイズを切り替えたときの処理
+function changeScreenShotCarouselSize() {
+    var value = $('input[name="screenShotCarouselSize"]:checked').prop('value');
+
+    screenShotData.size = value;
+}
+
+// 自動保存を切り替えたときの処理
+function changeScreenShotAutoSave() {
+    var value = $('input[name="screenShotAutoSave"]').prop('checked');
+    screenShotData.autoSave = value;
 }
 
 

@@ -1,11 +1,41 @@
-#screenShotBox {
+#screenShotBox.largeSize {
     background-color: white;
     height: 100px;
     margin: 0px 0px 16px 0px;
     border: solid 1px gray;
 }
+
+#screenShotBox.largeSize #screenShotButton img {
+    max-height: 60px;
+    margin: 20px 10px 20px 10px;
+}
+
+#screenShotBox.mediumSize {
+    background-color: white;
+    height: 60px;
+    margin: 0px 0px 12px 0px;
+    border: solid 1px gray;
+}
+
+#screenShotBox.mediumSize #screenShotButton img {
+    max-height: 36px;
+    margin: 12px 6px 12px 6px;
+}
+
+#screenShotBox.smallSize {
+    background-color: white;
+    height: 40px;
+    margin: 0px 0px 8px 0px;
+    border: solid 1px gray;
+}
+
+#screenShotBox.smallSize #screenShotButton img {
+    max-height: 24px;
+    margin: 8px 4px 8px 4px;
+}
+
 #screenShotBox button {
-    padding:0px;
+    padding: 0px;
 }
 
 #screenShotButton {
@@ -16,43 +46,42 @@
     outline: none;
     border-right: solid 1px gray;
 }
-#screenShotButton img {
-    max-height: 60px;
-    margin: 20px 10px 20px 10px;
-}
 
 #carouselLeftMoveButton {
     float: left;
-    width:20px;
-    height:100px;
+    width: 20px;
+    height: 100%;
     border-right: solid 1px gray;
     cursor: pointer;
     outline: none;
 }
 #carouselRightMoveButton {
     float: left;
-    width:20px;
-    height:100px;
+    width: 20px;
+    height: 100%;
     border-left: solid 1px gray;
     cursor: pointer;
     outline: none;
 }
 
 #screenShotCarousel{
-    overflow:hidden;
+    overflow: hidden;
     float: left;
+    height: 100%;
 }
 #screenShotCarouselInner {
-    height: 100px;
+    height: 100%;
 }
-#screenShotCarouselInner div {
-    float:left;
-    width:107px;
+
+#screenShotBox.largeSize #screenShotCarouselInner div {
+    float: left;
+    height: 100%;
+    width: 107px;
     margin: 0px 5px 0px 5px;
 }
-#screenShotCarouselInner div canvas {
+#screenShotBox.largeSize #screenShotCarouselInner div canvas {
     background-color:yellow;
-    padding:0px;
+    padding: 0px;
     margin: 5px 0px 0px 0px;
     height: 60px;
     width: 107px;
@@ -61,7 +90,7 @@
     
 }
 
-#screenShotCarouselInner div a {
+#screenShotBox.largeSize #screenShotCarouselInner div a {
     display:block;
     text-align: center;
     line-height: 22px;
@@ -77,7 +106,75 @@
     outline: none;
 }
 
+#screenShotBox.mediumSize #screenShotCarouselInner div {
+    float: left;
+    height: 100%;
+    width: 64px;
+    margin: 0px 3px 0px 3px;
+}
+#screenShotBox.mediumSize #screenShotCarouselInner div canvas {
+    background-color:yellow;
+    padding: 0px;
+    margin: 2px 0px 0px 0px;
+    height: 42px;
+    width: 64px;
+    cursor: pointer;
+    outline: none;
+    
+}
+
+#screenShotBox.mediumSize #screenShotCarouselInner div a {
+    display:block;
+    font-size: 0.1em;
+    text-align: center;
+    line-height: 12px;
+    color:royalblue;
+    background-color:white;
+    margin: 0px 0px 0px 0px;
+    padding:0px;
+    height: 10px;
+    width: 62px;
+    cursor: pointer;
+    border-radius:10px;
+    border: solid 1px royalblue;
+    outline: none;
+}
+
+#screenShotBox.smallSize #screenShotCarouselInner div {
+    float: left;
+    height: 100%;
+    width: 43px;
+    margin: 0px 2px 0px 2px;
+}
+#screenShotBox.smallSize #screenShotCarouselInner div canvas {
+    background-color:yellow;
+    padding: 0px;
+    margin: 1px 0px 0px 0px;
+    height: 25px;
+    width: 43px;
+    cursor: pointer;
+    outline: none;
+    
+}
+
+#screenShotBox.smallSize #screenShotCarouselInner div a {
+    display:block;
+    font-size: 0.05em;
+    text-align: center;
+    line-height: 10px;
+    color:royalblue;
+    background-color:white;
+    margin: 0px 0px 0px 0px;
+    padding:0px;
+    height: 8px;
+    width: 41px;
+    cursor: pointer;
+    border-radius:10px;
+    border: solid 1px royalblue;
+    outline: none;
+}
+
 #popupCanvas{
-    position:absolute;
+    position: absolute;
     background-color:blue;
 }

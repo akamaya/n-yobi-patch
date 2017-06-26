@@ -5,13 +5,21 @@
 class ScreenShotCarousel {
 
     constructor() {
-        this._carouselItemWidth = 117;
+        this._autoSave = false;
+    }
+
+    get autoSave() {
+        return this._autoSave;
+    }
+    set autoSave(p) {
+        var bool = p ? true : false;
+        this._autoSave = bool;
     }
 
     insertDom() {
         var cameraURL = chrome.extension.getURL('images/camera.png');
         var popupCanvas = '<canvas id="popupCanvas" style="display:none;">';
-        var screenShotBox = '<div id="screenShotBox"></div>';
+        var screenShotBox = '<div id="screenShotBox" class="largeSize"></div>';
         var cameraButton = '<button type="button" id="screenShotButton"><img src="' + cameraURL + '"></button>';
         var leftMoveButton = '<button id="carouselLeftMoveButton">◁</button>';
         var rightMoveButton = '<button id="carouselRightMoveButton">▷</button>';
@@ -41,12 +49,20 @@ class ScreenShotCarousel {
             // 画像をcanvasElementで取得
             var canvas = this_.snapshot();
             // カルーセルにアイテムを追加
-            this_.push(canvas);
+            var item = this_.push(canvas);
             // カルーセルの一番後ろを表示
             this_.moveRightMost();
+
+            if (this_.autoSave) {
+                setTimeout(
+                    function () {
+                        item.find('a').get(0).click();
+                    }, 1000)
+            }
         });
         // 初回横幅計算
         this.resize();
+
     }
 
     show() {
@@ -73,7 +89,7 @@ class ScreenShotCarousel {
 
         // 現在表示中のindexを計算
         var marginLeft = parseInt(inner.css('margin-left'), 10);
-        var index = Math.ceil(Math.abs(marginLeft) / this._carouselItemWidth);
+        var index = Math.ceil(Math.abs(marginLeft) / this._carouselItemWidth());
         // 左にずらす
         index--;
 
@@ -83,8 +99,8 @@ class ScreenShotCarousel {
             marginLeftNew = 0;
         }
         else {
-            var rem = carouselWidth % this._carouselItemWidth;
-            marginLeftNew = this._carouselItemWidth * index;
+            var rem = carouselWidth % this._carouselItemWidth();
+            marginLeftNew = this._carouselItemWidth() * index;
         }
 
         inner.animate({ marginLeft: -marginLeftNew }, 300);
@@ -105,7 +121,7 @@ class ScreenShotCarousel {
         }
 
         // カルーセルのサイズから一度に表示できる個数を計算
-        var dispSize = Math.floor(carouselWidth / this._carouselItemWidth);
+        var dispSize = Math.floor(carouselWidth / this._carouselItemWidth());
         if (dispSize == 0) {
             dispSize = 1;
         }
@@ -114,7 +130,7 @@ class ScreenShotCarousel {
 
         // 現在表示中のindexを計算
         var marginLeft = parseInt(inner.css('margin-left'), 10);
-        var index = Math.ceil(Math.abs(marginLeft) / this._carouselItemWidth);
+        var index = Math.ceil(Math.abs(marginLeft) / this._carouselItemWidth());
         // 右にずらす
         index++;
 
@@ -124,8 +140,8 @@ class ScreenShotCarousel {
             marginLeftNew = innerWidth - carouselWidth;
         }
         else {
-            var rem = carouselWidth % this._carouselItemWidth;
-            marginLeftNew = this._carouselItemWidth * index - rem;
+            var rem = carouselWidth % this._carouselItemWidth();
+            marginLeftNew = this._carouselItemWidth() * index - rem;
         }
 
         inner.animate({ marginLeft: -marginLeftNew }, 300);
@@ -165,17 +181,64 @@ class ScreenShotCarousel {
         // カルーセルに追加
         var inner = $('#screenShotCarouselInner');
         inner.append(item);
-
-        var itemNum = inner.find(".carouselItem").length;
-        inner.width(itemNum * this._carouselItemWidth);
+        this._resizeInner();
+        return item;
     }
 
+    _resizeInner() {
+        var inner = $('#screenShotCarouselInner');
+        var itemNum = inner.find(".carouselItem").length;
+        inner.width(itemNum * this._carouselItemWidth());
+    }
+
+    _carouselItemWidth() {
+        var size = this.size();
+        if (size === 'large') return 117;
+        else if (size === 'medium') return 70;
+        else if (size === 'small') return 47;
+    }
+
+
     // カルーセルのwidthをvideoのwidthに合わせる
-    resize(width) {
+    resize(sizeType) {
+        if (sizeType) {
+            this.setSize(sizeType);
+        }
+
         var width = $('.component-lesson-left-column-player-container').width();
-        var buttonWidth = $('#screenShotButton img').width() == 0 ? Math.min(107, width / 5) : $('#screenShotButton').width();
+        var buttonWidth = this._getButtonWidth();
         buttonWidth += $('#carouselLeftMoveButton').width() + $('#carouselRightMoveButton').width();
         $('#screenShotCarousel').width(width - buttonWidth - 5);// -5はborder分
+        this._resizeInner();
+        this.moveRightMost();
+    }
+
+    size() {
+        var box = $('#screenShotBox');
+        if (box.hasClass('largeSize')) return 'large';
+        if (box.hasClass('mediumSize')) return 'medium';
+        if (box.hasClass('smallSize')) return 'small';
+    }
+
+    setSize(sizeType) {
+        var box = $('#screenShotBox');
+        box.removeClass('largeSize').removeClass('mediumSize').removeClass('smallSize');
+        if (sizeType === 'large') { box.addClass('largeSize') }
+        else if (sizeType === 'medium') { box.addClass('mediumSize') }
+        else if (sizeType === 'small') { box.addClass('smallSize') }
+        else { box.addClass('largeSize') }
+    }
+
+    _getButtonWidth() {
+        var box = $('#screenShotBox');
+        if ($('#screenShotButton img').width() == 0) {
+            var size = this.size();
+            if (size === 'large') return 107;
+            if (size === 'medium') return 64;
+            if (size === 'small') return 43;
+            return 107;
+        }
+        return Math.ceil($('#screenShotButton').width());
     }
 
     popupOn() {
