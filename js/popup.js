@@ -65,6 +65,12 @@ function setVideoSizeEvent() {
         changeVideoSizeFixed();
     });
 
+    // 初期化ボタンを押したときの処理
+    $('#videoSizeInitButton').click(function () {
+        pressVideoSizeInitButton();
+    })
+
+
     // 割合サイズを入力したときの処理
     $('#videoSizeRatio').change(function () {
         changeVideoSizeRatio();
@@ -101,6 +107,10 @@ function changeVideoSizeFixed() {
     if (isNaN(size)) return;
 
     videoSizeData.fixedSize = size;
+}
+
+function pressVideoSizeInitButton() {
+    $('#videoSizeFixed').val(608).trigger('change');
 }
 
 function changeVideoSizeRatio() {
