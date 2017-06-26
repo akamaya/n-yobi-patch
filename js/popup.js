@@ -2,20 +2,20 @@
 
 // アイコンを押したときに出てくるポップアップの処理
 
-
-
 // 保存された設定の読み込みは非同期のため、onload前に読んでおく
 var videoSizeData = new VideoSizeData();
 videoSizeData.setSaveNotification(noticeVideoSizeSave);
 var screenShotData = new ScreenShotData();
 screenShotData.setSaveNotification(noticeScreenShotSave);
-
+var fullScreenData = new FullScreenData();
+fullScreenData.setSaveNotification(noticeFullScreenSave);
 
 
 $(document).ready(function () {
     // 設定を変更したときのイベントを登録
     setVideoSizeEvent();
     setScreenShotEvent();
+    setFullScreenEvent();
 
     // 設定を画面上に反映
     refConfig();
@@ -23,13 +23,16 @@ $(document).ready(function () {
 
 function refConfig() {
     // 設定が読み込まれるまで待機
-    if (videoSizeData.isLoaded() === false || screenShotData.isLoaded() === false) {
+    if (videoSizeData.isLoaded() === false ||
+        screenShotData.isLoaded() === false ||
+        fullScreenData.isLoaded() === false) {
         setTimeout(function () { refConfig() }, 1000);
         return;
     }
     // 設定が読み込まれたら反映
     refVideoSizeConfig();
     refScreenShotConfig();
+    refFullScreenConfig();
 }
 
 function refVideoSizeConfig() {
@@ -184,6 +187,40 @@ function changeScreenShotAutoSave() {
 }
 
 
+function refFullScreenConfig() {
+
+    if (fullScreenData.isLoaded() === false) return;
+
+    $('#fullScreenPower').prop('disabled', false);
+    $('#fullScreenPower').prop('checked', fullScreenData.power);
+
+    changeFullScreenPower();
+}
+
+function setFullScreenEvent() {
+    // on:offボタンを切り替えたときの処理
+    $('#fullScreenPower').change(function () {
+        changeFullScreenPower();
+    });
+
+}
+
+// on:offボタンを切り替えたときの処理
+function changeFullScreenPower() {
+    var power = $('#fullScreenPower').is(':checked');
+    var boxRight = $('#fullScreenBox .customBoxRight');
+    if (power) {
+        boxRight.removeClass('disabled');
+        boxRight.find('input').prop('disabled', false);
+    }
+    else {
+        boxRight.addClass('disabled');
+        boxRight.find('input').prop('disabled', true);
+    }
+    fullScreenData.power = power;
+}
+
+
 // 設定変更があったことをブラウザのタブに通知
 function noticeVideoSizeSave() {
     noticeSave("videoSize", videoSizeData.getSaveData());
@@ -191,6 +228,10 @@ function noticeVideoSizeSave() {
 
 function noticeScreenShotSave() {
     noticeSave("screenShot", screenShotData.getSaveData());
+}
+
+function noticeFullScreenSave() {
+    noticeSave("fullScreen", fullScreenData.getSaveData());
 }
 
 function noticeSave(type, saveData) {

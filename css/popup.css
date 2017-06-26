@@ -7,6 +7,12 @@ body {
     float: left;
     border:solid 1px #ffffff;
 }
+.customBoxHalf{
+    width:15em;
+    height: 3em;
+    float: left;
+    border:solid 1px #ffffff;
+}
 .customBoxLeft{
     float:left;
     box-sizing: border-box;

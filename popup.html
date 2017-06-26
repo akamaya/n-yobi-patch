@@ -8,6 +8,7 @@
     <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="js/VideoSizeData.js"></script>
     <script type="text/javascript" src="js/ScreenShotData.js"></script>
+    <script type="text/javascript" src="js/FullScreenData.js"></script>
     <script type="text/javascript" src="js/popup.js"></script>
     <link rel="stylesheet" href="css/tgl.css" media="screen" type="text/css" />
     <link rel="stylesheet" href="css/popup.css" media="screen" type="text/css" />
@@ -29,13 +30,24 @@
                 <div class="indent">
                     <input type="radio" name="videoSizeType" value="fixed" disabled="disabled">
                     <label>固定</label><input type="text" id="videoSizeFixed" size="5" maxlength="5" value="" disabled="disabled">px
-                    <button id="videoSizeInitButton">初期値</button>
+                    <button id="videoSizeInitButton">初期化</button>
                 </div>
                 <div class="indent">
                     <input type="radio" name="videoSizeType" value="ratio" disabled="disabled">
                     <label>割合</label><input type="text" id="videoSizeRatio" size="5" maxlength="3" disabled="disabled">%
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div id="fullScreenBox" class="customBoxHalf">
+        <div class="customBoxLeft">
+            <input class="tgl" id="fullScreenPower" type="checkbox" value="on">
+            <label class="tgl-btn" for="fullScreenPower"></label>
+        </div>
+        
+        <div class="customBoxRight disabled">
+            <div class="customTitle">全画面ボタン</div>
         </div>
     </div>
 

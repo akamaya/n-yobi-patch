@@ -1,0 +1,21 @@
+.component-lesson-player-controller .component-lesson-player-controller-console .component-lesson-player-controller-fullScreen{
+    width: 24px;
+    height: 24px;
+    margin-right: 16px;
+    margin-bottom: 14px;
+    outline: none;
+    cursor: pointer;
+}
+.component-lesson-player-controller-fullScreen button img {
+    width: 24px;
+    height: 24px;
+
+}
+
+.component-lesson-player-controller-fullScreen button {
+    width: 24px;
+    height: 24px;
+    outline: none;
+    cursor: pointer;
+}
+
