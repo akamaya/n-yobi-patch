@@ -188,13 +188,9 @@ class VideoSizeChanger {
     _observeUnneiComment() {
         var this_ = this;
         function handleMutations(mutations) {
-            console.log('lengthsono1:' + $('.component-lesson-interaction-bar-event-information').length);
-            console.log('lengthsono2:' + $('component-modal').length);
             if (this_.data.originalCss) {
                 $('.component-lesson-interaction-bar-event-information').css({ 'z-index': 1001 });
-                $('component-modal').css({ 'z-index': 1002 })
-                console('kitayo');
-
+                $('.component-modal').css({ 'z-index': 1002 })
             }
         }
         var observer = new MutationObserver(handleMutations);
