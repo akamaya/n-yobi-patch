@@ -6,6 +6,7 @@ class ScreenShotCarousel {
 
     constructor() {
         this._autoSave = false;
+        this._carouselSpeed = 100;
     }
 
     get autoSave() {
@@ -83,7 +84,7 @@ class ScreenShotCarousel {
 
         // 中身の個数が少ないときは初期地点
         if (carouselWidth >= innerWidth) {
-            inner.animate({ marginLeft: 0 }, 300);
+            inner.animate({ marginLeft: 0 }, this._carouselSpeed);
             return;
         }
 
@@ -103,7 +104,7 @@ class ScreenShotCarousel {
             marginLeftNew = this._carouselItemWidth() * index;
         }
 
-        inner.animate({ marginLeft: -marginLeftNew }, 300);
+        inner.animate({ marginLeft: -marginLeftNew }, this._carouselSpeed);
     }
 
     // 右移動の矢印押した時の処理
@@ -116,7 +117,7 @@ class ScreenShotCarousel {
 
         // 中身の個数が少ないときは初期地点
         if (carouselWidth >= innerWidth) {
-            inner.animate({ marginLeft: 0 }, 300);
+            inner.animate({ marginLeft: 0 }, this._carouselSpeed);
             return;
         }
 
@@ -144,7 +145,7 @@ class ScreenShotCarousel {
             marginLeftNew = this._carouselItemWidth() * index - rem;
         }
 
-        inner.animate({ marginLeft: -marginLeftNew }, 300);
+        inner.animate({ marginLeft: -marginLeftNew }, this._carouselSpeed);
     }
 
     // 一番うしろのアイテムまでカルーセルを移動
@@ -157,13 +158,13 @@ class ScreenShotCarousel {
 
         // 中身の個数が少ないときは初期地点
         if (carouselWidth >= innerWidth) {
-            inner.animate({ marginLeft: 0 }, 300);
+            inner.animate({ marginLeft: 0 }, this._carouselSpeed);
             return;
         }
 
         var marginLeftNew = innerWidth - carouselWidth;
 
-        inner.animate({ marginLeft: -marginLeftNew }, 300);
+        inner.animate({ marginLeft: -marginLeftNew }, this._carouselSpeed);
     }
 
     // カルーセルにアイテムを追加

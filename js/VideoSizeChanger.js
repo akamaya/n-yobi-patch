@@ -20,6 +20,15 @@ class VideoSizeChanger {
         this.data.screenType = 'full';
     }
 
+    setVideoSizeChangeEvent(e) {
+        this.data.videoSizeChangeEvent = e;
+    }
+    _fireVideoSizeChangeEvent() {
+        if (this.data.videoSizeChangeEvent) {
+            this.data.videoSizeChangeEvent();
+        }
+    }
+
     setOriginalSize() {
         // 初期動画サイズを取得
         var videoComponent = $('.component-lesson-player-controller');
@@ -63,12 +72,14 @@ class VideoSizeChanger {
             'right': '0px',
             'display': 'block',
             'z-index': '1000',
+            'transform': '',
         };
         if (this.data.originalCss) {
             this._backFullScreen();
         }
         else {
             this.data.originalCss = this._changeVideoComponent(videoCss);
+            this._changeCommentComponent();
             this._centeringArchiveMenu();
 
             // ESCで全画面から復帰
@@ -150,18 +161,27 @@ class VideoSizeChanger {
             $(component).css(videoCss);
         }
 
+        this._fireVideoSizeChangeEvent();
+
         return originalCss;
     }
-
-    changeCommentComponent() {
+    // コメントコンポーネントを画面サイズにフィットさせる
+    // 全画面のときに画面上部の余った黒塗り部分にコメントが表示されるのを防ぐ
+    _changeCommentComponent() {
+        var width = $('.component-lesson-player', ).width();
+        var height = this.data.originHeight * width / this.data.originWidth;
         var comeCss = {
-
+            'width': width,
+            'height': height,
+            'top': '50%',
+            'left': '50%',
+            'transform': 'translate(-50%,-50%)',
         };
         $('.component-lesson-comment-pane').css(comeCss);
     }
 
     resize() {
-        if (fullScreenOriginalCss) {
+        if (this.data.originalCss) {
             this._centeringArchiveMenu();
         }
         else {
@@ -183,6 +203,7 @@ class VideoSizeChanger {
         for (var component of componentList) {
             $(component).css(originalCss[component]);
         }
+        this._fireVideoSizeChangeEvent();
     }
 
     // 画面中央の再生ボタン群の位置を中央に移動(録画のみ)

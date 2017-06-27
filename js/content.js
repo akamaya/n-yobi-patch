@@ -22,6 +22,7 @@ if (urlcheck.test(location.href)) {
 
         clearInterval(id);
         videoSizeChanger.setOriginalSize();
+        videoSizeChanger.setVideoSizeChangeEvent(videoSizeChangeEvent);
         initVideoSize();
         initScreenShot();
         initFullScreen();
@@ -31,7 +32,6 @@ if (urlcheck.test(location.href)) {
             if (msg.type == "videoSize") {
                 videoSizeData.setSaveData(msg.saveData);
                 changeVideoSize();
-                carousel.resize();
             }
             else if (msg.type == "screenShot") {
                 screenShotData.setSaveData(msg.saveData);
@@ -73,6 +73,10 @@ function initScreenShot() {
     changeScreenShot();
 
 };
+// videoのサイズ変更が合ったら呼び出される
+function videoSizeChangeEvent() {
+    carousel.resize();
+}
 
 // 全画面系の初期化
 function initFullScreen() {
