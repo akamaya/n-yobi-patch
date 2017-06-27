@@ -29,11 +29,13 @@ class VideoSizeChanger {
         }
     }
 
-    setOriginalSize() {
+    // 動画サイズを変更する前に呼び出してね
+    init() {
         // 初期動画サイズを取得
         var videoComponent = $('.component-lesson-player-controller');
         this.data.originWidth = videoComponent.width();
         this.data.originHeight = videoComponent.height();
+        this._observeUnneiComment();
     }
 
     insertDom() {
@@ -46,6 +48,7 @@ class VideoSizeChanger {
         $('.component-lesson-player-controller-fullScreen button').on('click', function () {
             this_.clickFullScreenButton();
         });
+
     }
 
     clickFullScreenButton() {
@@ -180,6 +183,20 @@ class VideoSizeChanger {
         $('.component-lesson-comment-pane').css(comeCss);
     }
 
+    // 全画面中の運営コメ監視
+    // 運営コメはdomの追加と削除を繰り返すので親domを監視して追加があればz-indexをセットする
+    _observeUnneiComment() {
+        var this_ = this;
+        function handleMutations(mutations) {
+            if (this_.data.originalCss) {
+                $('.component-lesson-interaction-bar-event-information').css({ 'z-index': 1001 });
+            }
+        }
+        var observer = new MutationObserver(handleMutations);
+        var config = { childList: true };
+        observer.observe(document.querySelector('.component-lesson-interaction-bar'), config);
+    }
+
     resize() {
         if (this.data.originalCss) {
             this._centeringArchiveMenu();
@@ -208,15 +225,15 @@ class VideoSizeChanger {
 
     // 画面中央の再生ボタン群の位置を中央に移動(録画のみ)
     _centeringArchiveMenu(unnei_comme_offset = 0) {
+        var height = $('.component-lesson-player').height();
+        var width = $('.component-lesson-player').width();
+        $('.component-lesson-player-controller-console').css({ 'width': width });
+
         var archiveMenu = $('.component-lesson-player-controller-archive-menu');
         if (archiveMenu.length > 0) {
-            var height = $('.component-lesson-player').height();
-            var width = $('.component-lesson-player').width();
             var top = Math.ceil((height - archiveMenu.height()) / 2) + unnei_comme_offset;
             var left = Math.ceil((width - archiveMenu.width()) / 2);
-
             archiveMenu.offset({ top: top, left: left });
-            $('.component-lesson-player-controller-console').css({ 'width': width });
         }
     }
 }

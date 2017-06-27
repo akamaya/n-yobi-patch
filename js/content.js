@@ -21,7 +21,7 @@ if (urlcheck.test(location.href)) {
             fullScreenData.isLoaded() == false) return;
 
         clearInterval(id);
-        videoSizeChanger.setOriginalSize();
+        videoSizeChanger.init();
         videoSizeChanger.setVideoSizeChangeEvent(videoSizeChangeEvent);
         initVideoSize();
         initScreenShot();
