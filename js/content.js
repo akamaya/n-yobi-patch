@@ -2,12 +2,11 @@
 
 // 既存の画面にコンテンツを追加していく処理
 
-var originWidth = 608;
-var originHeight = 342;
 var videoSizeData = new VideoSizeData();
 var screenShotData = new ScreenShotData();
 var fullScreenData = new FullScreenData();
 var carousel = new ScreenShotCarousel();
+var videoSizeChanger = new VideoSizeChanger();
 
 
 // 放送ページでないならなにもせず終了
@@ -20,10 +19,13 @@ if (urlcheck.test(location.href)) {
             videoSizeData.isLoaded() == false ||
             screenShotData.isLoaded() == false ||
             fullScreenData.isLoaded() == false) return;
+
         clearInterval(id);
+        videoSizeChanger.setOriginalSize();
         initVideoSize();
         initScreenShot();
         initFullScreen();
+
         // chrome拡張のアイコンから設定を変更されたときの通知を受ける
         chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
             if (msg.type == "videoSize") {
@@ -43,14 +45,8 @@ if (urlcheck.test(location.href)) {
     }, 500);
 }
 
-
 // 動画サイズ変更系の初期化
 function initVideoSize() {
-    // 初期動画サイズを取得
-    var videoComponent = $('.component-lesson-player-controller');
-    originWidth = videoComponent.width();
-    originHeight = videoComponent.height();
-
     // 設定に合わせて動画サイズ変更
     if (videoSizeData.power === true) {
         changeVideoSize();
@@ -80,13 +76,12 @@ function initScreenShot() {
 
 // 全画面系の初期化
 function initFullScreen() {
-    var icon = chrome.extension.getURL('images/fullScreenIcon.png');
-    var tag = '<div class="component-lesson-player-controller-fullScreen"><button type="submit"><img src="' + icon + '" alt="全画面"/></button></i></div>';
-    $('.component-lesson-player-controller-console').append(tag);
 
+    videoSizeChanger.insertDom();
 
-    $('.component-lesson-player-controller-fullScreen button').on('click', function () {
-        clickFullScreen();
+    // windowサイズが変更されたときの処理
+    $(window).resize(function () {
+        videoSizeChanger.resize();
     });
 
     changeFullScreen();
@@ -95,122 +90,25 @@ function initFullScreen() {
 
 function changeFullScreen() {
     if (fullScreenData.power === false) {
-        $('.component-lesson-player-controller-fullScreen').hide();
+        videoSizeChanger.hide();
         return;
     }
-
-    $('.component-lesson-player-controller-fullScreen').show();
+    videoSizeChanger.show();
 }
 
-var fullScreenOriginalCss;
-function clickFullScreen() {
-
-    var videoCss = {
-        'position': 'absolute',
-        'width': '100%',
-        'height': '100%',
-        'top': '0px',
-        'left': '0px',
-        'bottom': '0px',
-        'right': '0px',
-        'display': 'block',
-        'z-index': '1000',
-    };
-    if (fullScreenOriginalCss) {
-        _resetVideoComponent(fullScreenOriginalCss);
-        fullScreenOriginalCss = undefined;
-        // 画面中央の再生ボタン群の位置を中央に修正(録画のみ)
-        _centeringArchiveMenu(80);
-    }
-    else {
-        fullScreenOriginalCss = _changeVideoComponent(videoCss);
-        // 画面中央の再生ボタン群の位置を中央に修正(録画のみ)
-        _centeringArchiveMenu();
-    }
-
-}
-
-function backFullScreen() {
-
-}
 
 // 動画サイズを変更
 function changeVideoSize() {
     if (videoSizeData.power === false) {
-        _changeVideoSize(originWidth);
+        videoSizeChanger.changeVideoSize();
     }
     else if (videoSizeData.type === 'fixed') {
-        _changeVideoSize(videoSizeData.fixedSize);
+        videoSizeChanger.changeVideoSize(videoSizeData.fixedSize);
     }
     else if (videoSizeData.type === 'ratio') {
-
-        var width = Math.ceil($(window).width() * videoSizeData.ratioSize / 100);
-        _changeVideoSize(width);
+        videoSizeChanger.changeVideoRatio(videoSizeData.ratioSize);
     }
 }
-
-function _changeVideoSize(width) {
-
-    if ($('.component-lesson-left-column').length === 0) {
-        return;
-    }
-
-    var scale = width / originWidth;
-    var height = Math.ceil(originHeight * scale);
-
-    // 画面サイズを修正
-    var videoCss = {
-        'width': width,
-        'height': height,
-    };
-    _changeVideoComponent(videoCss);
-    // 画面中央の再生ボタン群の位置を中央に修正(録画のみ)
-    _centeringArchiveMenu(80);
-
-    // 右テキストの位置を修正
-    $('.component-lesson-right-column').css('margin-left', (width + 32) + 'px');
-}
-
-// ビデオコンポーネントのサイズ変更
-function _changeVideoComponent(videoCss) {
-    var components = [
-        '.component-lesson-left-column',
-        '.component-lesson-player',
-        '.component-lesson-player-controller',
-        '.vjs_video_3-dimensions',
-        '.component-lesson-comment-pane',
-    ];
-    var cssKeyList = Object.keys(videoCss);
-    var originalCss = {};
-    for (var component of components) {
-        originalCss[component] = $(component).css(cssKeyList);
-        $(component).css(videoCss);
-    }
-
-    return originalCss;
-}
-function _resetVideoComponent(originalCss) {
-    var componentList = Object.keys(originalCss);
-
-    for (var component of componentList) {
-        $(component).css(originalCss[component]);
-    }
-}
-
-// 画面中央の再生ボタン群の位置を中央に移動(録画のみ)
-function _centeringArchiveMenu(unnei_comme_offset = 0) {
-    var archiveMenu = $('.component-lesson-player-controller-archive-menu');
-    if (archiveMenu.length > 0) {
-        var height = $('.component-lesson-player').height();
-        var width = $('.component-lesson-player').width();
-        var top = Math.ceil((height - archiveMenu.height()) / 2) + unnei_comme_offset;
-        var left = Math.ceil((width - archiveMenu.width()) / 2);
-
-        archiveMenu.offset({ top: top, left: left });
-        $('.component-lesson-player-controller-console').css({ 'width': width });
-    }
-}
-
 
 function changeScreenShot() {
     if (screenShotData.power === false) {

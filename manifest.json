@@ -24,7 +24,7 @@
     {
       "matches": ["*://www.nnn.ed.nico/lessons/*"],
       "js": ["js/jquery-3.2.1.min.js","js/VideoSizeData.js","js/ScreenShotData.js","js/ScreenShotCarousel.js",
-             "js/FullScreenData.js","js/content.js"],
+             "js/FullScreenData.js","js/VideoSizeChanger.js","js/content.js"],
       "css": ["css/content.css","css/carousel.css"]
     }
   ],
