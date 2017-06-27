@@ -143,7 +143,7 @@ class VideoSizeChanger {
         $('.component-lesson-right-column').css('margin-left', (width + 32) + 'px');
     }
 
-    changeVideoRasio(ratio) {
+    changeVideoRatio(ratio) {
         var width = Math.ceil($(window).width() * ratio / 100);
         this.changeVideoSize(width);
     }
@@ -188,13 +188,18 @@ class VideoSizeChanger {
     _observeUnneiComment() {
         var this_ = this;
         function handleMutations(mutations) {
+            console.log('lengthsono1:' + $('.component-lesson-interaction-bar-event-information').length);
+            console.log('lengthsono2:' + $('component-modal').length);
             if (this_.data.originalCss) {
                 $('.component-lesson-interaction-bar-event-information').css({ 'z-index': 1001 });
+                $('component-modal').css({ 'z-index': 1002 })
+                console('kitayo');
+
             }
         }
         var observer = new MutationObserver(handleMutations);
         var config = { childList: true };
-        observer.observe(document.querySelector('.component-lesson-interaction-bar'), config);
+        observer.observe(document.querySelector('.component-lesson'), config);
     }
 
     resize() {

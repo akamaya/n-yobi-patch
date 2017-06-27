@@ -57,3 +57,7 @@ body {
     outline: none;
     cursor: pointer;
 }
+
+#videoSizeFixed, #videoSizeRatio{
+    width: 40px;
+}
