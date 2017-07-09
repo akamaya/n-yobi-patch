@@ -3,12 +3,12 @@
 // アイコンを押したときに出てくるポップアップの処理
 
 // 保存された設定の読み込みは非同期のため、onload前に読んでおく
-var videoSizeData = new VideoSizeData();
-videoSizeData.setSaveNotification(noticeVideoSizeSave);
-var screenShotData = new ScreenShotData();
-screenShotData.setSaveNotification(noticeScreenShotSave);
-var fullScreenData = new FullScreenData();
-fullScreenData.setSaveNotification(noticeFullScreenSave);
+var videoSizeSaveData = new VideoSizeSaveData();
+videoSizeSaveData.setSaveNotification(noticeVideoSizeSave);
+var screenShotSaveData = new ScreenShotSaveData();
+screenShotSaveData.setSaveNotification(noticeScreenShotSave);
+var fullScreenSaveData = new FullScreenSaveData();
+fullScreenSaveData.setSaveNotification(noticeFullScreenSave);
 
 
 $(document).ready(function () {
@@ -23,9 +23,9 @@ $(document).ready(function () {
 
 function refConfig() {
     // 設定が読み込まれるまで待機
-    if (videoSizeData.isLoaded() === false ||
-        screenShotData.isLoaded() === false ||
-        fullScreenData.isLoaded() === false) {
+    if (videoSizeSaveData.isLoaded() === false ||
+        screenShotSaveData.isLoaded() === false ||
+        fullScreenSaveData.isLoaded() === false) {
         setTimeout(function () { refConfig() }, 1000);
         return;
     }
@@ -37,15 +37,15 @@ function refConfig() {
 
 function refVideoSizeConfig() {
 
-    if (videoSizeData.isLoaded() === false) return;
+    if (videoSizeSaveData.isLoaded() === false) return;
 
 
-    $('input[name="videoSizeType"][value="' + videoSizeData.type + '"]').prop('checked', true);
-    $('#videoSizeFixed').prop('value', videoSizeData.fixedSize);
-    $('#videoSizeRatio').prop('value', videoSizeData.ratioSize);
+    $('input[name="videoSizeType"][value="' + videoSizeSaveData.type + '"]').prop('checked', true);
+    $('#videoSizeFixed').prop('value', videoSizeSaveData.fixedSize);
+    $('#videoSizeRatio').prop('value', videoSizeSaveData.ratioSize);
 
     $('#videoSizePower').prop('disabled', false);
-    $('#videoSizePower').prop('checked', videoSizeData.power);
+    $('#videoSizePower').prop('checked', videoSizeSaveData.power);
 
 
     changeVideoSizePower();
@@ -93,13 +93,13 @@ function changeVideoSizePower() {
         boxRight.addClass('disabled');
         boxRight.find('input').prop('disabled', true);
     }
-    videoSizeData.power = power;
+    videoSizeSaveData.power = power;
 }
 
 function changeVideoSizeType() {
     var value = $('input[name="videoSizeType"]:checked').prop('value');
 
-    videoSizeData.type = value;
+    videoSizeSaveData.type = value;
 }
 
 function changeVideoSizeFixed() {
@@ -108,7 +108,7 @@ function changeVideoSizeFixed() {
 
     if (isNaN(size)) return;
 
-    videoSizeData.fixedSize = size;
+    videoSizeSaveData.fixedSize = size;
 }
 
 function pressVideoSizeInitButton() {
@@ -121,20 +121,20 @@ function changeVideoSizeRatio() {
 
     if (isNaN(size)) return;
 
-    videoSizeData.ratioSize = size;
+    videoSizeSaveData.ratioSize = size;
 }
 
 
 
 function refScreenShotConfig() {
 
-    if (screenShotData.isLoaded() === false) return;
+    if (screenShotSaveData.isLoaded() === false) return;
 
     $('#screenShotPower').prop('disabled', false);
-    $('#screenShotPower').prop('checked', screenShotData.power);
+    $('#screenShotPower').prop('checked', screenShotSaveData.power);
 
-    $('input[name="screenShotCarouselSize"][value="' + screenShotData.size + '"]').prop('checked', true);
-    $('input[name="screenShotAutoSave"]').prop('checked', screenShotData.autoSave);
+    $('input[name="screenShotCarouselSize"][value="' + screenShotSaveData.size + '"]').prop('checked', true);
+    $('input[name="screenShotAutoSave"]').prop('checked', screenShotSaveData.autoSave);
 
     changeScreenShotPower();
     changeScreenShotCarouselSize();
@@ -170,29 +170,29 @@ function changeScreenShotPower() {
         boxRight.addClass('disabled');
         boxRight.find('input').prop('disabled', true);
     }
-    screenShotData.power = power;
+    screenShotSaveData.power = power;
 }
 
 // カルーセルサイズを切り替えたときの処理
 function changeScreenShotCarouselSize() {
     var value = $('input[name="screenShotCarouselSize"]:checked').prop('value');
 
-    screenShotData.size = value;
+    screenShotSaveData.size = value;
 }
 
 // 自動保存を切り替えたときの処理
 function changeScreenShotAutoSave() {
     var value = $('input[name="screenShotAutoSave"]').prop('checked');
-    screenShotData.autoSave = value;
+    screenShotSaveData.autoSave = value;
 }
 
 
 function refFullScreenConfig() {
 
-    if (fullScreenData.isLoaded() === false) return;
+    if (fullScreenSaveData.isLoaded() === false) return;
 
     $('#fullScreenPower').prop('disabled', false);
-    $('#fullScreenPower').prop('checked', fullScreenData.power);
+    $('#fullScreenPower').prop('checked', fullScreenSaveData.power);
 
     changeFullScreenPower();
 }
@@ -217,21 +217,21 @@ function changeFullScreenPower() {
         boxRight.addClass('disabled');
         boxRight.find('input').prop('disabled', true);
     }
-    fullScreenData.power = power;
+    fullScreenSaveData.power = power;
 }
 
 
 // 設定変更があったことをブラウザのタブに通知
 function noticeVideoSizeSave() {
-    noticeSave("videoSize", videoSizeData.getSaveData());
+    noticeSave("videoSize", videoSizeSaveData.serializeSaveData());
 }
 
 function noticeScreenShotSave() {
-    noticeSave("screenShot", screenShotData.getSaveData());
+    noticeSave("screenShot", screenShotSaveData.serializeSaveData());
 }
 
 function noticeFullScreenSave() {
-    noticeSave("fullScreen", fullScreenData.getSaveData());
+    noticeSave("fullScreen", fullScreenSaveData.serializeSaveData());
 }
 
 function noticeSave(type, saveData) {

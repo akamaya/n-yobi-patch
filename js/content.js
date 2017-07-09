@@ -2,9 +2,9 @@
 
 // 既存の画面にコンテンツを追加していく処理
 
-var videoSizeData = new VideoSizeData();
-var screenShotData = new ScreenShotData();
-var fullScreenData = new FullScreenData();
+var videoSizeSaveData = new VideoSizeSaveData();
+var screenShotSaveData = new ScreenShotSaveData();
+var fullScreenSaveData = new FullScreenSaveData();
 var carousel = new ScreenShotCarousel();
 var videoSizeChanger = new VideoSizeChanger();
 
@@ -16,9 +16,9 @@ if (urlcheck.test(location.href)) {
     // ベージコンテンツが生成されるのでDOMチェックはポーリングで
     var id = setInterval(function () {
         if ($('.component-lesson-player-controller').length == 0 ||
-            videoSizeData.isLoaded() == false ||
-            screenShotData.isLoaded() == false ||
-            fullScreenData.isLoaded() == false) return;
+            videoSizeSaveData.isLoaded() == false ||
+            screenShotSaveData.isLoaded() == false ||
+            fullScreenSaveData.isLoaded() == false) return;
 
         clearInterval(id);
         videoSizeChanger.init();
@@ -30,15 +30,15 @@ if (urlcheck.test(location.href)) {
         // chrome拡張のアイコンから設定を変更されたときの通知を受ける
         chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
             if (msg.type == "videoSize") {
-                videoSizeData.setSaveData(msg.saveData);
+                videoSizeSaveData.setSaveData(msg.saveData);
                 changeVideoSize();
             }
             else if (msg.type == "screenShot") {
-                screenShotData.setSaveData(msg.saveData);
+                screenShotSaveData.setSaveData(msg.saveData);
                 changeScreenShot();
             }
             else if (msg.type == "fullScreen") {
-                fullScreenData.setSaveData(msg.saveData);
+                fullScreenSaveData.setSaveData(msg.saveData);
                 changeFullScreen();
             }
         });
@@ -48,13 +48,13 @@ if (urlcheck.test(location.href)) {
 // 動画サイズ変更系の初期化
 function initVideoSize() {
     // 設定に合わせて動画サイズ変更
-    if (videoSizeData.power === true) {
+    if (videoSizeSaveData.power === true) {
         changeVideoSize();
     }
 
     // windowサイズが変更されたときの処理
     $(window).resize(function () {
-        if (videoSizeData.power === true && videoSizeData.type === 'ratio') {
+        if (videoSizeSaveData.power === true && videoSizeSaveData.type === 'ratio') {
             changeVideoSize();
         }
     });
@@ -93,7 +93,7 @@ function initFullScreen() {
 }
 
 function changeFullScreen() {
-    if (fullScreenData.power === false) {
+    if (fullScreenSaveData.power === false) {
         videoSizeChanger.hide();
         return;
     }
@@ -103,25 +103,25 @@ function changeFullScreen() {
 
 // 動画サイズを変更
 function changeVideoSize() {
-    if (videoSizeData.power === false) {
+    if (videoSizeSaveData.power === false) {
         videoSizeChanger.changeVideoSize();
     }
-    else if (videoSizeData.type === 'fixed') {
-        videoSizeChanger.changeVideoSize(videoSizeData.fixedSize);
+    else if (videoSizeSaveData.type === 'fixed') {
+        videoSizeChanger.changeVideoSize(videoSizeSaveData.fixedSize);
     }
-    else if (videoSizeData.type === 'ratio') {
-        videoSizeChanger.changeVideoRatio(videoSizeData.ratioSize);
+    else if (videoSizeSaveData.type === 'ratio') {
+        videoSizeChanger.changeVideoRatio(videoSizeSaveData.ratioSize);
     }
 }
 
 function changeScreenShot() {
-    if (screenShotData.power === false) {
+    if (screenShotSaveData.power === false) {
         carousel.hide();
         return;
     }
-    carousel.autoSave = screenShotData.autoSave;
+    carousel.autoSave = screenShotSaveData.autoSave;
     carousel.show();
-    carousel.resize(screenShotData.size);
+    carousel.resize(screenShotSaveData.size);
 }
 
 
