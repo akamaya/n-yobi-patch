@@ -232,9 +232,15 @@ class VideoSizeChanger {
 
         var archiveMenu = $('.component-lesson-player-controller-archive-menu');
         if (archiveMenu.length > 0) {
-            var top = Math.ceil((height - archiveMenu.height()) / 2) + unnei_comme_offset;
-            var left = Math.ceil((width - archiveMenu.width()) / 2);
-            archiveMenu.offset({ top: top, left: left });
+            var top = Math.ceil(height * 50 / (height + unnei_comme_offset));
+
+            var centeringCss = {
+                'top': top + '%',
+                'left': '50%',
+                'transform': 'translate(-50%,-50%)',
+            };
+            archiveMenu.css(centeringCss);
+
         }
     }
 }
