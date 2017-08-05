@@ -105,8 +105,13 @@ class VideoSizeChanger {
         if (!this.data.originalCss) return;
 
         this._resetVideoComponent(this.data.originalCss);
+        // こいつだけ元のheightが変な値で取れてしまうので元に戻らない。
+        // とりあえずの応急処置
+        $('.vjs_video_3-dimensions').css('height', this.data.originalCss['.component-lesson-player'].height);
+
         this.data.originalCss = undefined;
-        this._centeringArchiveMenu(80);
+        this._centeringArchiveMenu();
+
         $(window).off('keydown');
     }
 
@@ -137,7 +142,7 @@ class VideoSizeChanger {
         };
         this._changeVideoComponent(videoCss);
         // 画面中央の再生ボタン群の位置を中央に修正(録画のみ)
-        this._centeringArchiveMenu(80);
+        this._centeringArchiveMenu();
 
         // 右テキストの位置を修正
         $('.component-lesson-right-column').css('margin-left', (width + 32) + 'px');
@@ -186,6 +191,7 @@ class VideoSizeChanger {
     // 全画面中の運営コメ監視
     // 運営コメはdomの追加と削除を繰り返すので親domを監視して追加があればz-indexをセットする
     _observeUnneiComment() {
+
         var this_ = this;
         function handleMutations(mutations) {
             if (this_.data.originalCss) {
@@ -195,16 +201,13 @@ class VideoSizeChanger {
         }
         var observer = new MutationObserver(handleMutations);
         var config = { childList: true };
-        observer.observe(document.querySelector('.component-lesson'), config);
+        observer.observe(document.querySelector('.component-lesson-interaction-bar'), config);
+
     }
 
     resize() {
-        if (this.data.originalCss) {
-            this._centeringArchiveMenu();
-        }
-        else {
-            this._centeringArchiveMenu(80);
-        }
+        this._centeringArchiveMenu();
+
     }
 
     show() {
@@ -225,19 +228,16 @@ class VideoSizeChanger {
     }
 
     // 画面中央の再生ボタン群の位置を中央に移動(録画のみ)
-    _centeringArchiveMenu(unnei_comme_offset = 0) {
-        var height = $('.component-lesson-player').height();
+    _centeringArchiveMenu() {
         var width = $('.component-lesson-player').width();
         $('.component-lesson-player-controller-console').css({ 'width': width });
 
         var archiveMenu = $('.component-lesson-player-controller-archive-menu');
         if (archiveMenu.length > 0) {
-            var top = Math.ceil(height * 50 / (height + unnei_comme_offset));
 
             var centeringCss = {
-                'top': top + '%',
+                'top': '50%',
                 'left': '50%',
-                'transform': 'translate(-50%,-50%)',
             };
             archiveMenu.css(centeringCss);
 

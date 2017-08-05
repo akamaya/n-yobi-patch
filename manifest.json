@@ -1,6 +1,6 @@
 {
   "name": "N予備校パッチ",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "N予備校で放送画面サイズの変更、スクショボタン追加など",
   "manifest_version": 2,
   "icons": {
@@ -8,12 +8,10 @@
     "48": "images/icon48.png",
     "128": "images/icon128.png"
   },
-
   "web_accessible_resources": [
     "images/camera.png",
     "images/fullScreenIcon.png"
   ],
-
   "permissions": [
     "storage",
     "tabs",
@@ -22,10 +20,23 @@
   ],
   "content_scripts": [
     {
-      "matches": ["*://www.nnn.ed.nico/lessons/*"],
-      "js": ["js/jquery-3.2.1.min.js","js/SaveData.js","js/VideoSizeSaveData.js","js/ScreenShotSaveData.js","js/FullScreenSaveData.js",
-             "js/ScreenShotCarousel.js","js/VideoSizeChanger.js","js/content.js"],
-      "css": ["css/content.css","css/carousel.css"]
+      "matches": [
+        "*://www.nnn.ed.nico/lessons/*"
+      ],
+      "js": [
+        "js/jquery-3.2.1.min.js",
+        "js/SaveData.js",
+        "js/VideoSizeSaveData.js",
+        "js/ScreenShotSaveData.js",
+        "js/FullScreenSaveData.js",
+        "js/ScreenShotCarousel.js",
+        "js/VideoSizeChanger.js",
+        "js/content.js"
+      ],
+      "css": [
+        "css/content.css",
+        "css/carousel.css"
+      ]
     }
   ],
   "browser_action": {

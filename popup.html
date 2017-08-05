@@ -18,61 +18,61 @@
 
 <body>
 
-<div class="customBoxGroup">
-    <div id="videoSizeBox" class="customBox">
-        <div class="customBoxLeft">
-            <input class="tgl" id="videoSizePower" type="checkbox" value="on">
-            <label class="tgl-btn" for="videoSizePower"></label>
+    <div class="customBoxGroup">
+        <div id="videoSizeBox" class="customBox">
+            <div class="customBoxLeft">
+                <input class="tgl" id="videoSizePower" type="checkbox" value="on">
+                <label class="tgl-btn" for="videoSizePower"></label>
+            </div>
+
+            <div class="customBoxRight disabled">
+                <div class="customTitle">動画サイズ</div>
+                <div>
+                    <div class="indent">
+                        <input type="radio" name="videoSizeType" value="fixed" disabled="disabled">
+                        <label>固定</label><input type="text" id="videoSizeFixed" size="5" maxlength="5" value="" disabled="disabled">px
+                        <button id="videoSizeInitButton">初期化</button>
+                    </div>
+                    <div class="indent">
+                        <input type="radio" name="videoSizeType" value="ratio" disabled="disabled">
+                        <label>割合</label><input type="text" id="videoSizeRatio" size="5" maxlength="3" disabled="disabled">%
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <div class="customBoxRight disabled">
-            <div class="customTitle">動画サイズ</div>
-            <div>
+
+        <div id="fullScreenBox" class="customBoxHalf">
+            <div class="customBoxLeft">
+                <input class="tgl" id="fullScreenPower" type="checkbox" value="on">
+                <label class="tgl-btn" for="fullScreenPower"></label>
+            </div>
+
+            <div class="customBoxRight disabled">
+                <div class="customTitle">全画面ボタン</div>
+            </div>
+        </div>
+
+        <div id="screenShotBox" class="customBox">
+            <div class="customBoxLeft">
+                <input class="tgl" id="screenShotPower" type="checkbox">
+                <label class="tgl-btn" for="screenShotPower"></label>
+            </div>
+
+            <div class="customBoxRight disabled">
+                <div class="customTitle">スクショボタン</div>
                 <div class="indent">
-                    <input type="radio" name="videoSizeType" value="fixed" disabled="disabled">
-                    <label>固定</label><input type="text" id="videoSizeFixed" size="5" maxlength="5" value="" disabled="disabled">px
-                    <button id="videoSizeInitButton">初期化</button>
+                    <input type="radio" name="screenShotCarouselSize" value="large" disabled="disabled"><label>大</label>
+                    <input type="radio" name="screenShotCarouselSize" value="medium" disabled="disabled"><label>中</label>
+                    <input type="radio" name="screenShotCarouselSize" value="small" disabled="disabled"><label>小</label>
                 </div>
                 <div class="indent">
-                    <input type="radio" name="videoSizeType" value="ratio" disabled="disabled">
-                    <label>割合</label><input type="text" id="videoSizeRatio" size="5" maxlength="3" disabled="disabled">%
+                    <input type="checkbox" name="screenShotAutoSave" disabled="disabled">自動で保存
                 </div>
             </div>
         </div>
+
     </div>
-
-    <div id="fullScreenBox" class="customBoxHalf">
-        <div class="customBoxLeft">
-            <input class="tgl" id="fullScreenPower" type="checkbox" value="on">
-            <label class="tgl-btn" for="fullScreenPower"></label>
-        </div>
-        
-        <div class="customBoxRight disabled">
-            <div class="customTitle">全画面ボタン</div>
-        </div>
-    </div>
-
-    <div id="screenShotBox" class="customBox">
-        <div class="customBoxLeft">
-            <input class="tgl" id="screenShotPower" type="checkbox">
-            <label class="tgl-btn" for="screenShotPower"></label>
-        </div>
-        
-        <div class="customBoxRight disabled">
-            <div class="customTitle">スクショボタン</div>
-            <div class="indent">
-                <input type="radio" name="screenShotCarouselSize" value="large" disabled="disabled"><label>大</label>
-                <input type="radio" name="screenShotCarouselSize" value="medium" disabled="disabled"><label>中</label>
-                <input type="radio" name="screenShotCarouselSize" value="small" disabled="disabled"><label>小</label>
-            </div>
-            <div class="indent">
-                <input type="checkbox" name="screenShotAutoSave" disabled="disabled">自動で保存
-            </div>
-        </div>
-    </div>
-
-</div>
-
+    <div style="color:red;">公式シアターモードが動かなくなる挙動を確認しております。対応は8/20頃になる予定です。ご迷惑をおかけしますがよろしくお願いします。</div>
 </body>
 
 </html>
