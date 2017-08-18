@@ -3,11 +3,11 @@
 // アイコンを押したときに出てくるポップアップの処理
 
 // 保存された設定の読み込みは非同期のため、onload前に読んでおく
-var videoSizeSaveData = new VideoSizeSaveData();
+const videoSizeSaveData = new VideoSizeSaveData();
 videoSizeSaveData.setSaveNotification(noticeVideoSizeSave);
-var screenShotSaveData = new ScreenShotSaveData();
+const screenShotSaveData = new ScreenShotSaveData();
 screenShotSaveData.setSaveNotification(noticeScreenShotSave);
-var fullScreenSaveData = new FullScreenSaveData();
+const fullScreenSaveData = new FullScreenSaveData();
 fullScreenSaveData.setSaveNotification(noticeFullScreenSave);
 
 
@@ -82,8 +82,8 @@ function setVideoSizeEvent() {
 
 // on:offボタンを切り替えたときの処理
 function changeVideoSizePower() {
-    var power = $('#videoSizePower').is(':checked');
-    var boxRight = $('#videoSizeBox .customBoxRight');
+    const power = $('#videoSizePower').is(':checked');
+    const boxRight = $('#videoSizeBox .customBoxRight');
     if (power) {
         boxRight.removeClass('disabled');
         boxRight.find('input').prop('disabled', false);
@@ -97,14 +97,14 @@ function changeVideoSizePower() {
 }
 
 function changeVideoSizeType() {
-    var value = $('input[name="videoSizeType"]:checked').prop('value');
+    const value = $('input[name="videoSizeType"]:checked').prop('value');
 
     videoSizeSaveData.type = value;
 }
 
 function changeVideoSizeFixed() {
-    var sizeString = $('#videoSizeFixed').prop('value');
-    var size = Number(sizeString);
+    const sizeString = $('#videoSizeFixed').prop('value');
+    const size = Number(sizeString);
 
     if (isNaN(size)) return;
 
@@ -116,8 +116,8 @@ function pressVideoSizeInitButton() {
 }
 
 function changeVideoSizeRatio() {
-    var sizeString = $('#videoSizeRatio').prop('value');
-    var size = Number(sizeString);
+    const sizeString = $('#videoSizeRatio').prop('value');
+    const size = Number(sizeString);
 
     if (isNaN(size)) return;
 
@@ -160,8 +160,8 @@ function setScreenShotEvent() {
 
 // on:offボタンを切り替えたときの処理
 function changeScreenShotPower() {
-    var power = $('#screenShotPower').is(':checked');
-    var boxRight = $('#screenShotBox .customBoxRight');
+    const power = $('#screenShotPower').is(':checked');
+    const boxRight = $('#screenShotBox .customBoxRight');
     if (power) {
         boxRight.removeClass('disabled');
         boxRight.find('input').prop('disabled', false);
@@ -175,14 +175,14 @@ function changeScreenShotPower() {
 
 // カルーセルサイズを切り替えたときの処理
 function changeScreenShotCarouselSize() {
-    var value = $('input[name="screenShotCarouselSize"]:checked').prop('value');
+    const value = $('input[name="screenShotCarouselSize"]:checked').prop('value');
 
     screenShotSaveData.size = value;
 }
 
 // 自動保存を切り替えたときの処理
 function changeScreenShotAutoSave() {
-    var value = $('input[name="screenShotAutoSave"]').prop('checked');
+    const value = $('input[name="screenShotAutoSave"]').prop('checked');
     screenShotSaveData.autoSave = value;
 }
 
@@ -207,8 +207,8 @@ function setFullScreenEvent() {
 
 // on:offボタンを切り替えたときの処理
 function changeFullScreenPower() {
-    var power = $('#fullScreenPower').is(':checked');
-    var boxRight = $('#fullScreenBox .customBoxRight');
+    const power = $('#fullScreenPower').is(':checked');
+    const boxRight = $('#fullScreenBox .customBoxRight');
     if (power) {
         boxRight.removeClass('disabled');
         boxRight.find('input').prop('disabled', false);
@@ -238,7 +238,7 @@ function noticeSave(type, saveData) {
     // chrome.tabs.query => tabの配列をcallbackに渡してくる(N予備校のURLで絞る)
     // callback => tabの配列に設定が変更されたことを通知
     chrome.tabs.query({ url: ['*://www.nnn.ed.nico/lessons/*', '*://nnn.ed.nico/lessons/*'] }, function (tabs) {
-        for (var tab of tabs) {
+        for (const tab of tabs) {
             chrome.tabs.sendMessage(tab.id, { type: type, saveData: saveData });
         }
     });

@@ -5,7 +5,7 @@
 class ScreenShotSaveData extends SaveData {
     constructor() {
         // 初期値
-        var initialValue = {
+        const initialValue = {
             power: true,// 機能のon/offボタン
             size: 'large',// カルーセルサイズ
             autoSave: false,// 自動保存

@@ -5,7 +5,7 @@
 class VideoSizeSaveData extends SaveData {
     constructor() {
         // 初期値
-        var initialValue = {
+        const initialValue = {
             power: true,// 機能のon/offボタン
             type: 'fixed',// 固定:'fixed',割合:'ratio'
             fixed: 608,// 固定時のpx

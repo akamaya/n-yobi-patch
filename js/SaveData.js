@@ -21,7 +21,7 @@ class SaveData {
 
     // bool型のセーブデータ
     saveBool(key, value) {
-        var boolValue = value ? true : false;
+        const boolValue = value ? true : false;
 
         // 値に変更がないならなにもしない
         if (boolValue === this._saveData[key]) return;
@@ -48,7 +48,7 @@ class SaveData {
         if (value === this._saveData[key]) return;
 
         // formatチェック
-        for (var format of formatList) {
+        for (const format of formatList) {
             // 合致したらセーブ
             if (value === format) {
                 this._saveData[key] = value;
@@ -77,7 +77,7 @@ class SaveData {
 
         // 設定が保存されてないかセーブデータが不正なときは初期値を設定
         // 1項目ずつチェックするのはバージョンアップで新項目が増えたときに初期値を設定するため
-        for (var key of Object.keys(this._initialValue)) {
+        for (const key of Object.keys(this._initialValue)) {
             if (this._saveData[key] === undefined) {
                 this._saveData[key] = this._initialValue[key];
             }
@@ -91,8 +91,8 @@ class SaveData {
     }
 
     load(callback) {
-        var _this = this;
-        var callbackWrap = function (items) {
+        const _this = this;
+        const callbackWrap = function (items) {
 
             _this.setSaveData(items[_this._saveName]);
 
@@ -105,8 +105,8 @@ class SaveData {
     }
 
     save() {
-        var saveName = this._saveName;
-        var saveData = {};
+        const saveName = this._saveName;
+        const saveData = {};
         saveData[saveName] = this.serializeSaveData();
 
         chrome.storage.local.set(saveData);

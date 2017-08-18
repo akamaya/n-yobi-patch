@@ -5,7 +5,7 @@
 class FullScreenSaveData extends SaveData {
     constructor() {
         // 初期値
-        var initialValue = {
+        const initialValue = {
             power: true,// 機能のon/offボタン
         };
         super('FullScreen', initialValue);

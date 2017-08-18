@@ -2,19 +2,19 @@
 
 // 既存の画面にコンテンツを追加していく処理
 
-var videoSizeSaveData = new VideoSizeSaveData();
-var screenShotSaveData = new ScreenShotSaveData();
-var fullScreenSaveData = new FullScreenSaveData();
-var carousel = new ScreenShotCarousel();
-var videoSizeChanger = new VideoSizeChanger();
+const videoSizeSaveData = new VideoSizeSaveData();
+const screenShotSaveData = new ScreenShotSaveData();
+const fullScreenSaveData = new FullScreenSaveData();
+const carousel = new ScreenShotCarousel();
+const videoSizeChanger = new VideoSizeChanger();
 
 
 // 放送ページでないならなにもせず終了
-var urlcheck = new RegExp("://www.nnn.ed.nico/lessons/\\d+");
+const urlcheck = new RegExp("://www.nnn.ed.nico/lessons/\\d+");
 if (urlcheck.test(location.href)) {
     // $(document).readyやchrome.api等々のページ読み込み完了系イベントのあとで
     // ベージコンテンツが生成されるのでDOMチェックはポーリングで
-    var id = setInterval(function () {
+    const id = setInterval(function () {
         if ($('.component-lesson-player-controller').length == 0 ||
             videoSizeSaveData.isLoaded() == false ||
             screenShotSaveData.isLoaded() == false ||
