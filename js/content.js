@@ -5,7 +5,7 @@
         constructor(videoSizeSaveData) {
             this.videoSizeSaveData = videoSizeSaveData;
             this.videoSizeChanger = new VideoSizeChanger();
-
+            this.reserveAction = null;
         }
 
         init() {
@@ -15,30 +15,49 @@
         isTheaterMode() {
             return $('.mode-theater').length ? true : false;
         }
+
         // 画面サイズ変更を元に戻す
         reset() {
-            if (this.isTheaterMode()) {// シアターモードを解除
-                $('.mode-theater').removeClass('mode-theater');
-            }
-            this.videoSizeChanger.reset();
+            this.resetAndAction();
         }
+
+        // 画面サイズ変更を元に戻したあと指定された関数を実行
+        resetAndAction(action) {
+            this.videoSizeChanger.reset();
+            if (this.isTheaterMode()) {// シアターモードを解除
+                $('.component-lesson-player-controller-theater-mode').click();
+                this.reserveAction = action;
+                //この後clickTheaterModeButtonEvent();が発行されてreserveActionが実行される
+            }
+            else if (action) {
+                action();
+            }
+        }
+
         // 画面を設定されたサイズに変更する　
         changeVideoSize() {
-            this.reset();
-            if (this.videoSizeSaveData.power === false) {
-                // nop
+            const this_ = this;
+            const action = function () {
+                if (this_.videoSizeSaveData.power === false) {
+                    // nop
+                }
+                else if (this_.videoSizeSaveData.type === 'fixed') {
+                    this_.videoSizeChanger.changeVideoSize(this_.videoSizeSaveData.fixedSize);
+                }
+                else if (this_.videoSizeSaveData.type === 'ratio') {
+                    this_.videoSizeChanger.changeVideoRatio(this_.videoSizeSaveData.ratioSize);
+                }
             }
-            else if (this.videoSizeSaveData.type === 'fixed') {
-                this.videoSizeChanger.changeVideoSize(this.videoSizeSaveData.fixedSize);
-            }
-            else if (this.videoSizeSaveData.type === 'ratio') {
-                this.videoSizeChanger.changeVideoRatio(this.videoSizeSaveData.ratioSize);
-            }
+            this.resetAndAction(action);
         }
+
         // 画面をフルスクリーンにする
         changeFullScreen() {
-            this.reset();
-            this.videoSizeChanger.changeFullScreen();
+            const this_ = this;
+            const action = function () {
+                this_.videoSizeChanger.changeFullScreen();
+            }
+            this.resetAndAction(action);
         }
 
         // 画面を公式シアターモードにする
@@ -53,6 +72,10 @@
         clickTheaterModeButtonEvent() {
             if (this.isTheaterMode()) {// シアターモードになった
                 this.videoSizeChanger.reset();
+            }
+            else if (this.reserveAction) {
+                this.reserveAction();
+                this.reserveAction = null;
             }
             else {// シアターモードを解除した
                 this.changeVideoSize();
@@ -153,6 +176,7 @@
     function changeSettingFullScreen() {
         if (fullScreenSaveData.power === false) {
             fullScreenButton.hide();
+            changeSettingVideoSize();
             return;
         }
         fullScreenButton.show();
@@ -174,10 +198,14 @@
         carousel.resize(screenShotSaveData.size);
     }
 
+    // シアターモードの監視
     function observeTheaterMode() {
         const this_ = this;
         function handleMutations(mutations) {
             screenMode.clickTheaterModeButtonEvent();
+            if (screenMode.isTheaterMode()) {
+                fullScreenButton.off();
+            }
             carousel.resize();
         }
         const observer = new MutationObserver(handleMutations);

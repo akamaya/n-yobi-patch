@@ -22,15 +22,26 @@ class FullScreenButton {
     hide() {
         $('.component-lesson-player-controller-fullScreen').hide();
         this._on = false;
-        this._fireFullScreenButton();
+        this._settingESCKey();
     }
 
     clickFullScreenButton() {
         this._on = this._on ? false : true;
-        this._fireFullScreenButton();
+        this._settingESCKey();
+        this._fireButtonCallback();
     }
 
-    _fireFullScreenButton() {
+    on() {
+        this._on = true;
+        this._settingESCKey();
+    }
+
+    off() {
+        this._on = false;
+        this._settingESCKey();
+    }
+
+    _settingESCKey() {
         if (this._on) {
             // ESCで全画面から復帰
             $(window).on('keydown', e => e.keyCode == 27 ? this.clickFullScreenButton() : false);
@@ -38,6 +49,9 @@ class FullScreenButton {
         else {
             $(window).off('keydown');
         }
+
+    }
+    _fireButtonCallback() {
         if (this._callback) {
             this._callback(this._on);
         }
