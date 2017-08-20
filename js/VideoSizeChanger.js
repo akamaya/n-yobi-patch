@@ -104,6 +104,14 @@ class VideoSizeChanger {
         this._changeCommentComponent();
     }
 
+    // フルスクリーン状態かどうか
+    isFullScreen() {
+        if ($('.component-lesson-header').css('z-index') === '-1') {
+            return true;
+        }
+        return false;
+    }
+
     // 画面サイズにフルスクリーン(未実装)
     _changeFullScreen() {
 

@@ -16,6 +16,10 @@
             return $('.mode-theater').length ? true : false;
         }
 
+        isFullScreen() {
+            return this.videoSizeChanger.isFullScreen();
+        }
+
         // 画面サイズ変更を元に戻す
         reset() {
             this.resetAndAction();
@@ -139,6 +143,15 @@
 
         // windowサイズが変更されたときの処理
         $(window).resize(function () {
+            // シアターモード中はなにもしない
+            if (screenMode.isTheaterMode()) {
+                return;
+            }
+            // フルスクリーン中ならなにもしない
+            if (screenMode.isFullScreen()) {
+                return;
+            }
+            // 画面割合で表示中なら画面サイズを変更する
             if (videoSizeSaveData.power === true && videoSizeSaveData.type === 'ratio') {
                 changeSettingVideoSize();
             }
