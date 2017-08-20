@@ -7,9 +7,19 @@ class VideoSizeChanger {
         this.data = {
             originWidth: 608,
             originHeight: 342,
-
-            screenType: 'window',// window or full
+            screenType: 'window',// window or full(未実装)
         };
+        this.videoStyleChanger = this._makeVideoStyleChanger();
+        this.rightColumnStyleChanger = this._makeRightColumnStyleChanger();
+        this.headerStyleChanger = this._makeHeaderStyleChanger();
+        this.centerStyleChanger = this._makeCenterStyleChanger();
+    }
+
+    reset() {
+        this.videoStyleChanger.revert();
+        this.rightColumnStyleChanger.revert();
+        this.headerStyleChanger.revert();
+        this.centerStyleChanger.revert();
     }
 
     setWindowScreenType() {
@@ -20,13 +30,43 @@ class VideoSizeChanger {
         this.data.screenType = 'full';
     }
 
-    setVideoSizeChangeEvent(e) {
-        this.data.videoSizeChangeEvent = e;
+    // ビデオコンポーネントのスタイル変更
+    _makeVideoStyleChanger() {
+        const components = [
+            '.component-lesson-left-column',
+            '.component-lesson-left-column-player-container',
+            '.vjs_video_3-dimensions',
+            '.component-lesson-player',
+        ];
+
+        return new StyleChangerList(components);
     }
-    _fireVideoSizeChangeEvent() {
-        if (this.data.videoSizeChangeEvent) {
-            this.data.videoSizeChangeEvent();
-        }
+
+    // 右側(教科書ゾーン)のスタイル変更
+    _makeRightColumnStyleChanger() {
+        const components = [
+            '.component-lesson-right-column',
+        ];
+
+        return new StyleChangerList(components);
+    }
+
+    // ヘッダのスタイル変更
+    _makeHeaderStyleChanger() {
+        const components = [
+            '.component-lesson-header',
+        ];
+
+        return new StyleChangerList(components);
+    }
+
+    // 画面中央に乗せるパーツのスタイル変更
+    _makeCenterStyleChanger() {
+        const components = [
+            '.component-lesson-comment-pane',
+        ];
+
+        return new StyleChangerList(components);
     }
 
     // 動画サイズを変更する前に呼び出してね
@@ -38,24 +78,11 @@ class VideoSizeChanger {
         this._observeUnneiComment();
     }
 
-    insertDom() {
-
-        const icon = chrome.extension.getURL('images/fullScreenIcon.png');
-        const tag = '<div class="component-lesson-player-controller-fullScreen"><button type="submit"><img src="' + icon + '" alt="全画面"/></button></i></div>';
-        $('.component-lesson-player-controller-console').append(tag);
-
-        $('.component-lesson-player-controller-fullScreen button').on('click', () => this.clickFullScreenButton());
-
-    }
-
-    clickFullScreenButton() {
-        if (this.data.originalCss) {
-            this._backFullScreen();
-        }
-        else if (this.data.screenType === 'window') {
+    changeFullScreen() {
+        if (this.data.screenType === 'window') {
             this._changeWindowScreen();
         }
-        else if (this.data.screenType === 'full') {
+        else if (this.data.screenType === 'full') {// 未実装
             this._changeFullScreen();
         }
     }
@@ -71,39 +98,15 @@ class VideoSizeChanger {
             'bottom': '0px',
             'right': '0px',
             'display': 'block',
-            'z-index': '1000',
-            'transform': '',
         };
-        if (this.data.originalCss) {
-            this._backFullScreen();
-        }
-        else {
-            this.data.originalCss = this._changeVideoComponent(videoCss);
-            this._changeCommentComponent();
-            this._centeringArchiveMenu();
-
-            // ESCで全画面から復帰
-            $(window).on('keydown', e => e.keyCode == 27 ? this._backFullScreen() : false);
-        }
+        this.videoStyleChanger.setStyle(videoCss);
+        this.headerStyleChanger.setStyle({ 'z-index': '-1' });
+        this._changeCommentComponent();
     }
 
-    // 画面サイズにフルスクリーン
+    // 画面サイズにフルスクリーン(未実装)
     _changeFullScreen() {
 
-    }
-    // フルスクリーンから戻る
-    _backFullScreen() {
-        if (!this.data.originalCss) return;
-
-        this._resetVideoComponent(this.data.originalCss);
-        // こいつだけ元のheightが変な値で取れてしまうので元に戻らない。
-        // とりあえずの応急処置
-        $('.vjs_video_3-dimensions').css('height', this.data.originalCss['.component-lesson-player'].height);
-
-        this.data.originalCss = undefined;
-        this._centeringArchiveMenu();
-
-        $(window).off('keydown');
     }
 
     // 指定したサイズに変更
@@ -117,26 +120,14 @@ class VideoSizeChanger {
             return;
         }
 
-        // フルスクリーン中にサイズ変更があったときは元のサイズに戻してから続行
-        if (this.data.originalCss) {
-            this._backFullScreen();
-        }
-
-
         const scale = width / this.data.originWidth;
         const height = Math.ceil(this.data.originHeight * scale);
 
         // 画面サイズを修正
-        const videoCss = {
-            'width': width,
-            'height': height,
-        };
-        this._changeVideoComponent(videoCss);
-        // 画面中央の再生ボタン群の位置を中央に修正(録画のみ)
-        this._centeringArchiveMenu();
+        this.videoStyleChanger.setStyle({ 'width': width });
 
         // 右テキストの位置を修正
-        $('.component-lesson-right-column').css('margin-left', (width + 32) + 'px');
+        this.rightColumnStyleChanger.setStyle({ 'margin-left': (width + 32) + 'px' });
     }
 
     changeVideoRatio(ratio) {
@@ -144,30 +135,10 @@ class VideoSizeChanger {
         this.changeVideoSize(width);
     }
 
-    // ビデオコンポーネントのサイズ変更
-    _changeVideoComponent(videoCss) {
-        const components = [
-            '.component-lesson-left-column',
-            '.component-lesson-player',
-            '.component-lesson-player-controller',
-            '.vjs_video_3-dimensions',
-            '.component-lesson-comment-pane',
-        ];
-        const cssKeyList = Object.keys(videoCss);
-        const originalCss = {};
-        for (const component of components) {
-            originalCss[component] = $(component).css(cssKeyList);
-            $(component).css(videoCss);
-        }
-
-        this._fireVideoSizeChangeEvent();
-
-        return originalCss;
-    }
     // コメントコンポーネントを画面サイズにフィットさせる
     // 全画面のときに画面上部の余った黒塗り部分にコメントが表示されるのを防ぐ
     _changeCommentComponent() {
-        const width = $('.component-lesson-player', ).width();
+        const width = $('#vjs_video_3').width();
         const height = this.data.originHeight * width / this.data.originWidth;
         const comeCss = {
             'width': width,
@@ -176,7 +147,7 @@ class VideoSizeChanger {
             'left': '50%',
             'transform': 'translate(-50%,-50%)',
         };
-        $('.component-lesson-comment-pane').css(comeCss);
+        this.centerStyleChanger.setStyle(comeCss);
     }
 
     // 全画面中の運営コメ監視
@@ -185,7 +156,7 @@ class VideoSizeChanger {
 
         const this_ = this;
         function handleMutations(mutations) {
-            if (this_.data.originalCss) {
+            if (this_.videoStyleChanger.isChanged()) {
                 $('.component-lesson-interaction-bar-event-information').css({ 'z-index': 1001 });
                 $('.component-modal').css({ 'z-index': 1002 })
             }
@@ -193,45 +164,6 @@ class VideoSizeChanger {
         const observer = new MutationObserver(handleMutations);
         const config = { childList: true };
         observer.observe(document.querySelector('.component-lesson-interaction-bar'), config);
-
     }
 
-    resize() {
-        this._centeringArchiveMenu();
-
-    }
-
-    show() {
-        $('.component-lesson-player-controller-fullScreen').show();
-    }
-
-    hide() {
-        $('.component-lesson-player-controller-fullScreen').hide();
-    }
-
-    _resetVideoComponent(originalCss) {
-        const componentList = Object.keys(originalCss);
-
-        for (const component of componentList) {
-            $(component).css(originalCss[component]);
-        }
-        this._fireVideoSizeChangeEvent();
-    }
-
-    // 画面中央の再生ボタン群の位置を中央に移動(録画のみ)
-    _centeringArchiveMenu() {
-        const width = $('.component-lesson-player').width();
-        $('.component-lesson-player-controller-console').css({ 'width': width });
-
-        const archiveMenu = $('.component-lesson-player-controller-archive-menu');
-        if (archiveMenu.length > 0) {
-
-            const centeringCss = {
-                'top': '50%',
-                'left': '50%',
-            };
-            archiveMenu.css(centeringCss);
-
-        }
-    }
 }
