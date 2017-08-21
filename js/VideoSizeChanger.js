@@ -11,14 +11,14 @@ class VideoSizeChanger {
         };
         this.videoStyleChanger = this._makeVideoStyleChanger();
         this.rightColumnStyleChanger = this._makeRightColumnStyleChanger();
-        this.headerStyleChanger = this._makeHeaderStyleChanger();
+        this.hiddenStyleChanger = this._makeHiddenStyleChanger();
         this.centerStyleChanger = this._makeCenterStyleChanger();
     }
 
     reset() {
         this.videoStyleChanger.revert();
         this.rightColumnStyleChanger.revert();
-        this.headerStyleChanger.revert();
+        this.hiddenStyleChanger.revert();
         this.centerStyleChanger.revert();
     }
 
@@ -51,10 +51,11 @@ class VideoSizeChanger {
         return new StyleChangerList(components);
     }
 
-    // ヘッダのスタイル変更
-    _makeHeaderStyleChanger() {
+    // ヘッダとコメントフォームを全画面時に隠す
+    _makeHiddenStyleChanger() {
         const components = [
             '.component-lesson-header',
+            '.component-lesson-comment-form',
         ];
 
         return new StyleChangerList(components);
@@ -100,7 +101,7 @@ class VideoSizeChanger {
             'display': 'block',
         };
         this.videoStyleChanger.setStyle(videoCss);
-        this.headerStyleChanger.setStyle({ 'z-index': '-1' });
+        this.hiddenStyleChanger.setStyle({ 'z-index': '-1' });
         this._changeCommentComponent();
     }
 
