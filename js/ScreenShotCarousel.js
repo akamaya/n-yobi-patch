@@ -269,7 +269,7 @@ class ScreenShotCarousel {
         const elapsedTimeString = $(".component-lesson-player-controller-time").text();// 00:00:00
         elapsedTimeString.match(/^(-?)(\d+):(\d+):(\d+)/);
 
-        const elapsedSecond = Number(RegExp.$2) * 3600 + Number(RegExp.$3) * 60 + Number(RegExp.$4);
+        let elapsedSecond = Number(RegExp.$2) * 3600 + Number(RegExp.$3) * 60 + Number(RegExp.$4);
         if (RegExp.$1 == '-') {
             elapsedSecond *= -1;
         }
