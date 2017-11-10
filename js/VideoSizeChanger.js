@@ -33,11 +33,26 @@ class VideoSizeChanger {
     // ビデオコンポーネントのスタイル変更
     _makeVideoStyleChanger() {
         const components = [
-            '.component-lesson-left-column',
-            '.component-lesson-left-column-player-container',
+            //旧 '.component-lesson-left-column',
+            '#root > div > div[class] > div[class]:nth-child(1)',
+
+            // 旧'.component-lesson-left-column-player-container'
+            // div[class]:nth-child(3)の部分が謎
+            // そこをdiv[class]にすると2件取れる。
+            // div[class]:nth-child(1)にすると1件目が取れる
+            // div[class]:nth-child(2)にすると取れない
+            // div[class]:nth-child(3)にすると2件目が取れる
+            // reactが追加した要素っぽかったのでローカルに保存したりしたけど挙動は変わらず。原因不明。
+            '#root > div > div[class] > div[class] > div > div > div[class] > div[class] > div > div[class]:nth-child(3)',
+
             '.vjs_video_3-dimensions',
-            '.component-lesson-player',
+
+            //旧'.component-lesson-player',
+            '#root > div > div[class] > div[class] > div > div > div[class] > div[class]:nth-child(2)',
+
         ];
+
+
 
         return new StyleChangerList(components);
     }
@@ -45,7 +60,8 @@ class VideoSizeChanger {
     // 右側(教科書ゾーン)のスタイル変更
     _makeRightColumnStyleChanger() {
         const components = [
-            '.component-lesson-right-column',
+            // 旧 '.component-lesson-right-column' 画面の右側要素
+            '#root > div > div[class] > div[class]:nth-child(2)',
         ];
 
         return new StyleChangerList(components);
@@ -54,7 +70,8 @@ class VideoSizeChanger {
     // ヘッダとコメントフォームを全画面時に隠す
     _makeHiddenStyleChanger() {
         const components = [
-            '.component-lesson-header',
+            // 旧 '.component-lesson-header',
+            '#root > div > div[class]:nth-child(1)',
             '.component-lesson-comment-form',
         ];
 
@@ -64,7 +81,7 @@ class VideoSizeChanger {
     // 画面中央に乗せるパーツのスタイル変更
     _makeCenterStyleChanger() {
         const components = [
-            '.component-lesson-comment-pane',
+            '#comment-layer',
         ];
 
         return new StyleChangerList(components);
@@ -73,7 +90,9 @@ class VideoSizeChanger {
     // 動画サイズを変更する前に呼び出してね
     init() {
         // 初期動画サイズを取得
-        const videoComponent = $('.component-lesson-player-controller');
+        const videoComponent = $('#comment-layer');
+        console.log(videoComponent.length);
+        console.log(videoComponent.height())
         this.data.originWidth = videoComponent.width();
         this.data.originHeight = videoComponent.height();
         this._observeUnneiComment();
@@ -100,8 +119,11 @@ class VideoSizeChanger {
             'right': '0px',
             'display': 'block',
         };
+
         this.videoStyleChanger.setStyle(videoCss);
         this.hiddenStyleChanger.setStyle({ 'z-index': '-1' });
+        this.rightColumnStyleChanger.setStyle({ 'visibility': 'hidden' });
+
         this._changeCommentComponent();
     }
 
@@ -125,7 +147,8 @@ class VideoSizeChanger {
             width = this.data.originWidth;
         }
 
-        if ($('.component-lesson-left-column').length === 0) {
+        // 旧'.component-lesson-left-column' 画面の左側要素
+        if ($('#root > div > div[class] > div[class]:nth-child(1)').length === 0) {
             return;
         }
 
@@ -166,13 +189,15 @@ class VideoSizeChanger {
         const this_ = this;
         function handleMutations(mutations) {
             if (this_.videoStyleChanger.isChanged()) {
-                $('.component-lesson-interaction-bar-event-information').css({ 'z-index': 1001 });
-                $('.component-modal').css({ 'z-index': 1002 })
+                // 旧 '.component-lesson-interaction-bar-event-information'
+                $('#root > div > div[class] > div[class] > div > div > div[class]:nth-child(1) > div[class]:nth-child(1) > div > div').css({ 'z-index': 1001 });
+
             }
         }
         const observer = new MutationObserver(handleMutations);
-        const config = { childList: true };
-        observer.observe(document.querySelector('.component-lesson-interaction-bar'), config);
+        const config = { childList: true, subtree: true };
+
+        observer.observe(document.querySelector('#root > div > div > div > div > div > div > div'), config);
     }
 
 }

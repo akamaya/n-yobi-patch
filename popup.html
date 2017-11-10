@@ -11,6 +11,7 @@
     <script type="text/javascript" src="js/ScreenShotSaveData.js"></script>
     <script type="text/javascript" src="js/FullScreenSaveData.js"></script>
     <script type="text/javascript" src="js/StyleChanger.js"></script>
+    <script type="text/javascript" src="js/ScreenMode.js"></script>
     <script type="text/javascript" src="js/popup.js"></script>
     <link rel="stylesheet" href="css/tgl.css" media="screen" type="text/css" />
     <link rel="stylesheet" href="css/popup.css" media="screen" type="text/css" />
@@ -31,12 +32,14 @@
                 <div>
                     <div class="indent">
                         <input type="radio" name="videoSizeType" value="fixed" disabled="disabled">
-                        <label>固定</label><input type="text" id="videoSizeFixed" size="5" maxlength="5" value="" disabled="disabled">px
+                        <label>固定</label>
+                        <input type="text" id="videoSizeFixed" size="5" maxlength="5" value="" disabled="disabled">px
                         <button id="videoSizeInitButton">初期化</button>
                     </div>
                     <div class="indent">
                         <input type="radio" name="videoSizeType" value="ratio" disabled="disabled">
-                        <label>割合</label><input type="text" id="videoSizeRatio" size="5" maxlength="3" disabled="disabled">%
+                        <label>割合</label>
+                        <input type="text" id="videoSizeRatio" size="5" maxlength="3" disabled="disabled">%
                     </div>
                 </div>
             </div>
@@ -62,9 +65,12 @@
             <div class="customBoxRight disabled">
                 <div class="customTitle">スクショボタン</div>
                 <div class="indent">
-                    <input type="radio" name="screenShotCarouselSize" value="large" disabled="disabled"><label>大</label>
-                    <input type="radio" name="screenShotCarouselSize" value="medium" disabled="disabled"><label>中</label>
-                    <input type="radio" name="screenShotCarouselSize" value="small" disabled="disabled"><label>小</label>
+                    <input type="radio" name="screenShotCarouselSize" value="large" disabled="disabled">
+                    <label>大</label>
+                    <input type="radio" name="screenShotCarouselSize" value="medium" disabled="disabled">
+                    <label>中</label>
+                    <input type="radio" name="screenShotCarouselSize" value="small" disabled="disabled">
+                    <label>小</label>
                 </div>
                 <div class="indent">
                     <input type="checkbox" name="screenShotAutoSave" disabled="disabled">自動で保存

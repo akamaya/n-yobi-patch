@@ -1,6 +1,6 @@
 {
   "name": "N予備校パッチ",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "N予備校で放送画面サイズの変更、スクショボタン追加など",
   "manifest_version": 2,
   "icons": {
@@ -33,6 +33,7 @@
         "js/FullScreenSaveData.js",
         "js/FullScreenButton.js",
         "js/StyleChanger.js",
+        "js/ScreenMode.js",
         "js/content.js"
       ],
       "css": [

@@ -1,4 +1,4 @@
-.component-lesson-player-controller .component-lesson-player-controller-console .component-lesson-player-controller-fullScreen{
+.component-lesson-player-controller-fullScreen{
     width: 24px;
     height: 24px;
     margin-right: 14px;
@@ -6,6 +6,7 @@
     outline: none;
     cursor: pointer;
 }
+
 .component-lesson-player-controller-fullScreen button img {
     width: 24px;
     height: 24px;
@@ -18,5 +19,8 @@
     padding: 0px;
     outline: none;
     cursor: pointer;
+    background-color: transparent;
+    border-style: none;
+    
 }
 

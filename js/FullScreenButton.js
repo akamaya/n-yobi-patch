@@ -11,7 +11,7 @@ class FullScreenButton {
         this._callback = callback;
         const icon = chrome.extension.getURL('images/fullScreenIcon.png');
         const tag = '<div class="component-lesson-player-controller-fullScreen"><button type="submit"><img src="' + icon + '" alt="全画面"/></button></i></div>';
-        $('.component-lesson-player-controller-console').append(tag);
+        $('#root > div > div[class] > div[class] > div > div > div[class] > div[class] > div > div[class] > div[class]').eq(7).append(tag);
 
         $('.component-lesson-player-controller-fullScreen button').on('click', () => this.clickFullScreenButton());
     }
