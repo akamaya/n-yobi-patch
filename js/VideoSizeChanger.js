@@ -36,6 +36,8 @@ class VideoSizeChanger {
             //旧 '.component-lesson-left-column',
             '#root > div > div[class] > div[class]:nth-child(1)',
 
+            '#root > div > div[class] > div[class] > div > div',
+
             // 旧'.component-lesson-left-column-player-container'
             // div[class]:nth-child(3)の部分が謎
             // そこをdiv[class]にすると2件取れる。
@@ -91,8 +93,6 @@ class VideoSizeChanger {
     init() {
         // 初期動画サイズを取得
         const videoComponent = $('#comment-layer');
-        console.log(videoComponent.length);
-        console.log(videoComponent.height())
         this.data.originWidth = videoComponent.width();
         this.data.originHeight = videoComponent.height();
         this._observeUnneiComment();

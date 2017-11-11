@@ -132,14 +132,15 @@
         const this_ = this;
         function handleMutations(mutations) {
             screenMode.theaterModeButtonClickEventHandle();
+
             if (screenMode.isTheaterMode()) {
-                fullScreenButton.off();
+                fullScreenButton.off();// ESCボタンの解除
             }
             carousel.resize();
         }
         const observer = new MutationObserver(handleMutations);
         const config = { attributes: true };
-        observer.observe(document.querySelector('#root > div > div[class] > div[class] > div > div > div[class] > div[class] > div > div[class] > div[class] > div[class] > a'), config);
+        observer.observe(document.querySelector('#root > div > div[class]:nth-child(2)'), config);
     }
 
 })();

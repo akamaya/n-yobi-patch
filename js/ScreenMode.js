@@ -5,6 +5,7 @@ class ScreenMode {
         this.videoSizeSaveData = videoSizeSaveData;
         this.videoSizeChanger = new VideoSizeChanger();
         this.reserveAction = null;
+        this.theaterModeClass = null;
     }
 
     init() {
@@ -12,7 +13,8 @@ class ScreenMode {
     }
 
     isTheaterMode() {
-        return $('.mode-theater').length ? true : false;
+        // シアターモードのときはclassが増える
+        return $('#root > div > div[class]:nth-child(2)').attr('class').split(' ').length >= 2 ? true : false;
     }
 
     isFullScreen() {
@@ -20,17 +22,23 @@ class ScreenMode {
     }
 
     // 画面サイズ変更を元に戻す
+    // シアターモードの場合、シアターモードボタンをクリックしないと解除できない。
     reset() {
-        this.resetAndAction();
+        this.videoSizeChanger.reset();
+        if (this.isTheaterMode()) {// シアターモードを解除
+            $('#root > div > div[class] > div[class] > div > div > div[class] > div[class] > div > div[class] > div[class] > div[class]:nth-child(6) > a > i').click();
+        }
     }
 
     // 画面サイズ変更を元に戻したあと指定された関数を実行
+    // シアターモードの場合、この関数の実行後theaterModeButtonClickEventHandle()が動くのでそこでactionを実行する
     resetAndAction(action) {
-        this.videoSizeChanger.reset();
-        if (this.isTheaterMode()) {// シアターモードを解除
-            $('.component-lesson-player-controller-theater-mode').click();
+        const theaterMode = this.isTheaterMode();
+
+        this.reset();
+
+        if (theaterMode) {
             this.reserveAction = action;
-            //この後theaterModeButtonClickEventHandle();が発行されてreserveActionが実行される
         }
         else if (action) {
             action();
@@ -63,25 +71,17 @@ class ScreenMode {
         this.resetAndAction(action);
     }
 
-    // 画面を公式シアターモードにする
-    changeTheaterMode() {
-        this.videoSizeChanger.reset();
-        if (!this.isTheaterMode()) {// シアターモードにセット
-            $('.component-lesson-player-controller-theater-mode').click();
-        }
-    }
-
     // シアターモードボタンがクリックされたときのイベント
     theaterModeButtonClickEventHandle() {
-        if (this.isTheaterMode()) {// シアターモードになった
-            this.videoSizeChanger.reset();
-        }
-        else if (this.reserveAction) {
+        if (this.reserveAction) {
             this.reserveAction();
             this.reserveAction = null;
         }
+        else if (this.isTheaterMode()) {// シアターモードになった
+            this.videoSizeChanger.reset();// 変更した画面設定を削除
+        }
         else {// シアターモードを解除した
-            this.changeVideoSize();
+            this.changeVideoSize();// 設定通りに画面サイズを変更
         }
     }
 }
