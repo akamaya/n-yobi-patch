@@ -282,7 +282,6 @@ class ScreenShotCarousel {
         const title = $('#root > div > div[class] > div[class] > div[class] > article > header > div[class] > h2').text();
 
         const dateText = $('#root > div > div[class] > div[class] > div[class] > article > header > div[class] > div > p[class] > time').text();
-        console.log(dateText);
         let date = "";
         if (dateText.match(/^(\S+)\s+(\d+):(\d+)/)) {
             const ymd = RegExp.$1;// 2017年4月27日
