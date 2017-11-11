@@ -72,6 +72,7 @@
                 changeSettingVideoSize();
             }
         });
+
     }
 
     // スクショ系の初期化
@@ -114,6 +115,7 @@
     // 動画サイズを変更
     function changeSettingVideoSize() {
         screenMode.changeVideoSize();
+        fullScreenButton.off();// ESCボタンの解除
         carousel.resize();
     }
 
@@ -129,12 +131,12 @@
 
     // シアターモードの監視
     function observeTheaterMode() {
-        const this_ = this;
         function handleMutations(mutations) {
             screenMode.theaterModeButtonClickEventHandle();
 
             if (screenMode.isTheaterMode()) {
                 fullScreenButton.off();// ESCボタンの解除
+                setTimeout(() => carousel.resize(), 400);
             }
             carousel.resize();
         }

@@ -1,8 +1,14 @@
-#screenShotBox.largeSize {
+#screenShotBox{
     background-color: white;
+    border: solid 1px gray;
+}
+#screenShotBox button{
+    background-color: white;
+}
+#screenShotBox.largeSize {
+    
     height: 100px;
     margin: 0px 0px 16px 0px;
-    border: solid 1px gray;
 }
 
 #screenShotBox.largeSize #screenShotButton img {
@@ -11,10 +17,8 @@
 }
 
 #screenShotBox.mediumSize {
-    background-color: white;
     height: 60px;
     margin: 0px 0px 12px 0px;
-    border: solid 1px gray;
 }
 
 #screenShotBox.mediumSize #screenShotButton img {
@@ -23,10 +27,9 @@
 }
 
 #screenShotBox.smallSize {
-    background-color: white;
     height: 40px;
     margin: 0px 0px 8px 0px;
-    border: solid 1px gray;
+    
 }
 
 #screenShotBox.smallSize #screenShotButton img {
@@ -38,19 +41,24 @@
     padding: 0px;
 }
 
+
 #screenShotButton {
     overflow:hidden;
     float: left;
     max-width: 20%;
+    height: 100%;
     cursor: pointer;
     outline: none;
+    border-width: 0px;
     border-right: solid 1px gray;
+    padding: 0px;
 }
 
 #carouselLeftMoveButton {
     float: left;
     width: 20px;
     height: 100%;
+    border-width: 0px;
     border-right: solid 1px gray;
     cursor: pointer;
     outline: none;
@@ -59,6 +67,7 @@
     float: left;
     width: 20px;
     height: 100%;
+    border-width: 0px;
     border-left: solid 1px gray;
     cursor: pointer;
     outline: none;

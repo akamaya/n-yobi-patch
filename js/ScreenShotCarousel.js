@@ -21,13 +21,13 @@ class ScreenShotCarousel {
         const cameraURL = chrome.extension.getURL('images/camera.png');
         const popupCanvas = '<canvas id="popupCanvas" style="display:none;">';
         const screenShotBox = '<div id="screenShotBox" class="largeSize"></div>';
-        const cameraButton = '<button type="button" id="screenShotButton"><img src="' + cameraURL + '"></button>';
+        const cameraButton = '<button id="screenShotButton"><img src="' + cameraURL + '"></button>';
         const leftMoveButton = '<button id="carouselLeftMoveButton">◁</button>';
         const rightMoveButton = '<button id="carouselRightMoveButton">▷</button>';
         const screenShotCarousel = '<div id="screenShotCarousel"><div id="screenShotCarouselInner"></div></div>';
 
 
-        $('.component-lesson-left-column-player-container').after(screenShotBox);
+        $('#root > div > div[class] > div[class] > div > div > div[class]:nth-child(1)').after(screenShotBox);
         $('#screenShotBox').append(popupCanvas);
         $('#screenShotBox').append(cameraButton);
         $('#screenShotBox').append(leftMoveButton);
@@ -185,10 +185,10 @@ class ScreenShotCarousel {
     }
 
     _carouselItemWidth() {
-        const size = this.size();
-        if (size === 'large') return 117;
-        else if (size === 'medium') return 70;
-        else if (size === 'small') return 47;
+        const sizeType = this.sizeType();
+        if (sizeType === 'large') return 117;
+        else if (sizeType === 'medium') return 70;
+        else if (sizeType === 'small') return 47;
     }
 
 
@@ -198,14 +198,14 @@ class ScreenShotCarousel {
             this.setSize(sizeType);
         }
 
-        const width = $('.component-lesson-left-column-player-container').width();
+        const width = $('#screenShotBox').width();
         const buttonWidth = this._getButtonWidth() + $('#carouselLeftMoveButton').width() + $('#carouselRightMoveButton').width();
         $('#screenShotCarousel').width(width - buttonWidth - 5);// -5はborder分
         this._resizeInner();
         this.moveRightMost();
     }
 
-    size() {
+    sizeType() {
         const box = $('#screenShotBox');
         if (box.hasClass('largeSize')) return 'large';
         if (box.hasClass('mediumSize')) return 'medium';
@@ -223,21 +223,27 @@ class ScreenShotCarousel {
 
     _getButtonWidth() {
         const box = $('#screenShotBox');
-        if ($('#screenShotButton img').width() == 0) {
-            const size = this.size();
-            if (size === 'large') return 107;
-            if (size === 'medium') return 64;
-            if (size === 'small') return 43;
-            return 107;
+
+        // まだ読み込みが完了していなくて横幅が取れなかった時の処理
+        if ($('#screenShotButton img').length === 0 || $('#screenShotButton img').width() === 0) {
+            const sizeType = this.sizeType();
+            let size = 107;
+            if (sizeType === 'large') size = 107;
+            if (sizeType === 'medium') size = 64;
+            if (sizeType === 'small') size = 43;
+
+            // screenShotButtonのwidthはmax-width: 20%;が指定されているのでscreenShotBoxの20%まで
+            size = Math.ceil(Math.min(box.width() * 0.2, size));
+            return size;
         }
         return Math.ceil($('#screenShotButton').width());
     }
 
     popupOn() {
         const popupCanvas = $('#popupCanvas');
-        const videoComponent = $('.component-lesson-player-controller');
+        const videoComponent = $('#comment-layer');
         popupCanvas.attr('width', videoComponent.width()).attr('height', videoComponent.height());
-        popupCanvas.css('top', $('.component-lesson-interaction-bar').height()).css('left', 0);
+        popupCanvas.css('top', $('#root > div > div[class] > div[class] > div > div > div[class]:nth-child(1) > div[class]:nth-child(1)').height()).css('left', 0);
 
         popupCanvas.get(0).getContext("2d").drawImage(this, 0, 0, this.width, this.height, 0, 0, popupCanvas.width(), popupCanvas.height());
 
@@ -266,20 +272,24 @@ class ScreenShotCarousel {
         const videoElement = $('#vjs_video_3_html5_api').get(0);
 
         // videoの経過時間
-        const elapsedTimeString = $(".component-lesson-player-controller-time").text();// 00:00:00
+        const elapsedTimeString = $('#root > div > div[class] > div[class] > div > div > div[class] > div[class] > div > div[class] > div[class] > div[class] > time:nth-child(1)').text();// 00:00:00
         elapsedTimeString.match(/^(-?)(\d+):(\d+):(\d+)/);
 
         let elapsedSecond = Number(RegExp.$2) * 3600 + Number(RegExp.$3) * 60 + Number(RegExp.$4);
         if (RegExp.$1 == '-') {
             elapsedSecond *= -1;
         }
-        const title = $('.component-lesson-information-summary-title').text();
-        const dateText = $('.component-lesson-information-summary-cast-date').text();
+        const title = $('#root > div > div[class] > div[class] > div[class] > article > header > div[class] > h2').text();
 
+        const dateText = $('#root > div > div[class] > div[class] > div[class] > article > header > div[class] > div > p[class] > time').text();
+        console.log(dateText);
         let date = "";
         if (dateText.match(/^(\S+)\s+(\d+):(\d+)/)) {
             const ymd = RegExp.$1;// 2017年4月27日
-            const time = Number(RegExp.$2) * 3600 + Number(RegExp.$3) * 60 + elapsedSecond;
+            const hour = RegExp.$2;
+            const min = RegExp.$3;
+
+            const time = Number(hour) * 3600 + Number(min) * 60 + elapsedSecond;
 
             date = ymd + this.zeroPadding(time / 3600) + '時' + this.zeroPadding((time % 3600) / 60) + '分' + this.zeroPadding(time % 60) + '秒';
         }
