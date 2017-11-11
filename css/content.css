@@ -24,3 +24,17 @@
     
 }
 
+.text-open-link-box {
+    padding: 8px 0px 8px 0px;
+    background-color: white;
+    box-shadow: 0 1px 1px rgba(0,0,0,.16);
+    font-size: 1.6rem;
+}
+.text-open-link-box div{
+    margin: 6px 5%;
+}
+.text-open-link-box a{
+    color: #4183c4;
+    text-decoration: none;
+}
+

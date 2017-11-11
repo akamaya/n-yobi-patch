@@ -6,9 +6,11 @@
     const videoSizeSaveData = new VideoSizeSaveData();
     const screenShotSaveData = new ScreenShotSaveData();
     const fullScreenSaveData = new FullScreenSaveData();
+    const textOpenLinkSaveData = new TextOpenLinkSaveData();
     const carousel = new ScreenShotCarousel();
     const fullScreenButton = new FullScreenButton();
     const screenMode = new ScreenMode(videoSizeSaveData);
+    const textOpenLink = new TextOpenLink();
 
     // 放送ページでないならなにもせず終了
     const urlcheck = new RegExp("://www.nnn.ed.nico/lessons/\\d+");
@@ -27,6 +29,7 @@
             initVideoSize();
             initScreenShot();
             initFullScreen();
+            initTextOpenLink();
 
             // chrome拡張のアイコンから設定を変更されたときの通知を受ける
             chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
@@ -42,11 +45,14 @@
                     fullScreenSaveData.setSaveData(msg.saveData);
                     changeSettingFullScreen();
                 }
+                else if (msg.type == "textOpenLink") {
+                    textOpenLinkSaveData.setSaveData(msg.saveData);
+                    changeSettingTextOpenLink();
+                }
+
             });
             // シアターモードボタンの監視
             observeTheaterMode();
-
-
         }, 500);
     }
 
@@ -93,6 +99,13 @@
         changeSettingFullScreen();
     }
 
+    // テキストのみ開くリンク
+    function initTextOpenLink() {
+        textOpenLink.insertDom();
+        changeSettingTextOpenLink();
+    }
+
+
     // フルスクリーンボタンが押されたときのコールバック
     function clickFullScreenButton(on) {
         if (on) {
@@ -127,6 +140,14 @@
         carousel.autoSave = screenShotSaveData.autoSave;
         carousel.show();
         carousel.resize(screenShotSaveData.size);
+    }
+
+    function changeSettingTextOpenLink() {
+        if (textOpenLinkSaveData.power === false) {
+            textOpenLink.hide();
+            return;
+        }
+        textOpenLink.show();
     }
 
     // シアターモードの監視

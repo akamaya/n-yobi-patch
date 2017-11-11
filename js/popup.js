@@ -9,6 +9,8 @@ const screenShotSaveData = new ScreenShotSaveData();
 screenShotSaveData.setSaveNotification(noticeScreenShotSave);
 const fullScreenSaveData = new FullScreenSaveData();
 fullScreenSaveData.setSaveNotification(noticeFullScreenSave);
+const textOpenLinkSaveData = new TextOpenLinkSaveData();
+textOpenLinkSaveData.setSaveNotification(noticeTextOpenLinkSave);
 
 
 $(document).ready(function () {
@@ -16,6 +18,7 @@ $(document).ready(function () {
     setVideoSizeEvent();
     setScreenShotEvent();
     setFullScreenEvent();
+    setTextOpenLinkEvent();
 
     // 設定を画面上に反映
     refConfig();
@@ -25,7 +28,8 @@ function refConfig() {
     // 設定が読み込まれるまで待機
     if (videoSizeSaveData.isLoaded() === false ||
         screenShotSaveData.isLoaded() === false ||
-        fullScreenSaveData.isLoaded() === false) {
+        fullScreenSaveData.isLoaded() === false ||
+        textOpenLinkSaveData.isLoaded() === false) {
         setTimeout(function () { refConfig() }, 1000);
         return;
     }
@@ -33,6 +37,7 @@ function refConfig() {
     refVideoSizeConfig();
     refScreenShotConfig();
     refFullScreenConfig();
+    refTextOpenLinkConfig();
 }
 
 function refVideoSizeConfig() {
@@ -221,6 +226,39 @@ function changeFullScreenPower() {
 }
 
 
+function refTextOpenLinkConfig() {
+
+    if (textOpenLinkSaveData.isLoaded() === false) return;
+
+    $('#textOpenLinkPower').prop('disabled', false);
+    $('#textOpenLinkPower').prop('checked', textOpenLinkSaveData.power);
+
+    changeTextOpenLinkPower();
+}
+
+function setTextOpenLinkEvent() {
+    // on:offボタンを切り替えたときの処理
+    $('#textOpenLinkPower').change(function () {
+        changeTextOpenLinkPower();
+    });
+
+}
+
+// on:offボタンを切り替えたときの処理
+function changeTextOpenLinkPower() {
+    const power = $('#textOpenLinkPower').is(':checked');
+    const boxRight = $('#textOpenLinkBox .customBoxRight');
+    if (power) {
+        boxRight.removeClass('disabled');
+        boxRight.find('input').prop('disabled', false);
+    }
+    else {
+        boxRight.addClass('disabled');
+        boxRight.find('input').prop('disabled', true);
+    }
+    textOpenLinkSaveData.power = power;
+}
+
 // 設定変更があったことをブラウザのタブに通知
 function noticeVideoSizeSave() {
     noticeSave("videoSize", videoSizeSaveData.serializeSaveData());
@@ -232,6 +270,10 @@ function noticeScreenShotSave() {
 
 function noticeFullScreenSave() {
     noticeSave("fullScreen", fullScreenSaveData.serializeSaveData());
+}
+
+function noticeTextOpenLinkSave() {
+    noticeSave("textOpenLink", textOpenLinkSaveData.serializeSaveData());
 }
 
 function noticeSave(type, saveData) {
