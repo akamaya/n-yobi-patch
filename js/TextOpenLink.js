@@ -9,7 +9,7 @@ class TextOpenLink {
 
     insertDom() {
         const url = $('#root > div > div[class] > div[class] > div[class] > iframe').attr('src');
-        const tag = `<div class="text-open-link-box"><div>テキストのみを開く</div><div><a href="${url}" target="_blank">${url}</div></div>`;
+        const tag = `<div class="text-open-link-box"><div>テキストのURL</div><div><a href="${url}" target="_blank">${url}</div></div>`;
         $('#root > div > div[class] > div[class] > div[class]:nth-child(1)').after(tag);
     }
     show() {
