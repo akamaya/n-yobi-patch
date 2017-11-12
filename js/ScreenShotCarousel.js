@@ -203,6 +203,13 @@ class ScreenShotCarousel {
         $('#screenShotCarousel').width(width - buttonWidth - 5);// -5はborder分
         this._resizeInner();
         this.moveRightMost();
+
+        // widthが設定上は変更されているはずなのに変更後の値が取得できないことがあるのでsetTimeoutで苦肉の策
+        setTimeout(() => {
+            if ($('#screenShotBox').width() !== width) {
+                this.resize();
+            }
+        }, 400);
     }
 
     sizeType() {

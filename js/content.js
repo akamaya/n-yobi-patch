@@ -157,7 +157,6 @@
 
             if (screenMode.isTheaterMode()) {
                 fullScreenButton.off();// ESCボタンの解除
-                setTimeout(() => carousel.resize(), 400);
             }
             carousel.resize();
         }
