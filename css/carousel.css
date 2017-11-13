@@ -113,6 +113,7 @@
     border-radius:10px;
     border: solid 1px royalblue;
     outline: none;
+    text-decoration: none;
 }
 
 #screenShotBox.mediumSize #screenShotCarouselInner div {
@@ -141,12 +142,15 @@
     background-color:white;
     margin: 0px 0px 0px 0px;
     padding:0px;
-    height: 10px;
+    height: 12px;
     width: 62px;
     cursor: pointer;
     border-radius:10px;
     border: solid 1px royalblue;
     outline: none;
+    position: relative;
+    top: -3px;
+    text-decoration: none;
 }
 
 #screenShotBox.smallSize #screenShotCarouselInner div {
@@ -175,12 +179,15 @@
     background-color:white;
     margin: 0px 0px 0px 0px;
     padding:0px;
-    height: 8px;
+    height: 11px;
     width: 41px;
     cursor: pointer;
     border-radius:10px;
     border: solid 1px royalblue;
     outline: none;
+    position: relative;
+    top: -3px;
+    text-decoration: none;
 }
 
 #popupCanvas{

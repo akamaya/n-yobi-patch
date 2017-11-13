@@ -166,7 +166,7 @@ class ScreenShotCarousel {
 
         $(canvas).hover(this.popupOn, this.popupOff);
 
-        const a = $('<a>保存する</a>').attr('href', canvas.toDataURL()).attr('download', this.makeFileName());
+        const a = $('<a>保存</a>').attr('href', canvas.toDataURL()).attr('download', this.makeFileName());
 
         item.append(canvas);
         item.append(a);
