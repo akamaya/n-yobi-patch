@@ -7,10 +7,13 @@
     const screenShotSaveData = new ScreenShotSaveData();
     const fullScreenSaveData = new FullScreenSaveData();
     const textOpenLinkSaveData = new TextOpenLinkSaveData();
+    const questionnaireSaveData = new QuestionnaireSaveData();
+
     const carousel = new ScreenShotCarousel();
     const fullScreenButton = new FullScreenButton();
     const screenMode = new ScreenMode(videoSizeSaveData);
     const textOpenLink = new TextOpenLink();
+    const questionnaire = new Questionnaire(questionnaireSaveData);
 
     // 放送ページでないならなにもせず終了
     const urlcheck = new RegExp("://www.nnn.ed.nico/lessons/\\d+");
@@ -21,7 +24,10 @@
             if ($('#comment-layer').length == 0 ||
                 videoSizeSaveData.isLoaded() == false ||
                 screenShotSaveData.isLoaded() == false ||
-                fullScreenSaveData.isLoaded() == false) return;
+                fullScreenSaveData.isLoaded() == false ||
+                textOpenLinkSaveData.isLoaded() == false ||
+                questionnaireSaveData.isLoaded() == false
+            ) return;
 
             clearInterval(id);
 
@@ -30,6 +36,7 @@
             initScreenShot();
             initFullScreen();
             initTextOpenLink();
+            initQuestionnaire();
 
             // chrome拡張のアイコンから設定を変更されたときの通知を受ける
             chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
@@ -48,6 +55,10 @@
                 else if (msg.type == "textOpenLink") {
                     textOpenLinkSaveData.setSaveData(msg.saveData);
                     changeSettingTextOpenLink();
+                }
+                else if (msg.type == "questionnaire") {
+                    questionnaireSaveData.setSaveData(msg.saveData);
+                    changeSettingQuestionnaire();
                 }
 
             });
@@ -99,10 +110,15 @@
         changeSettingFullScreen();
     }
 
-    // テキストのみ開くリンク
+    // テキストURLリンク
     function initTextOpenLink() {
         textOpenLink.insertDom();
         changeSettingTextOpenLink();
+    }
+
+    // アンケート
+    function initQuestionnaire() {
+        changeSettingQuestionnaire();
     }
 
 
@@ -148,6 +164,10 @@
             return;
         }
         textOpenLink.show();
+    }
+
+    function changeSettingQuestionnaire() {
+        questionnaire.reset();
     }
 
     // シアターモードの監視

@@ -1,6 +1,6 @@
 'use strict';
 
-// 全画面ボタンを生成
+// テキストURLリンクを生成
 
 class TextOpenLink {
     constructor() {

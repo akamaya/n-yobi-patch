@@ -1,6 +1,6 @@
 'use strict';
 
-// テキストを開くリンクを保存する
+// テキストURLリンクを保存する
 
 class TextOpenLinkSaveData extends SaveData {
     constructor() {
