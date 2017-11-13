@@ -45,12 +45,12 @@ class Questionnaire {
 
     _setStyle() {
         const scPortal = new StyleChanger($('body > div:nth-of-type(2)'));// アンケートを引っ付けるroot
+        const scBackGround = new StyleChanger($('body > div:nth-of-type(2) > div'));// 背景
         const scFrame = new StyleChanger($('body > div:nth-of-type(2) > div > div'));// アンケート枠
         const scTargetHeader = new StyleChanger($('body > div:nth-of-type(2) > div > div > div[class] > div[class] > div > header'));// 解答枠ヘッダ
         const scTargetQuestion = new StyleChanger($('body > div:nth-of-type(2) > div > div > div[class] > div[class] > div > div[class]:nth-of-type(1)'));// 質問
         const scTarget = new StyleChanger($('body > div:nth-of-type(2) > div > div > div[class] > div[class] > div'));// 解答窓
         const scColomn = new StyleChanger($('body > div:nth-of-type(2) > div > div > div[class] > div[class] > div li'));// 解答欄
-        const scBackGround = new StyleChanger($('body > div:nth-of-type(2) > div'));// 背景
 
         const stylePortal = {};
         const styleFrame = {};
@@ -61,12 +61,6 @@ class Questionnaire {
         const styleBackGround = {};
 
         if (this._questionnaireSaveData.power) {
-
-            // 背景を無色にする
-            if (this._questionnaireSaveData.changeBackGroundColor) {
-                styleFrame['border'] = 'solid 1px gray';
-                styleBackGround['background-color'] = 'transparent';
-            }
 
             // 縮小する
             if (this._questionnaireSaveData.shrink) {
@@ -89,8 +83,8 @@ class Questionnaire {
 
             }
 
-            // 端に寄せる
-            if (this._questionnaireSaveData.move) {
+            // 端に寄せる 背景色あり
+            if (this._questionnaireSaveData.move && this._questionnaireSaveData.changeBackGroundColor === false) {
                 styleFrame['top'] = '0px';
                 styleFrame['bottom'] = '0px';
                 if (this._questionnaireSaveData.movePosition === 'leftUpper') {
@@ -110,6 +104,47 @@ class Questionnaire {
                     styleFrame['margin'] = '0px';
                     styleFrame['left'] = 'auto';
                 }
+            }
+            // 端に寄せる 背景色なしに変更(下の画面をクリックできるようにする)
+            else if (this._questionnaireSaveData.move && this._questionnaireSaveData.changeBackGroundColor) {
+                if (this._questionnaireSaveData.movePosition === 'leftUpper') {
+                    styleBackGround['top'] = 'auto';
+                    styleFrame['border'] = 'solid 1px gray';
+                    styleFrame['top'] = '0px';
+                    styleFrame['margin'] = '0px';
+                }
+                else if (this._questionnaireSaveData.movePosition === 'rightUpper') {
+                    styleBackGround['top'] = 'auto';
+                    styleFrame['border'] = 'solid 1px gray';
+                    styleFrame['top'] = '0px';
+                    styleFrame['left'] = 'auto';
+                    styleFrame['margin'] = '0px';
+                }
+                else if (this._questionnaireSaveData.movePosition === 'leftLower') {
+                    styleBackGround['bottom'] = 'auto';
+                    styleFrame['border'] = 'solid 1px gray';
+                    styleFrame['top'] = 'auto';
+                    styleFrame['bottom'] = '0px';
+                    styleFrame['margin'] = '0px';
+                }
+                else if (this._questionnaireSaveData.movePosition === 'rightLower') {
+                    styleBackGround['left'] = 'auto';
+                    styleFrame['border'] = 'solid 1px gray';
+                    styleFrame['top'] = 'auto';
+                    styleFrame['bottom'] = '0px';
+                    styleFrame['left'] = 'auto';
+                }
+
+            }
+            // 端に寄せない 背景色あり
+            else if (this._questionnaireSaveData.move === false && this._questionnaireSaveData.changeBackGroundColor === false) {
+                // もともとなのでなにもしない
+            }
+            // 端に寄せない 背景色なしに変更(下の画面をクリックできるようにする)
+            else {
+                styleBackGround['bottom'] = 'auto';
+                styleFrame['border'] = 'solid 1px gray';
+                styleFrame['bottom'] = '0px';
             }
 
             // 生放送で非表示
