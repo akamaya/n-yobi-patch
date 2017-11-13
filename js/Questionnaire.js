@@ -3,6 +3,9 @@
 class Questionnaire {
     constructor(questionnaireSaveData) {
         this._questionnaireSaveData = questionnaireSaveData;
+    }
+
+    init() {
         this.observer = this._observe();
     }
 

@@ -16,8 +16,8 @@
     const questionnaire = new Questionnaire(questionnaireSaveData);
 
     // 放送ページでないならなにもせず終了
-    const urlcheck = new RegExp("://www.nnn.ed.nico/lessons/\\d+");
-    if (urlcheck.test(location.href)) {
+    const urlcheckLessons = new RegExp("://www.nnn.ed.nico/lessons/\\d+");
+    if (urlcheckLessons.test(location.href)) {
         // $(document).readyやchrome.api等々のページ読み込み完了系イベントのあとで
         // ベージコンテンツが生成されるのでDOMチェックはポーリングで
         const id = setInterval(function () {
@@ -32,6 +32,7 @@
             clearInterval(id);
 
             screenMode.init();
+            questionnaire.init();
             initVideoSize();
             initScreenShot();
             initFullScreen();
