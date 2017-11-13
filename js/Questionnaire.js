@@ -31,6 +31,10 @@ class Questionnaire {
     }
 
     _setAutoClose() {
+        if (this._questionnaireSaveData.power === false) {
+            return;
+        }
+
         if (this._questionnaireSaveData.autoClose === false) {
             return;
         }
