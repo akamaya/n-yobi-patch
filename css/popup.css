@@ -7,18 +7,18 @@ body {
 }
 .customBox{
     width:15.5em;
-    height: 6em;
+    height: 6.4em;
     border:solid 1px #ffffff;
 }
 
 .customBoxHalf{
     width:15.5em;
-    height: 2.8em;
+    height: 3em;
     border:solid 1px #ffffff;
 }
 .customBoxThree{
     width:15.5em;
-    height: 18.2em;
+    height: 19.4em;
     border:solid 1px #ffffff;
 }
 .customBoxLeft{
@@ -75,4 +75,8 @@ body {
 
 #videoSizeFixed, #videoSizeRatio{
     width: 40px;
+}
+
+#questionnaireShrinkRatio, #questionnaireAutoCloseSeconds{
+    width: 2em;
 }
