@@ -74,7 +74,7 @@ class VideoSizeChanger {
         const components = [
             // 旧 '.component-lesson-header',
             '#root > div > div[class]:nth-child(1)',
-            '.component-lesson-comment-form',
+            '#root > div > div[class] > div[class] > div > div > div[class]:has(form)',
         ];
 
         return new StyleChangerList(components);
@@ -121,7 +121,7 @@ class VideoSizeChanger {
         };
 
         this.videoStyleChanger.setStyle(videoCss);
-        this.hiddenStyleChanger.setStyle({ 'z-index': '-1' });
+        this.hiddenStyleChanger.setStyle({ 'z-index': '-1', 'display': 'none' });
         this.rightColumnStyleChanger.setStyle({ 'visibility': 'hidden' });
 
         this._changeCommentComponent();
