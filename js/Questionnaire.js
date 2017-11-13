@@ -43,6 +43,7 @@ class Questionnaire {
         const scPortal = new StyleChanger($('body > div:nth-of-type(2)'));// アンケートを引っ付けるroot
         const scFrame = new StyleChanger($('body > div:nth-of-type(2) > div > div'));// アンケート枠
         const scTargetHeader = new StyleChanger($('body > div:nth-of-type(2) > div > div > div[class] > div[class] > div > header'));// 解答枠ヘッダ
+        const scTargetQuestion = new StyleChanger($('body > div:nth-of-type(2) > div > div > div[class] > div[class] > div > div[class]:nth-of-type(1)'));// 質問
         const scTarget = new StyleChanger($('body > div:nth-of-type(2) > div > div > div[class] > div[class] > div'));// 解答窓
         const scColomn = new StyleChanger($('body > div:nth-of-type(2) > div > div > div[class] > div[class] > div li'));// 解答欄
         const scBackGround = new StyleChanger($('body > div:nth-of-type(2) > div'));// 背景
@@ -50,6 +51,7 @@ class Questionnaire {
         const stylePortal = {};
         const styleFrame = {};
         const styleTargetHeader = {};
+        const styleTargetQuestion = {};
         const styleTarget = {};
         const styleColomn = {};
         const styleBackGround = {};
@@ -78,6 +80,8 @@ class Questionnaire {
 
                 styleTargetHeader['margin-left'] = Math.floor(-24 * ratio / 100) + 'px';
                 styleTargetHeader['margin-right'] = Math.floor(-24 * ratio / 100) + 'px';
+
+                styleTargetQuestion['font-size'] = 1 + Math.floor(8 * ratio / 100) / 10 + 'rem';
 
             }
 
@@ -119,6 +123,7 @@ class Questionnaire {
         scPortal.setStyle(stylePortal);
         scFrame.setStyle(styleFrame);
         scTargetHeader.setStyle(styleTargetHeader);
+        scTargetQuestion.setStyle(styleTargetQuestion);
         scTarget.setStyle(styleTarget);
         scColomn.setStyle(styleColomn);
         scBackGround.setStyle(styleBackGround);
