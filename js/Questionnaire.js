@@ -54,62 +54,66 @@ class Questionnaire {
         const styleColomn = {};
         const styleBackGround = {};
 
-        // 背景を無色にする
-        if (this._questionnaireSaveData.changeBackGroundColor) {
-            styleFrame['border'] = 'solid 1px gray';
-            styleBackGround['background-color'] = 'transparent';
-        }
+        if (this._questionnaireSaveData.power) {
 
-        // 縮小する
-        if (this._questionnaireSaveData.shrink) {
-            const ratio = this._questionnaireSaveData.shrinkRatio;
-            styleFrame['width'] = Math.ceil(600 * ratio / 100) + 'px';
-            styleFrame['height'] = ratio + '%';
-
-            styleColomn['width'] = Math.ceil(260 * ratio / 100) + 'px';
-            styleColomn['height'] = Math.ceil(108 * ratio / 100) + 'px';
-            styleColomn['margin-bottom'] = Math.floor(12 * ratio / 100) + 'px';
-            styleColomn['margin-right'] = Math.floor(12 * ratio / 100) + 'px';
-
-            styleTarget['padding-left'] = Math.floor(24 * ratio / 100) + 'px';
-            styleTarget['padding-right'] = Math.floor(24 * ratio / 100) + 'px';
-
-            styleTargetHeader['margin-left'] = Math.floor(-24 * ratio / 100) + 'px';
-            styleTargetHeader['margin-right'] = Math.floor(-24 * ratio / 100) + 'px';
-
-        }
-
-        // 端に寄せる
-        if (this._questionnaireSaveData.move) {
-            styleFrame['top'] = '0px';
-            styleFrame['bottom'] = '0px';
-            if (this._questionnaireSaveData.movePosition === 'leftUpper') {
-                styleFrame['margin'] = '0px';
+            // 背景を無色にする
+            if (this._questionnaireSaveData.changeBackGroundColor) {
+                styleFrame['border'] = 'solid 1px gray';
+                styleBackGround['background-color'] = 'transparent';
             }
-            else if (this._questionnaireSaveData.movePosition === 'rightUpper') {
-                styleFrame['margin'] = '0px';
-                styleFrame['left'] = 'auto';
+
+            // 縮小する
+            if (this._questionnaireSaveData.shrink) {
+                const ratio = this._questionnaireSaveData.shrinkRatio;
+                styleFrame['width'] = Math.ceil(600 * ratio / 100) + 'px';
+                styleFrame['height'] = ratio + '%';
+
+                styleColomn['width'] = Math.ceil(260 * ratio / 100) + 'px';
+                styleColomn['height'] = Math.ceil(108 * ratio / 100) + 'px';
+                styleColomn['margin-bottom'] = Math.floor(12 * ratio / 100) + 'px';
+                styleColomn['margin-right'] = Math.floor(12 * ratio / 100) + 'px';
+
+                styleTarget['padding-left'] = Math.floor(24 * ratio / 100) + 'px';
+                styleTarget['padding-right'] = Math.floor(24 * ratio / 100) + 'px';
+
+                styleTargetHeader['margin-left'] = Math.floor(-24 * ratio / 100) + 'px';
+                styleTargetHeader['margin-right'] = Math.floor(-24 * ratio / 100) + 'px';
 
             }
-            else if (this._questionnaireSaveData.movePosition === 'leftLower') {
-                styleFrame['top'] = 'auto';
-                styleFrame['margin'] = '0px';
-            }
-            else if (this._questionnaireSaveData.movePosition === 'rightLower') {
-                styleFrame['top'] = 'auto';
-                styleFrame['margin'] = '0px';
-                styleFrame['left'] = 'auto';
-            }
-        }
 
-        // 生放送で非表示
-        if (this._questionnaireSaveData.hiddenLive && this.isLive()) {
-            stylePortal['display'] = 'none';
-        }
+            // 端に寄せる
+            if (this._questionnaireSaveData.move) {
+                styleFrame['top'] = '0px';
+                styleFrame['bottom'] = '0px';
+                if (this._questionnaireSaveData.movePosition === 'leftUpper') {
+                    styleFrame['margin'] = '0px';
+                }
+                else if (this._questionnaireSaveData.movePosition === 'rightUpper') {
+                    styleFrame['margin'] = '0px';
+                    styleFrame['left'] = 'auto';
 
-        // アーカイブで非表示
-        if (this._questionnaireSaveData.hiddenArchive && this.isArchive()) {
-            stylePortal['display'] = 'none';
+                }
+                else if (this._questionnaireSaveData.movePosition === 'leftLower') {
+                    styleFrame['top'] = 'auto';
+                    styleFrame['margin'] = '0px';
+                }
+                else if (this._questionnaireSaveData.movePosition === 'rightLower') {
+                    styleFrame['top'] = 'auto';
+                    styleFrame['margin'] = '0px';
+                    styleFrame['left'] = 'auto';
+                }
+            }
+
+            // 生放送で非表示
+            if (this._questionnaireSaveData.hiddenLive && this.isLive()) {
+                stylePortal['display'] = 'none';
+            }
+
+            // アーカイブで非表示
+            if (this._questionnaireSaveData.hiddenArchive && this.isArchive()) {
+                stylePortal['display'] = 'none';
+            }
+
         }
 
         scPortal.setStyle(stylePortal);
