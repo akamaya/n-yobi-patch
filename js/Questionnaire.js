@@ -11,12 +11,12 @@ class Questionnaire {
         const this_ = this;
         const handleMutations = function handleMutations(mutations) {
             // アンケート結果
-            if ($('body > div:nth-child(6) > div > div > div[class] > div[class] > div > div[class] > ul > li:nth-child(1) > span[class]:nth-child(3)').length > 0) {
+            if ($('body > div:nth-of-type(2) > div > div > div[class] > div[class] > div > div[class] > ul > li:nth-child(1) > span[class]:nth-child(3)').length > 0) {
                 this_._setStyle();
                 this_._setAutoClose();
             }
             // アンケート開始
-            else if ($('body > div:nth-child(6) > div > div').length > 0) {
+            else if ($('body > div:nth-of-type(2) > div > div').length > 0) {
                 this_._setStyle();
             }
             // アンケート閉じた
@@ -26,7 +26,7 @@ class Questionnaire {
         };
         const observer = new MutationObserver(handleMutations);
         const config = { childList: true, subtree: true };
-        observer.observe(document.querySelector('body > div:nth-child(6)'), config);
+        observer.observe(document.querySelector('body > div:nth-of-type(2)'), config);
         return observer;
     }
 
@@ -36,16 +36,16 @@ class Questionnaire {
         }
 
         const seconds = this._questionnaireSaveData.autoCloseSeconds;
-        setTimeout(() => $('body > div:nth-child(6) > div > div > div[class] > i').click(), seconds * 1000);
+        setTimeout(() => $('body > div:nth-of-type(2) > div > div > div[class] > i').click(), seconds * 1000);
     }
 
     _setStyle() {
-        const scPortal = new StyleChanger($('body > div:nth-child(6)'));// アンケートを引っ付けるroot
-        const scFrame = new StyleChanger($('body > div:nth-child(6) > div > div'));// アンケート枠
-        const scTargetHeader = new StyleChanger($('body > div:nth-child(6) > div > div > div[class] > div[class] > div > header'));// 解答枠ヘッダ
-        const scTarget = new StyleChanger($('body > div:nth-child(6) > div > div > div[class] > div[class] > div'));// 解答窓
-        const scColomn = new StyleChanger($('body > div:nth-child(6) > div > div > div[class] > div[class] > div li'));// 解答欄
-        const scBackGround = new StyleChanger($('body > div:nth-child(6) > div'));// 背景
+        const scPortal = new StyleChanger($('body > div:nth-of-type(2)'));// アンケートを引っ付けるroot
+        const scFrame = new StyleChanger($('body > div:nth-of-type(2) > div > div'));// アンケート枠
+        const scTargetHeader = new StyleChanger($('body > div:nth-of-type(2) > div > div > div[class] > div[class] > div > header'));// 解答枠ヘッダ
+        const scTarget = new StyleChanger($('body > div:nth-of-type(2) > div > div > div[class] > div[class] > div'));// 解答窓
+        const scColomn = new StyleChanger($('body > div:nth-of-type(2) > div > div > div[class] > div[class] > div li'));// 解答欄
+        const scBackGround = new StyleChanger($('body > div:nth-of-type(2) > div'));// 背景
 
         const stylePortal = {};
         const styleFrame = {};
