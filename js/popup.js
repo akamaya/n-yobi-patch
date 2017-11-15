@@ -429,7 +429,7 @@ function noticeQuestionnaireSave() {
 function noticeSave(type, saveData) {
     // chrome.tabs.query => tabの配列をcallbackに渡してくる(N予備校のURLで絞る)
     // callback => tabの配列に設定が変更されたことを通知
-    chrome.tabs.query({ url: ['*://www.nnn.ed.nico/lessons/*', '*://nnn.ed.nico/lessons/*'] }, function (tabs) {
+    chrome.tabs.query({ url: ['*://www.nnn.ed.nico/lessons/*', '*://nnn.ed.nico/lessons/*', '*://www.nnn.ed.nico/courses/*', '*://nnn.ed.nico/courses/*'] }, function (tabs) {
         for (const tab of tabs) {
             chrome.tabs.sendMessage(tab.id, { type: type, saveData: saveData });
         }

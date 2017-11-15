@@ -69,13 +69,27 @@
     }
 
     // 教材ページでないならなにもせず終了
-    const lessonPrint = new LessonPrint();
+    const lessonPrint = new LessonPrint(textOpenLinkSaveData);
     const urlcheckCourses = new RegExp("://www.nnn.ed.nico/courses/\\d+/chapters/\\d+");
     const urlcheckContents = new RegExp("://www.nnn.ed.nico/contents/links/\\d+");
     if (urlcheckCourses.test(location.href) || urlcheckContents.test(location.href)) {
+        const id = setInterval(function () {
+            if (textOpenLinkSaveData.isLoaded() == false) return;
+            clearInterval(id);
 
-        lessonPrint.init();
 
+            lessonPrint.init();
+
+
+            // chrome拡張のアイコンから設定を変更されたときの通知を受ける
+            chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
+                if (msg.type == "textOpenLink") {
+                    textOpenLinkSaveData.setSaveData(msg.saveData);
+                    changeSettingTextOpenLinkPrint();
+                }
+
+            });
+        }, 500);
     }
 
     // 動画サイズ変更系の初期化
@@ -179,6 +193,10 @@
 
     function changeSettingQuestionnaire() {
         questionnaire.reset();
+    }
+
+    function changeSettingTextOpenLinkPrint() {
+        lessonPrint.onoff();
     }
 
     // シアターモードの監視

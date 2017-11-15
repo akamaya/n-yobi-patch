@@ -1,7 +1,8 @@
 // 教材の印刷ページ作成
 'use strict';
 class LessonPrint {
-    constructor() {
+    constructor(textOpenLinkSaveData) {
+        this.textOpenLinkSaveData = textOpenLinkSaveData;
     }
 
     init() {
@@ -16,6 +17,7 @@ class LessonPrint {
             this._addLessonPrintSetting();
         }
 
+        this.onoff();
     }
 
     _getSections() {
@@ -41,7 +43,7 @@ class LessonPrint {
         if (sections === undefined || sections.length === 0) return;
 
         // ヘッダを入れる
-        $('div.lesson div.u-card').prepend('<div class="u-list-header type-link"><a class="n-yobi-patch-print-header"><h2 class="typo-list-title"><span>印刷</span></h2><div class="u-list-header-show-more"><div class="icon-arrow-lined-down"></div></div></a></div><ul class="u-list has-linked-children n-yobi-patch-print-list"></ul>')
+        $('div.lesson div.u-card').prepend('<div class="u-list-header type-link n-yobi-patch-print"><a class="n-yobi-patch-print-header"><h2 class="typo-list-title"><span>印刷</span></h2><div class="u-list-header-show-more"><div class="icon-arrow-lined-down"></div></div></a></div><ul class="u-list has-linked-children n-yobi-patch-print-list"></ul>')
         /*
                 // 選択した教材を1ページで開くのカラムを入れる
                 $('.n-yobi-patch-print-list').append(`<li class="guide n-yobi-patch-print-section"><div class="n-yobi-patch-print-section-checkbox"><div><input type="checkbox" class="n-yobi-patch-print-section-checkbox-all-guide" checked>教材全てを選択</div><div><input type="checkbox" class="n-yobi-patch-print-section-checkbox-all-exercise" checked>問題全てを選択</div></div><a class="n-yobi-patch-text-link n-yobi-patch-text-link-all-open" target="_blank">選択した教材を<br>1ページで開く</a></li>`);
@@ -192,6 +194,17 @@ class LessonPrint {
             });
         });
 
+    }
+
+    onoff() {
+        if (this.textOpenLinkSaveData.power) {
+            $('.n-yobi-patch-print').show();
+            $('.n-yobi-patch-print-list').show();
+        }
+        else {
+            $('.n-yobi-patch-print').hide();
+            $('.n-yobi-patch-print-list').hide();
+        }
     }
 
 }
