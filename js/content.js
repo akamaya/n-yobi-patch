@@ -68,6 +68,16 @@
         }, 500);
     }
 
+    // 教材ページでないならなにもせず終了
+    const lessonPrint = new LessonPrint();
+    const urlcheckCourses = new RegExp("://www.nnn.ed.nico/courses/\\d+/chapters/\\d+");
+    const urlcheckContents = new RegExp("://www.nnn.ed.nico/contents/links/\\d+");
+    if (urlcheckCourses.test(location.href) || urlcheckContents.test(location.href)) {
+
+        lessonPrint.init();
+
+    }
+
     // 動画サイズ変更系の初期化
     function initVideoSize() {
         // 設定に合わせて動画サイズ変更
