@@ -93,11 +93,21 @@ class LessonPrint {
             $('.n-yobi-patch-print-list').append(`<li class="guide n-yobi-patch-print-section ${sectionClass}"><a class="n-yobi-patch-text-link" id="${linkClass}" href="${url}" target="_blank">教材を開く</a>${checkbox}</li>`);
         }
 
+        // タイトルが2行になったときなど高さが変わることがあるので取得して設定
+        const sectionList = $('div.section li');
+        const printList = $('.n-yobi-patch-print-list li');
+        for (let i = 0; i < printList.length; i++) {
+            const height = sectionList.eq(i).height();
+            if (height) {
+                printList.eq(i).height(height);
+            }
+        }
+
         $('.n-yobi-patch-text-link').on('click', function () {
             if (this.id) {
                 const checkboxClass = this.id;
                 if ($('.' + checkboxClass).length > 0) {
-                    this.href = this.href.split('?n-yobi-patch-answer-open')[0]
+                    this.href = this.href.split('?n-yobi-patch-answer-open')[0];
                     if ($('.' + checkboxClass).prop('checked')) {
                         this.href = this.href + '?n-yobi-patch-answer-open';
                     }

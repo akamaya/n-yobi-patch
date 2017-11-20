@@ -39,13 +39,13 @@
 }
 
 .n-yobi-patch-print-section{
-    height: 81px;
+    min-height: 81px;
     display: none;/* jsでflexに変更される*/
     align-items: center;
     justify-content: center;
 }
 li.n-yobi-patch-print-section-clear{
-    height: 94px;
+    min-height: 94px;
 }
 
 .n-yobi-patch-dummy-section{
