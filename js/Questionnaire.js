@@ -14,7 +14,7 @@ class Questionnaire {
         const this_ = this;
         const handleMutations = function handleMutations(mutations) {
             // アンケート結果
-            if ($('body > div:nth-of-type(2) > div > div > div[class] > div[class] > div > div[class] > ul > li:nth-child(1) > span[class]:nth-child(3)').length > 0) {
+            if ($('body > div:nth-of-type(2) > div > div > div[class] > div[class] > div > div > div[class] > ul > li:nth-child(1) > span[class]:nth-child(3)').length > 0) {
                 this_._setStyle();
                 this_._setAutoClose();
             }
