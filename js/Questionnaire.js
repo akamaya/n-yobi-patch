@@ -51,8 +51,8 @@ class Questionnaire {
         const scBackGround = new StyleChanger($('body > div:nth-of-type(2) > div'));// 背景
         const scFrame = new StyleChanger($('body > div:nth-of-type(2) > div > div'));// アンケート枠
         const scTargetHeader = new StyleChanger($('body > div:nth-of-type(2) > div > div > div[class] > div[class] > div > header'));// 解答枠ヘッダ
-        const scTargetQuestion = new StyleChanger($('body > div:nth-of-type(2) > div > div > div[class] > div[class] > div > div[class]:nth-of-type(1)'));// 質問
-        const scTarget = new StyleChanger($('body > div:nth-of-type(2) > div > div > div[class] > div[class] > div'));// 解答窓
+        const scTargetQuestion = new StyleChanger($('body > div:nth-of-type(2) > div > div > div[class] > div[class] > div > div > div[class]:nth-child(1)'));// 質問
+        const scTarget = new StyleChanger($('body > div:nth-of-type(2) > div > div > div[class] > div[class] > div > div'));// 解答窓
         const scColomn = new StyleChanger($('body > div:nth-of-type(2) > div > div > div[class] > div[class] > div li'));// 解答欄
 
         const stylePortal = {};
