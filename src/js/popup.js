@@ -1,5 +1,6 @@
 'use strict';
 
+import $ from 'jQuery';
 import FullScreenSaveData from './FullScreenSaveData';
 import VideoSizeSaveData from './VideoSizeSaveData';
 import ScreenShotSaveData from './ScreenShotSaveData';

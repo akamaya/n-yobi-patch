@@ -1,5 +1,7 @@
 'use strict';
 
+import $ from 'jQuery';
+
 // domのstyle変更を保持しておいて、後から一発で戻すクラス
 
 class StyleChanger {
@@ -22,7 +24,7 @@ class StyleChanger {
     }
 }
 
-class StyleChangerList {
+export default class StyleChangerList {
     constructor(domList) {
         this._changeList = [];
         for (const dom of domList) {

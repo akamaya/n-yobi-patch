@@ -1,8 +1,16 @@
+import $ from 'jQuery';
 import FullScreenSaveData from './FullScreenSaveData';
 import VideoSizeSaveData from './VideoSizeSaveData';
 import ScreenShotSaveData from './ScreenShotSaveData';
 import TextOpenLinkSaveData from './TextOpenLinkSaveData';
 import QuestionnaireSaveData from './QuestionnaireSaveData';
+
+import ScreenShotCarousel from './ScreenShotCarousel';
+import FullScreenButton from './FullScreenButton';
+import ScreenMode from './ScreenMode';
+import TextOpenLink from './TextOpenLink';
+import Questionnaire from './Questionnaire';
+import LessonPrint from './LessonPrint';
 
 (function () {
     'use strict';

@@ -1,8 +1,10 @@
 'use strict';
 
+import $ from 'jQuery';
+
 // 全画面ボタンを生成
 
-class FullScreenButton {
+export default class FullScreenButton {
     constructor() {
         this._on = false;
     }
@@ -15,6 +17,7 @@ class FullScreenButton {
 
         $('.component-lesson-player-controller-fullScreen button').on('click', () => this.clickFullScreenButton());
     }
+
     show() {
         $('.component-lesson-player-controller-fullScreen').show();
     }
@@ -51,6 +54,7 @@ class FullScreenButton {
         }
 
     }
+
     _fireButtonCallback() {
         if (this._callback) {
             this._callback(this._on);

@@ -1,6 +1,9 @@
 // 教材の印刷ページ作成
 'use strict';
-class LessonPrint {
+
+import $ from 'jQuery';
+
+export default class LessonPrint {
     constructor(textOpenLinkSaveData) {
         this.textOpenLinkSaveData = textOpenLinkSaveData;
     }
@@ -141,7 +144,9 @@ class LessonPrint {
         // 選択した教材を1ページで開くをクリック
         $('.n-yobi-patch-text-link-all-open').on('click', function () {
             const idList = [];
-            $('input[name=n-yobi-patch-print-section-id]:checked').each(function (index, input) { return idList.push(input.value) });
+            $('input[name=n-yobi-patch-print-section-id]:checked').each(function (index, input) {
+                return idList.push(input.value)
+            });
             const url = sections[0].content_url + '?n-yobi-patch-print-ids=' + idList.join(',');
             window.open(url);
         });
