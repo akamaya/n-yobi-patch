@@ -1,7 +1,7 @@
 // シアターモードと画面サイズ変更がバッティングしないように調整する
 'use strict';
 
-import $ from 'jQuery';
+import $ from 'jquery';
 import VideoSizeChanger from './VideoSizeChanger';
 
 export default class ScreenMode {

@@ -1,6 +1,6 @@
 'use strict';
 
-import $ from 'jQuery';
+import $ from 'jquery';
 
 // 全画面ボタンを生成
 

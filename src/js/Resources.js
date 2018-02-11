@@ -1,5 +1,5 @@
 'use strict';
-import $ from 'jQuery';
+import $ from 'jquery';
 
 // DOMのリソース管理
 // class名などがハッシュ化されてしまったので名前をつけたい

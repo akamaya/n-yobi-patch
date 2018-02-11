@@ -1,6 +1,6 @@
 'use strict';
 
-import $ from 'jQuery';
+import $ from 'jquery';
 
 // スクリーンショットのカルーセルを生成
 

@@ -1,6 +1,6 @@
 'use strict';
 
-import $ from 'jQuery';
+import $ from 'jquery';
 
 // domのstyle変更を保持しておいて、後から一発で戻すクラス
 

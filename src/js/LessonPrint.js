@@ -1,7 +1,7 @@
 // 教材の印刷ページ作成
 'use strict';
 
-import $ from 'jQuery';
+import $ from 'jquery';
 
 export default class LessonPrint {
     constructor(textOpenLinkSaveData) {
