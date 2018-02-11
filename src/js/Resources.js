@@ -1,3 +1,6 @@
+'use strict';
+import $ from 'jQuery';
+
 class Resources {
 
     get componentLessonHeader() {
@@ -106,5 +109,3 @@ class Resources {
     }
 
 }
-
-const R = new Resources();

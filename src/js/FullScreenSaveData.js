@@ -1,8 +1,9 @@
 'use strict';
+import SaveData from './SaveData';
 
 // 全画面の設定を保存する
 
-class FullScreenSaveData extends SaveData {
+export default class FullScreenSaveData extends SaveData {
     constructor() {
         // 初期値
         const initialValue = {

@@ -2,7 +2,7 @@
 
 // 設定保存の親クラス
 
-class SaveData {
+export default class SaveData {
     constructor(saveName, initialValue) {
         this._isLoaded = false;// 設定のロード完了フラグ
         this._saveData = {};
@@ -28,6 +28,7 @@ class SaveData {
         this._saveData[key] = boolValue;
         this.save();
     }
+
     // 数値型のセーブデータ
     saveNumeric(key, value) {
         // 数値でないならなにもしない
@@ -63,6 +64,7 @@ class SaveData {
     get power() {
         return this.getSaveData('power');
     }
+
     set power(p) {
         this.saveBool('power', p);
     }
@@ -73,7 +75,8 @@ class SaveData {
         try {
             this._saveData = JSON.parse(saveData);
         }
-        catch (e) { }
+        catch (e) {
+        }
 
         // 設定が保存されてないかセーブデータが不正なときは初期値を設定
         // 1項目ずつチェックするのはバージョンアップで新項目が増えたときに初期値を設定するため

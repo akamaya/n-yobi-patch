@@ -1,8 +1,9 @@
 'use strict';
+import SaveData from './SaveData';
 
 // スクリーンショットの設定を保存する
 
-class ScreenShotSaveData extends SaveData {
+export default class ScreenShotSaveData extends SaveData {
     constructor() {
         // 初期値
         const initialValue = {
@@ -16,6 +17,7 @@ class ScreenShotSaveData extends SaveData {
     get size() {
         return this.getSaveData('size');
     }
+
     set size(newSize) {
         this.saveFormatString('size', newSize, ['large', 'medium', 'small']);
     }
@@ -23,6 +25,7 @@ class ScreenShotSaveData extends SaveData {
     get autoSave() {
         return this.getSaveData('autoSave');
     }
+
     set autoSave(newAutoSave) {
         this.saveBool('autoSave', newAutoSave);
     }

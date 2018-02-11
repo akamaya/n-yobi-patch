@@ -1,8 +1,9 @@
 'use strict';
+import SaveData from './SaveData';
 
 // videoサイズの設定を保存する
 
-class QuestionnaireSaveData extends SaveData {
+export default class QuestionnaireSaveData extends SaveData {
     constructor() {
         // 初期値
         const initialValue = {
@@ -19,9 +20,11 @@ class QuestionnaireSaveData extends SaveData {
         };
         super('Questionnaire', initialValue);
     }
+
     get autoClose() {
         return this.getSaveData('autoClose');
     }
+
     set autoClose(flag) {
         return this.saveBool('autoClose', flag);
     }
@@ -29,6 +32,7 @@ class QuestionnaireSaveData extends SaveData {
     get autoCloseSeconds() {
         return this.getSaveData('autoCloseSeconds');
     }
+
     set autoCloseSeconds(seconds) {
         this.saveNumeric('autoCloseSeconds', seconds);
     }
@@ -36,6 +40,7 @@ class QuestionnaireSaveData extends SaveData {
     get shrink() {
         return this.getSaveData('shrink');
     }
+
     set shrink(flag) {
         return this.saveBool('shrink', flag);
     }
@@ -43,6 +48,7 @@ class QuestionnaireSaveData extends SaveData {
     get shrinkRatio() {
         return this.getSaveData('shrinkRatio');
     }
+
     set shrinkRatio(ratio) {
         this.saveNumeric('shrinkRatio', ratio);
     }
@@ -50,6 +56,7 @@ class QuestionnaireSaveData extends SaveData {
     get changeBackGroundColor() {
         return this.getSaveData('changeBackGroundColor');
     }
+
     set changeBackGroundColor(flag) {
         return this.saveBool('changeBackGroundColor', flag);
     }
@@ -57,6 +64,7 @@ class QuestionnaireSaveData extends SaveData {
     get move() {
         return this.getSaveData('move');
     }
+
     set move(flag) {
         return this.saveBool('move', flag);
     }
@@ -64,6 +72,7 @@ class QuestionnaireSaveData extends SaveData {
     get movePosition() {
         return this.getSaveData('movePosition');
     }
+
     set movePosition(position) {
         this.saveFormatString('movePosition', position, ['leftUpper', 'rightUpper', 'leftLower', 'rightLower']);
     }
@@ -71,6 +80,7 @@ class QuestionnaireSaveData extends SaveData {
     get hiddenLive() {
         return this.getSaveData('hiddenLive');
     }
+
     set hiddenLive(flag) {
         return this.saveBool('hiddenLive', flag);
     }
@@ -78,6 +88,7 @@ class QuestionnaireSaveData extends SaveData {
     get hiddenArchive() {
         return this.getSaveData('hiddenArchive');
     }
+
     set hiddenArchive(flag) {
         return this.saveBool('hiddenArchive', flag);
     }

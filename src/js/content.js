@@ -1,3 +1,9 @@
+import FullScreenSaveData from './FullScreenSaveData';
+import VideoSizeSaveData from './VideoSizeSaveData';
+import ScreenShotSaveData from './ScreenShotSaveData';
+import TextOpenLinkSaveData from './TextOpenLinkSaveData';
+import QuestionnaireSaveData from './QuestionnaireSaveData';
+
 (function () {
     'use strict';
 
@@ -209,8 +215,9 @@
             }
             carousel.resize();
         }
+
         const observer = new MutationObserver(handleMutations);
-        const config = { attributes: true };
+        const config = {attributes: true};
         observer.observe(document.querySelector('#root > div > div[class]:nth-child(2)'), config);
     }
 
