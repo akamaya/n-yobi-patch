@@ -1,5 +1,11 @@
 'use strict';
 
+import FullScreenSaveData from './FullScreenSaveData';
+import VideoSizeSaveData from './VideoSizeSaveData';
+import ScreenShotSaveData from './ScreenShotSaveData';
+import TextOpenLinkSaveData from './TextOpenLinkSaveData';
+import QuestionnaireSaveData from './QuestionnaireSaveData';
+
 // アイコンを押したときに出てくるポップアップの処理
 
 // 保存された設定の読み込みは非同期のため、onload前に読んでおく
