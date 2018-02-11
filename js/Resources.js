@@ -39,6 +39,12 @@ class Resources {
         return this.questionnaireAnswerFrame.children().children();
     }
 
+    // アンケート閉じるボタン
+    get questionnaireCloseButton() {
+        return this.questionnaireBackGround.find('i').eq(0)
+    }
+
+    // 経過時間
     get elapsedTime() {
         // #vjs_video_3の兄弟要素のdivの子孫のtime
         return $('#vjs_video_3 ~ div time');

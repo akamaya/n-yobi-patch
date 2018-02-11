@@ -38,7 +38,7 @@ class Questionnaire {
             childList: true,
             subtree: true
         };
-        observer.observe(document.querySelector('body > div:nth-of-type(2)'), config);
+        observer.observe(R.modalRoot.get(0), config);
         return observer;
     }
 
@@ -52,7 +52,7 @@ class Questionnaire {
         }
 
         const seconds = this._questionnaireSaveData.autoCloseSeconds;
-        setTimeout(() => $('body > div:nth-of-type(2) > div > div > div[class] > i').click(), seconds * 1000);
+        setTimeout(() => R.questionnaireCloseButton.click(), seconds * 1000);
     }
 
     _scaleDownCeil(base) {
