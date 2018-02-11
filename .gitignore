@@ -1,2 +1,6 @@
 .idea
 node_modules
+dist/content.js
+dist/popup.js
+dist/css
+dist/images
