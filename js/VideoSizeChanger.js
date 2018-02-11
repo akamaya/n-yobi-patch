@@ -34,26 +34,19 @@ class VideoSizeChanger {
     _makeVideoStyleChanger() {
         const components = [
             //旧 '.component-lesson-left-column',
-            '#root > div > div[class] > div[class]:nth-child(1)',
+            R.componentLessonLeftColumn,
 
-            '#root > div > div[class] > div[class] > div > div',
+            R.componentLessonLeftColumnGrandson,
 
             // 旧'.component-lesson-left-column-player-container'
-            // div[class]:nth-child(3)の部分が謎
-            // そこをdiv[class]にすると2件取れる。
-            // div[class]:nth-child(1)にすると1件目が取れる
-            // div[class]:nth-child(2)にすると取れない
-            // div[class]:nth-child(3)にすると2件目が取れる
-            // reactが追加した要素っぽかったのでローカルに保存したりしたけど挙動は変わらず。原因不明。
-            '#root > div > div[class] > div[class] > div > div > div[class] > div[class] > div > div[class]:nth-child(3)',
+            R.componentLessonLeftColumnPlayerContainer,
 
-            '.vjs_video_3-dimensions',
+            R.vjsVideo3,
 
             //旧'.component-lesson-player',
-            '#root > div > div[class] > div[class] > div > div > div[class] > div[class]:nth-child(2)',
+            R.componentLessonPlayer,
 
         ];
-
 
 
         return new StyleChangerList(components);
@@ -63,7 +56,7 @@ class VideoSizeChanger {
     _makeRightColumnStyleChanger() {
         const components = [
             // 旧 '.component-lesson-right-column' 画面の右側要素
-            '#root > div > div[class] > div[class]:nth-child(2)',
+            R.componentLessonRightColumn,
         ];
 
         return new StyleChangerList(components);
@@ -73,8 +66,8 @@ class VideoSizeChanger {
     _makeHiddenStyleChanger() {
         const components = [
             // 旧 '.component-lesson-header',
-            '#root > div > div[class]:nth-child(1)',
-            '#root > div > div[class] > div[class] > div > div > div[class]:has(form)',
+            R.componentLessonHeader,
+            R.commentForm,
         ];
 
         return new StyleChangerList(components);
@@ -83,7 +76,7 @@ class VideoSizeChanger {
     // 画面中央に乗せるパーツのスタイル変更
     _makeCenterStyleChanger() {
         const components = [
-            '#comment-layer',
+            R.commentLayer,
         ];
 
         return new StyleChangerList(components);
@@ -92,7 +85,7 @@ class VideoSizeChanger {
     // 動画サイズを変更する前に呼び出してね
     init() {
         // 初期動画サイズを取得
-        const videoComponent = $('#comment-layer');
+        const videoComponent = R.commentLayer;
         this.data.originWidth = videoComponent.width();
         this.data.originHeight = videoComponent.height();
         this._observeUnneiComment();
@@ -121,15 +114,15 @@ class VideoSizeChanger {
         };
 
         this.videoStyleChanger.setStyle(videoCss);
-        this.hiddenStyleChanger.setStyle({ 'z-index': '-1', 'display': 'none' });
-        this.rightColumnStyleChanger.setStyle({ 'visibility': 'hidden' });
+        this.hiddenStyleChanger.setStyle({'z-index': '-1', 'display': 'none'});
+        this.rightColumnStyleChanger.setStyle({'visibility': 'hidden'});
 
         this._changeCommentComponent();
     }
 
     // フルスクリーン状態かどうか
     isFullScreen() {
-        if ($('.component-lesson-header').css('z-index') === '-1') {
+        if (R.componentLessonHeader.css('z-index') === '-1') {
             return true;
         }
         return false;
@@ -148,7 +141,7 @@ class VideoSizeChanger {
         }
 
         // 旧'.component-lesson-left-column' 画面の左側要素
-        if ($('#root > div > div[class] > div[class]:nth-child(1)').length === 0) {
+        if (R.componentLessonLeftColumn.length === 0) {
             return;
         }
 
@@ -156,10 +149,10 @@ class VideoSizeChanger {
         const height = Math.ceil(this.data.originHeight * scale);
 
         // 画面サイズを修正
-        this.videoStyleChanger.setStyle({ 'width': width });
+        this.videoStyleChanger.setStyle({'width': width});
 
         // 右テキストの位置を修正
-        this.rightColumnStyleChanger.setStyle({ 'margin-left': (width + 32) + 'px' });
+        this.rightColumnStyleChanger.setStyle({'margin-left': (width + 32) + 'px'});
     }
 
     changeVideoRatio(ratio) {
@@ -170,7 +163,7 @@ class VideoSizeChanger {
     // コメントコンポーネントを画面サイズにフィットさせる
     // 全画面のときに画面上部の余った黒塗り部分にコメントが表示されるのを防ぐ
     _changeCommentComponent() {
-        const width = $('#vjs_video_3').width();
+        const width = R.vjsVideo3.width();
         const height = this.data.originHeight * width / this.data.originWidth;
         const comeCss = {
             'width': width,
@@ -187,17 +180,19 @@ class VideoSizeChanger {
     _observeUnneiComment() {
 
         const this_ = this;
+
         function handleMutations(mutations) {
             if (this_.videoStyleChanger.isChanged()) {
                 // 旧 '.component-lesson-interaction-bar-event-information'
-                $('#root > div > div[class] > div[class] > div > div > div[class]:nth-child(1) > div[class]:nth-child(1) > div > div').css({ 'z-index': 1001 });
+                R.componentLessonInteractionBarEventInformation.css({'z-index': 1001});
 
             }
         }
-        const observer = new MutationObserver(handleMutations);
-        const config = { childList: true, subtree: true };
 
-        observer.observe(document.querySelector('#root > div > div > div > div > div > div > div'), config);
+        const observer = new MutationObserver(handleMutations);
+        const config = {childList: true, subtree: true};
+
+        observer.observe(R.unneiCommentBar.get(0), config);
     }
 
 }
