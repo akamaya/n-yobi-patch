@@ -1,4 +1,18 @@
-class Resources {
+'use strict';
+import $ from 'jQuery';
+
+// DOMのリソース管理
+// class名などがハッシュ化されてしまったので名前をつけたい
+export default class Resources {
+
+    get windowWidth() {
+        return $(window).width();
+    }
+
+    get windowHeight() {
+        return $(window).height();
+    }
+
 
     get componentLessonHeader() {
         return $('#root > div > div[class]').eq(0);
@@ -19,7 +33,7 @@ class Resources {
     }
 
     get componentLessonLeftColumnGrandson() {
-        return R.componentLessonLeftColumn.children().children().eq(0);
+        return this.componentLessonLeftColumn.children().children().eq(0);
     }
 
     get commentForm() {
@@ -106,5 +120,3 @@ class Resources {
     }
 
 }
-
-const R = new Resources();

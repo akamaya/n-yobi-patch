@@ -1,5 +1,12 @@
 'use strict';
 
+import $ from 'jQuery';
+import FullScreenSaveData from './FullScreenSaveData';
+import VideoSizeSaveData from './VideoSizeSaveData';
+import ScreenShotSaveData from './ScreenShotSaveData';
+import TextOpenLinkSaveData from './TextOpenLinkSaveData';
+import QuestionnaireSaveData from './QuestionnaireSaveData';
+
 // アイコンを押したときに出てくるポップアップの処理
 
 // 保存された設定の読み込みは非同期のため、onload前に読んでおく
@@ -35,7 +42,9 @@ function refConfig() {
         textOpenLinkSaveData.isLoaded() === false ||
         questionnaireSaveData.isLoaded() === false
     ) {
-        setTimeout(function () { refConfig() }, 1000);
+        setTimeout(function () {
+            refConfig()
+        }, 1000);
         return;
     }
     // 設定が読み込まれたら反映
@@ -133,7 +142,6 @@ function changeVideoSizeRatio() {
 
     videoSizeSaveData.ratioSize = size;
 }
-
 
 
 function refScreenShotConfig() {
@@ -343,6 +351,7 @@ function changeQuestionnaireAutoClose() {
     const value = $('input[name="questionnaireAutoClose"]:checkbox').prop('checked');
     questionnaireSaveData.autoClose = value;
 }
+
 function changeQuestionnaireAutoCloseSeconds() {
     const valueString = $('#questionnaireAutoCloseSeconds').prop('value');
     const value = Number(valueString);
@@ -351,13 +360,15 @@ function changeQuestionnaireAutoCloseSeconds() {
 
     questionnaireSaveData.autoCloseSeconds = value;
 }
+
 function changeQuestionnaireShrink() {
     const value = $('input[name="questionnaireShrink"]:checkbox').prop('checked');
     questionnaireSaveData.shrink = value;
 }
+
 function changeQuestionnaireShrinkRatio() {
     const valueString = $('#questionnaireShrinkRatio').prop('value');
-    const value = Number(valueString);
+    let value = Number(valueString);
 
     if (isNaN(value)) return;
 
@@ -368,22 +379,27 @@ function changeQuestionnaireShrinkRatio() {
 
     questionnaireSaveData.shrinkRatio = value;
 }
+
 function changeQuestionnaireChangeBackGroundColor() {
     const value = $('input[name="questionnaireChangeBackGroundColor"]:checkbox').prop('checked');
     questionnaireSaveData.changeBackGroundColor = value;
 }
+
 function changeQuestionnaireMove() {
     const value = $('input[name="questionnaireMove"]:checkbox').prop('checked');
     questionnaireSaveData.move = value;
 }
+
 function changeQuestionnaireMovePosition() {
     const value = $('input[name="questionnaireMovePosition"]:checked').prop('value');
     questionnaireSaveData.movePosition = value;
 }
+
 function changeQuestionnaireHiddenLive() {
     const value = $('input[name="questionnaireHiddenLive"]:checkbox').prop('checked');
     questionnaireSaveData.hiddenLive = value;
 }
+
 function changeQuestionnaireHiddenArchive() {
     const value = $('input[name="questionnaireHiddenArchive"]:checkbox').prop('checked');
     questionnaireSaveData.hiddenArchive = value;
@@ -429,9 +445,9 @@ function noticeQuestionnaireSave() {
 function noticeSave(type, saveData) {
     // chrome.tabs.query => tabの配列をcallbackに渡してくる(N予備校のURLで絞る)
     // callback => tabの配列に設定が変更されたことを通知
-    chrome.tabs.query({ url: ['*://www.nnn.ed.nico/lessons/*', '*://nnn.ed.nico/lessons/*', '*://www.nnn.ed.nico/courses/*', '*://nnn.ed.nico/courses/*'] }, function (tabs) {
+    chrome.tabs.query({url: ['*://www.nnn.ed.nico/lessons/*', '*://nnn.ed.nico/lessons/*', '*://www.nnn.ed.nico/courses/*', '*://nnn.ed.nico/courses/*']}, function (tabs) {
         for (const tab of tabs) {
-            chrome.tabs.sendMessage(tab.id, { type: type, saveData: saveData });
+            chrome.tabs.sendMessage(tab.id, {type: type, saveData: saveData});
         }
     });
 

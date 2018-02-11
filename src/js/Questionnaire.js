@@ -1,7 +1,12 @@
 // アンケートの設定変更機能
 'use strict';
 
-class Questionnaire {
+import Resources from './Resources';
+import StyleChangerList from './StyleChangerList';
+
+const R = new Resources();
+
+export default class Questionnaire {
     constructor(questionnaireSaveData) {
         this._questionnaireSaveData = questionnaireSaveData;
     }
@@ -181,8 +186,8 @@ class Questionnaire {
 
 
         function setStyle(dom, style) {
-            const styleChanger = new StyleChanger(dom);
-            styleChanger.setStyle(style);
+            const styleChangerList = new StyleChangerList([dom]);
+            styleChangerList.setStyle(style);
         }
 
         setStyle(R.modalRoot, styleRoot); // アンケートを引っ付けるroot

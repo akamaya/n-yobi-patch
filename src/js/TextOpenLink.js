@@ -1,8 +1,10 @@
 'use strict';
 
+import $ from 'jQuery';
+
 // テキストURLリンクを生成
 
-class TextOpenLink {
+export default class TextOpenLink {
     constructor() {
         this._on = false;
     }
@@ -12,6 +14,7 @@ class TextOpenLink {
         const tag = `<div class="text-open-link-box"><div>テキストのURL</div><div><a href="${url}" target="_blank">${url}</div></div>`;
         $('#root > div > div[class] > div[class] > div[class]:nth-child(1)').after(tag);
     }
+
     show() {
         $('.text-open-link-box').show();
     }

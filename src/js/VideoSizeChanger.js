@@ -2,7 +2,12 @@
 
 // videoサイズ変更を管理する
 
-class VideoSizeChanger {
+import Resources from './Resources';
+import StyleChangerList from './StyleChangerList';
+
+const R = new Resources();
+
+export default class VideoSizeChanger {
     constructor() {
         this.data = {
             originWidth: 608,
@@ -156,7 +161,7 @@ class VideoSizeChanger {
     }
 
     changeVideoRatio(ratio) {
-        const width = Math.ceil($(window).width() * ratio / 100);
+        const width = Math.ceil(R.windowWidth * ratio / 100);
         this.changeVideoSize(width);
     }
 

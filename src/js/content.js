@@ -1,3 +1,17 @@
+import $ from 'jQuery';
+import FullScreenSaveData from './FullScreenSaveData';
+import VideoSizeSaveData from './VideoSizeSaveData';
+import ScreenShotSaveData from './ScreenShotSaveData';
+import TextOpenLinkSaveData from './TextOpenLinkSaveData';
+import QuestionnaireSaveData from './QuestionnaireSaveData';
+
+import ScreenShotCarousel from './ScreenShotCarousel';
+import FullScreenButton from './FullScreenButton';
+import ScreenMode from './ScreenMode';
+import TextOpenLink from './TextOpenLink';
+import Questionnaire from './Questionnaire';
+import LessonPrint from './LessonPrint';
+
 (function () {
     'use strict';
 
@@ -209,8 +223,9 @@
             }
             carousel.resize();
         }
+
         const observer = new MutationObserver(handleMutations);
-        const config = { attributes: true };
+        const config = {attributes: true};
         observer.observe(document.querySelector('#root > div > div[class]:nth-child(2)'), config);
     }
 

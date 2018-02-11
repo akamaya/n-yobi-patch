@@ -1,8 +1,10 @@
 'use strict';
 
+import $ from 'jQuery';
+
 // スクリーンショットのカルーセルを生成
 
-class ScreenShotCarousel {
+export default class ScreenShotCarousel {
 
     constructor() {
         this._autoSave = false;
@@ -12,6 +14,7 @@ class ScreenShotCarousel {
     get autoSave() {
         return this._autoSave;
     }
+
     set autoSave(p) {
         const bool = p ? true : false;
         this._autoSave = bool;
@@ -80,7 +83,7 @@ class ScreenShotCarousel {
 
         // 中身の個数が少ないときは初期地点
         if (carouselWidth >= innerWidth) {
-            inner.animate({ marginLeft: 0 }, this._carouselSpeed);
+            inner.animate({marginLeft: 0}, this._carouselSpeed);
             return;
         }
 
@@ -96,7 +99,7 @@ class ScreenShotCarousel {
             marginLeftNew = this._carouselItemWidth() * index;
         }
 
-        inner.animate({ marginLeft: -marginLeftNew }, this._carouselSpeed);
+        inner.animate({marginLeft: -marginLeftNew}, this._carouselSpeed);
     }
 
     // 右移動の矢印押した時の処理
@@ -109,7 +112,7 @@ class ScreenShotCarousel {
 
         // 中身の個数が少ないときは初期地点
         if (carouselWidth >= innerWidth) {
-            inner.animate({ marginLeft: 0 }, this._carouselSpeed);
+            inner.animate({marginLeft: 0}, this._carouselSpeed);
             return;
         }
 
@@ -137,7 +140,7 @@ class ScreenShotCarousel {
             marginLeftNew = this._carouselItemWidth() * index - rem;
         }
 
-        inner.animate({ marginLeft: -marginLeftNew }, this._carouselSpeed);
+        inner.animate({marginLeft: -marginLeftNew}, this._carouselSpeed);
     }
 
     // 一番うしろのアイテムまでカルーセルを移動
@@ -150,13 +153,13 @@ class ScreenShotCarousel {
 
         // 中身の個数が少ないときは初期地点
         if (carouselWidth >= innerWidth) {
-            inner.animate({ marginLeft: 0 }, this._carouselSpeed);
+            inner.animate({marginLeft: 0}, this._carouselSpeed);
             return;
         }
 
         const marginLeftNew = innerWidth - carouselWidth;
 
-        inner.animate({ marginLeft: -marginLeftNew }, this._carouselSpeed);
+        inner.animate({marginLeft: -marginLeftNew}, this._carouselSpeed);
     }
 
     // カルーセルにアイテムを追加
@@ -222,10 +225,18 @@ class ScreenShotCarousel {
     setSize(sizeType) {
         const box = $('#screenShotBox');
         box.removeClass('largeSize').removeClass('mediumSize').removeClass('smallSize');
-        if (sizeType === 'large') { box.addClass('largeSize') }
-        else if (sizeType === 'medium') { box.addClass('mediumSize') }
-        else if (sizeType === 'small') { box.addClass('smallSize') }
-        else { box.addClass('largeSize') }
+        if (sizeType === 'large') {
+            box.addClass('largeSize')
+        }
+        else if (sizeType === 'medium') {
+            box.addClass('mediumSize')
+        }
+        else if (sizeType === 'small') {
+            box.addClass('smallSize')
+        }
+        else {
+            box.addClass('largeSize')
+        }
     }
 
     _getButtonWidth() {
@@ -256,6 +267,7 @@ class ScreenShotCarousel {
 
         $('#popupCanvas').show();
     }
+
     popupOff() {
         $('#popupCanvas').hide();
     }
@@ -302,6 +314,7 @@ class ScreenShotCarousel {
         const filename = title + " " + date + ".png";
         return filename;
     }
+
     zeroPadding(num) {
         return ("00" + Math.floor(num)).slice(-2);
     }

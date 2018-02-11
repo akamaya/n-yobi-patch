@@ -1,0 +1,16 @@
+{
+  "name": "n-yobi-patch",
+  "version": "3.0.0",
+  "description": "N予備校をちょっとだけ使いやすく",
+  "main": "content.js",
+  "repository": "https://github.com/akamaya/n-yobi-patch",
+  "author": "okazaki.eitaro <okazaki.eitaro@akamaya.com>",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "webpack": "^3.11.0"
+  },
+  "scripts": {
+    "build": "./packaging.sh"
+  }
+}

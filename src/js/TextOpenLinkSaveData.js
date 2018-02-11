@@ -1,8 +1,9 @@
 'use strict';
+import SaveData from './SaveData';
 
 // テキストURLリンクを保存する
 
-class TextOpenLinkSaveData extends SaveData {
+export default class TextOpenLinkSaveData extends SaveData {
     constructor() {
         // 初期値
         const initialValue = {

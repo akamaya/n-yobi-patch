@@ -1,8 +1,9 @@
 'use strict';
+import SaveData from './SaveData';
 
 // videoサイズの設定を保存する
 
-class VideoSizeSaveData extends SaveData {
+export default class VideoSizeSaveData extends SaveData {
     constructor() {
         // 初期値
         const initialValue = {
@@ -13,9 +14,11 @@ class VideoSizeSaveData extends SaveData {
         };
         super('VideoSize', initialValue);
     }
+
     get type() {
         return this.getSaveData('type');
     }
+
     set type(newType) {
         this.saveFormatString('type', newType, ['fixed', 'ratio']);
     }
@@ -23,6 +26,7 @@ class VideoSizeSaveData extends SaveData {
     get fixedSize() {
         return this.getSaveData('fixed');
     }
+
     set fixedSize(newSize) {
         this.saveNumeric('fixed', newSize);
     }
@@ -30,6 +34,7 @@ class VideoSizeSaveData extends SaveData {
     get ratioSize() {
         return this.getSaveData('ratio');
     }
+
     set ratioSize(newSize) {
         this.saveNumeric('ratio', newSize);
     }
