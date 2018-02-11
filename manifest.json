@@ -1,6 +1,6 @@
 {
   "name": "N予備校パッチ",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "description": "N予備校で放送画面サイズの変更、スクショボタン追加など",
   "manifest_version": 2,
   "icons": {
@@ -22,37 +22,36 @@
     "*://www.nnn.ed.nico/contents/*",
     "*://nnn.ed.nico/contents/*"
   ],
-  "content_scripts": [
-    {
-      "matches": [
-        "*://www.nnn.ed.nico/lessons/*",
-        "*://www.nnn.ed.nico/courses/*",
-        "*://www.nnn.ed.nico/contents/*"
-      ],
-      "js": [
-        "js/jquery-3.2.1.min.js",
-        "js/SaveData.js",
-        "js/VideoSizeSaveData.js",
-        "js/VideoSizeChanger.js",
-        "js/ScreenShotSaveData.js",
-        "js/ScreenShotCarousel.js",
-        "js/FullScreenSaveData.js",
-        "js/FullScreenButton.js",
-        "js/TextOpenLinkSaveData.js",
-        "js/TextOpenLink.js",
-        "js/QuestionnaireSaveData.js",
-        "js/Questionnaire.js",
-        "js/StyleChanger.js",
-        "js/ScreenMode.js",
-        "js/LessonPrint.js",
-        "js/content.js"
-      ],
-      "css": [
-        "css/content.css",
-        "css/carousel.css"
-      ]
-    }
-  ],
+  "content_scripts": [{
+    "matches": [
+      "*://www.nnn.ed.nico/lessons/*",
+      "*://www.nnn.ed.nico/courses/*",
+      "*://www.nnn.ed.nico/contents/*"
+    ],
+    "js": [
+      "js/jquery-3.2.1.min.js",
+      "js/SaveData.js",
+      "js/Resources.js",
+      "js/VideoSizeSaveData.js",
+      "js/VideoSizeChanger.js",
+      "js/ScreenShotSaveData.js",
+      "js/ScreenShotCarousel.js",
+      "js/FullScreenSaveData.js",
+      "js/FullScreenButton.js",
+      "js/TextOpenLinkSaveData.js",
+      "js/TextOpenLink.js",
+      "js/QuestionnaireSaveData.js",
+      "js/Questionnaire.js",
+      "js/StyleChanger.js",
+      "js/ScreenMode.js",
+      "js/LessonPrint.js",
+      "js/content.js"
+    ],
+    "css": [
+      "css/content.css",
+      "css/carousel.css"
+    ]
+  }],
   "browser_action": {
     "default_popup": "popup.html",
     "default_title": "N予備校パッチ"

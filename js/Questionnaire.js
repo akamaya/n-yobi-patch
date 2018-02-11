@@ -1,5 +1,6 @@
 // アンケートの設定変更機能
 'use strict';
+
 class Questionnaire {
     constructor(questionnaireSaveData) {
         this._questionnaireSaveData = questionnaireSaveData;
@@ -9,17 +10,22 @@ class Questionnaire {
         this.observer = this._observe();
     }
 
+    // アンケート結果が表示されているか？
+    _isResultDisplayed() {
+        return R.questionnaireAnswerButton.eq(1).children('span').eq(2).length > 0
+    }
+
     // アンケートが非表示の状態からのアンケート表示の監視
     _observe() {
         const this_ = this;
         const handleMutations = function handleMutations(mutations) {
             // アンケート結果
-            if ($('body > div:nth-of-type(2) > div > div > div[class] > div[class] > div > div > div[class] > ul > li:nth-child(1) > span[class]:nth-child(3)').length > 0) {
+            if (this_._isResultDisplayed()) {
                 this_._setStyle();
                 this_._setAutoClose();
             }
             // アンケート開始
-            else if ($('body > div:nth-of-type(2) > div > div').length > 0) {
+            else if (R.questionnaireAnswerButton.length > 0) {
                 this_._setStyle();
             }
             // アンケート閉じた
@@ -28,8 +34,11 @@ class Questionnaire {
             }
         };
         const observer = new MutationObserver(handleMutations);
-        const config = { childList: true, subtree: true };
-        observer.observe(document.querySelector('body > div:nth-of-type(2)'), config);
+        const config = {
+            childList: true,
+            subtree: true
+        };
+        observer.observe(R.modalRoot.get(0), config);
         return observer;
     }
 
@@ -43,46 +52,54 @@ class Questionnaire {
         }
 
         const seconds = this._questionnaireSaveData.autoCloseSeconds;
-        setTimeout(() => $('body > div:nth-of-type(2) > div > div > div[class] > i').click(), seconds * 1000);
+        setTimeout(() => R.questionnaireCloseButton.click(), seconds * 1000);
+    }
+
+    _scaleDownCeil(base) {
+        const ratio = this._questionnaireSaveData.shrinkRatio;
+        return Math.ceil(base * ratio / 100) + 'px';
+    }
+
+    _scaleDownFloor(base) {
+        const ratio = this._questionnaireSaveData.shrinkRatio;
+        return Math.floor(base * ratio / 100) + 'px';
     }
 
     _setStyle() {
-        const scPortal = new StyleChanger($('body > div:nth-of-type(2)'));// アンケートを引っ付けるroot
-        const scBackGround = new StyleChanger($('body > div:nth-of-type(2) > div'));// 背景
-        const scFrame = new StyleChanger($('body > div:nth-of-type(2) > div > div'));// アンケート枠
-        const scTargetHeader = new StyleChanger($('body > div:nth-of-type(2) > div > div > div[class] > div[class] > div > header'));// 解答枠ヘッダ
-        const scTargetQuestion = new StyleChanger($('body > div:nth-of-type(2) > div > div > div[class] > div[class] > div > div > div[class]:nth-child(1)'));// 質問
-        const scTarget = new StyleChanger($('body > div:nth-of-type(2) > div > div > div[class] > div[class] > div > div'));// 解答窓
-        const scColomn = new StyleChanger($('body > div:nth-of-type(2) > div > div > div[class] > div[class] > div li'));// 解答欄
-
-        const stylePortal = {};
-        const styleFrame = {};
-        const styleTargetHeader = {};
-        const styleTargetQuestion = {};
-        const styleTarget = {};
-        const styleColomn = {};
+        const styleRoot = {};
         const styleBackGround = {};
+        const styleFrame = {};
+        const styleHeader = {};
+        const styleBody = {};
+        const styleQuestion = {};
+        const styleAnswerFrame = {};
+        const styleAnswerButton = {};
 
         if (this._questionnaireSaveData.power) {
 
             // 縮小する
             if (this._questionnaireSaveData.shrink) {
                 const ratio = this._questionnaireSaveData.shrinkRatio;
-                styleFrame['width'] = Math.ceil(600 * ratio / 100) + 'px';
+
+
+                styleFrame['width'] = this._scaleDownCeil(600);
                 styleFrame['height'] = ratio + '%';
 
-                styleColomn['width'] = Math.ceil(260 * ratio / 100) + 'px';
-                styleColomn['height'] = Math.ceil(108 * ratio / 100) + 'px';
-                styleColomn['margin-bottom'] = Math.floor(12 * ratio / 100) + 'px';
-                styleColomn['margin-right'] = Math.floor(12 * ratio / 100) + 'px';
+                styleAnswerFrame['padding-left'] = this._scaleDownFloor(12);
+                styleAnswerFrame['padding-right'] = this._scaleDownFloor(12);
 
-                styleTarget['padding-left'] = Math.floor(24 * ratio / 100) + 'px';
-                styleTarget['padding-right'] = Math.floor(24 * ratio / 100) + 'px';
+                styleHeader['margin-left'] = this._scaleDownFloor(-24);
+                styleHeader['margin-right'] = this._scaleDownFloor(-24);
 
-                styleTargetHeader['margin-left'] = Math.floor(-24 * ratio / 100) + 'px';
-                styleTargetHeader['margin-right'] = Math.floor(-24 * ratio / 100) + 'px';
+                styleBody['padding'] = this._scaleDownFloor(12);
 
-                styleTargetQuestion['font-size'] = 1 + Math.floor(8 * ratio / 100) / 10 + 'rem';
+                styleQuestion['font-size'] = 1 + Math.floor(8 * ratio / 100) / 10 + 'rem';
+
+                styleAnswerButton['width'] = this._scaleDownCeil(260);
+                styleAnswerButton['height'] = this._scaleDownCeil(108);
+                styleAnswerButton['margin-bottom'] = this._scaleDownFloor(12);
+                styleAnswerButton['margin-right'] = this._scaleDownFloor(12);
+                styleAnswerButton['padding'] = this._scaleDownFloor(16);
 
             }
 
@@ -152,35 +169,42 @@ class Questionnaire {
 
             // 生放送で非表示
             if (this._questionnaireSaveData.hiddenLive && this.isLive()) {
-                stylePortal['display'] = 'none';
+                styleRoot['display'] = 'none';
             }
 
             // アーカイブで非表示
             if (this._questionnaireSaveData.hiddenArchive && this.isArchive()) {
-                stylePortal['display'] = 'none';
+                styleRoot['display'] = 'none';
             }
 
         }
 
-        scPortal.setStyle(stylePortal);
-        scFrame.setStyle(styleFrame);
-        scTargetHeader.setStyle(styleTargetHeader);
-        scTargetQuestion.setStyle(styleTargetQuestion);
-        scTarget.setStyle(styleTarget);
-        scColomn.setStyle(styleColomn);
-        scBackGround.setStyle(styleBackGround);
+
+        function setStyle(dom, style) {
+            const styleChanger = new StyleChanger(dom);
+            styleChanger.setStyle(style);
+        }
+
+        setStyle(R.modalRoot, styleRoot); // アンケートを引っ付けるroot
+        setStyle(R.questionnaireBackGround, styleBackGround); // アンケート背景
+        setStyle(R.questionnaireFrame, styleFrame); // アンケートフレーム
+        setStyle(R.questionnaireHeader, styleHeader); // 解答欄ヘッダ
+        setStyle(R.questionnaireBody, styleBody); // 解答欄ボディ
+        setStyle(R.questionnaireQuestion, styleQuestion); // 質問
+        setStyle(R.questionnaireAnswerFrame, styleAnswerFrame); // 解答窓
+        setStyle(R.questionnaireAnswerButton, styleAnswerButton); // 解答欄
 
     }
 
     isLive() {
-        if ($('#root > div > div[class] > div[class] > div > div > div[class] > div[class] > div > div[class] > div[class] > div[class] > time').length === 1) {
+        if (R.elapsedTime.length === 1) {
             return true;
         }
         return false;
     }
 
     isArchive() {
-        if ($('#root > div > div[class] > div[class] > div > div > div[class] > div[class] > div > div[class] > div[class] > div[class] > time').length === 2) {
+        if (R.elapsedTime.length === 2) {
             return true;
         }
         return false;
