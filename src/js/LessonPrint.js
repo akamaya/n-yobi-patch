@@ -44,10 +44,10 @@ export default class LessonPrint {
 
         const sections = LessonPrint._getSections();
         if (sections === undefined || sections.length === 0) return;
-        const printList = $('.n-yobi-patch-print-list');
 
         // ヘッダを入れる
         $('div.lesson div.u-card').prepend('<div class="u-list-header type-link n-yobi-patch-print"><a class="n-yobi-patch-print-header"><h2 class="typo-list-title"><span>印刷</span></h2><div class="u-list-header-show-more"><div class="icon-arrow-lined-down"></div></div></a></div><ul class="u-list has-linked-children n-yobi-patch-print-list"></ul>');
+        const printList = $('.n-yobi-patch-print-list');
         /*
                 // 選択した教材を1ページで開くのカラムを入れる
                 $('.n-yobi-patch-print-list').append(`<li class="guide n-yobi-patch-print-section"><div class="n-yobi-patch-print-section-checkbox"><div><input type="checkbox" class="n-yobi-patch-print-section-checkbox-all-guide" checked>教材全てを選択</div><div><input type="checkbox" class="n-yobi-patch-print-section-checkbox-all-exercise" checked>問題全てを選択</div></div><a class="n-yobi-patch-text-link n-yobi-patch-text-link-all-open" target="_blank">選択した教材を<br>1ページで開く</a></li>`);
@@ -57,6 +57,7 @@ export default class LessonPrint {
         */
         // 印刷側にカラムをいれる
         for (const section of sections) {
+            console.log("aaa")
             const type = section.resource_type;// exercise,guide
             let url = section.content_url;
 
