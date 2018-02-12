@@ -2,57 +2,67 @@ body {
     margin: 0px;
     width: 31.4em;
 }
-.customBoxGroup{
+
+.customBoxGroup {
     float: left;
 }
-.customBox{
-    width:15.5em;
+
+.customBox {
+    width: 15.5em;
     height: 6.4em;
-    border:solid 1px #ffffff;
+    border: solid 1px #ffffff;
 }
 
-.customBoxHalf{
-    width:15.5em;
+.customBoxHalf {
+    width: 15.5em;
     height: 3em;
-    border:solid 1px #ffffff;
+    border: solid 1px #ffffff;
 }
-.customBoxThree{
-    width:15.5em;
+
+.customBoxThree {
+    width: 15.5em;
     height: 19.4em;
-    border:solid 1px #ffffff;
+    border: solid 1px #ffffff;
 }
-.customBoxLeft{
-    float:left;
+
+.customBoxLeft {
+    float: left;
     box-sizing: border-box;
-    width:2em;
+    width: 2em;
     height: 100%;
-    padding:0.4em 0em 0em 0em;
+    padding: 0.4em 0em 0em 0em;
 }
-.customBoxRight{
-    margin:0em 0em 0em 0.2em;
-    float:left;
-    width:13.3em;
+
+.customBoxRight {
+    margin: 0em 0em 0em 0.2em;
+    float: left;
+    width: 13.3em;
     height: 100%;
     background-color: beige;
 }
-.customBoxRight hr{
+
+.customBoxRight hr {
     width: 80%;
-    border:solid 1px white;
-}
-.customBoxWide{
-    background-color:lightblue;
-}
-.customTitle{
-    padding: 0.1em 0.0em 0.0em 0.4em;
-}
-.customCaption{
-    font-size:0.8em;
+    border: solid 1px white;
 }
 
-.indent{
+.customBoxWide {
+    background-color: lightblue;
+}
+
+.customTitle {
+    padding: 0.1em 0.0em 0.0em 0.4em;
+}
+
+.customCaption {
+    font-size: 0.8em;
+}
+
+.indent {
     margin: 0.4em 0em 0em 0.4em;
 }
-.indentTwo{
+
+.indentTwo {
     margin: 0.4em 0em 0em 1.4em;
 }
 
@@ -60,23 +70,23 @@ body {
     background-color: #f0f0f0;
 }
 
-#videoSizeInitButton{
+#videoSizeInitButton {
     font-size: 0.6em;
     border-radius: 1em;
     padding: 0px 4px 0px 4px;
     margin: 0px 0px 0px 0.2em;
     background-color: white;
-    text-decoration:none;
+    text-decoration: none;
     border-style: none;
     box-shadow: 0px;
     outline: none;
     cursor: pointer;
 }
 
-#videoSizeFixed, #videoSizeRatio{
+#videoSizeFixed, #videoSizeRatio {
     width: 40px;
 }
 
-#questionnaireShrinkRatio, #questionnaireAutoCloseSeconds{
+#questionnaireShrinkRatio, #questionnaireAutoCloseSeconds {
     width: 2em;
 }
