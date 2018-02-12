@@ -1,27 +1,27 @@
 // シアターモードと画面サイズ変更がバッティングしないように調整する
 'use strict';
 
-import $ from 'jquery';
 import VideoSizeChanger from './VideoSizeChanger';
+import R from './Resources';
 
 export default class ScreenMode {
     constructor(videoSizeSaveData) {
         this.videoSizeSaveData = videoSizeSaveData;
         this.videoSizeChanger = new VideoSizeChanger();
         this.reserveAction = null;
-        this.theaterModeClass = null;
+
     }
 
     init() {
         this.videoSizeChanger.init();
     }
 
-    isTheaterMode() {
+    static isTheaterMode() {
         // シアターモードのときはclassが増える
-        return $('#root > div > div[class]:nth-child(2)').attr('class').split(' ').length >= 2 ? true : false;
+        return R.componentLessonBody.attr('class').split(' ').length >= 2;
     }
 
-    isFullScreen() {
+    static isFullScreen() {
         return VideoSizeChanger.isFullScreen();
     }
 
@@ -29,15 +29,15 @@ export default class ScreenMode {
     // シアターモードの場合、シアターモードボタンをクリックしないと解除できない。
     reset() {
         this.videoSizeChanger.reset();
-        if (this.isTheaterMode()) {// シアターモードを解除
-            $('#root > div > div[class] > div[class] > div > div > div[class] > div[class] > div > div[class] > div[class] > div[class]:nth-child(6) > a > i').click();
+        if (ScreenMode.isTheaterMode()) {// シアターモードを解除
+            R.controlBarTheaterModeIcon.trigger('click');
         }
     }
 
     // 画面サイズ変更を元に戻したあと指定された関数を実行
     // シアターモードの場合、この関数の実行後theaterModeButtonClickEventHandle()が動くのでそこでactionを実行する
     resetAndAction(action) {
-        const theaterMode = this.isTheaterMode();
+        const theaterMode = ScreenMode.isTheaterMode();
 
         this.reset();
 
@@ -62,7 +62,7 @@ export default class ScreenMode {
             else if (this_.videoSizeSaveData.type === 'ratio') {
                 this_.videoSizeChanger.changeVideoRatio(this_.videoSizeSaveData.ratioSize);
             }
-        }
+        };
         this.resetAndAction(action);
     }
 
@@ -71,7 +71,7 @@ export default class ScreenMode {
         const this_ = this;
         const action = function () {
             this_.videoSizeChanger.changeFullScreen();
-        }
+        };
         this.resetAndAction(action);
     }
 
@@ -81,7 +81,7 @@ export default class ScreenMode {
             this.reserveAction();
             this.reserveAction = null;
         }
-        else if (this.isTheaterMode()) {// シアターモードになった
+        else if (ScreenMode.isTheaterMode()) {// シアターモードになった
             this.videoSizeChanger.reset();// 変更した画面設定を削除
         }
         else {// シアターモードを解除した

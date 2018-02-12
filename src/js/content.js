@@ -117,11 +117,11 @@ import R from "./Resources";
         // windowサイズが変更されたときの処理
         $(window).on('resize', function () {
             // シアターモード中はなにもしない
-            if (screenMode.isTheaterMode()) {
+            if (ScreenMode.isTheaterMode()) {
                 return;
             }
             // フルスクリーン中ならなにもしない
-            if (screenMode.isFullScreen()) {
+            if (ScreenMode.isFullScreen()) {
                 return;
             }
             // 画面割合で表示中なら画面サイズを変更する
@@ -219,7 +219,7 @@ import R from "./Resources";
         function handleMutations() {
             screenMode.theaterModeButtonClickEventHandle();
 
-            if (screenMode.isTheaterMode()) {
+            if (ScreenMode.isTheaterMode()) {
                 fullScreenButton.off();// ESCボタンの解除
             }
             carousel.resize();

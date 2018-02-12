@@ -58,6 +58,10 @@ export default class Resources {
         return this.componentLessonLeftColumnPlayerContainer.children().eq(1);
     }
 
+    static get controlBarTheaterModeIcon() {
+        return this.controlBar.find('i').eq(2);
+    }
+
     // 運営コメントのバー
     static get unneiCommentBar() {
         return this.componentLessonLeftColumnGrandson.children().eq(0).children().eq(0);
