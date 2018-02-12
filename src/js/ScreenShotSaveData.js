@@ -9,6 +9,7 @@ export default class ScreenShotSaveData extends SaveData {
         const initialValue = {
             power: true,// 機能のon/offボタン
             size: 'large',// カルーセルサイズ
+            shortCut: true,// ショートカット
             autoSave: false,// 自動保存
         };
         super('ScreenShot', initialValue);
@@ -20,6 +21,14 @@ export default class ScreenShotSaveData extends SaveData {
 
     set size(newSize) {
         this.saveFormatString('size', newSize, ['large', 'medium', 'small']);
+    }
+
+    get shortCut() {
+        return this.getSaveData('shortCut');
+    }
+
+    set shortCut(value) {
+        this.saveBool('shortCut', value);
     }
 
     get autoSave() {

@@ -148,6 +148,7 @@ function refScreenShotConfig() {
     $('#screenShotPower').prop('disabled', false).prop('checked', screenShotSaveData.power);
 
     $('input[name="screenShotCarouselSize"][value="' + screenShotSaveData.size + '"]').prop('checked', true);
+    $('input[name="screenShotShortCut"]').prop('checked', screenShotSaveData.shortCut);
     $('input[name="screenShotAutoSave"]').prop('checked', screenShotSaveData.autoSave);
 
     changeScreenShotPower();
@@ -164,6 +165,11 @@ function setScreenShotEvent() {
     // カルーセルサイズを切り替えたときの処理
     $('input[name="screenShotCarouselSize"]:radio').on('change', function () {
         changeScreenShotCarouselSize();
+    });
+
+    // ショートカットを切り替えた時の処理
+    $('input[name="screenShotShortCut"]:checkbox').on('change', function () {
+        changeScreenShotShortCut();
     });
 
     // 自動保存を切り替えたときの処理
@@ -190,6 +196,11 @@ function changeScreenShotPower() {
 // カルーセルサイズを切り替えたときの処理
 function changeScreenShotCarouselSize() {
     screenShotSaveData.size = $('input[name="screenShotCarouselSize"]:checked').prop('value');
+}
+
+// ショートカットを切り替えた時の処理
+function changeScreenShotShortCut() {
+    screenShotSaveData.shortCut = $('input[name="screenShotShortCut"]:checked').prop('checked');
 }
 
 // 自動保存を切り替えたときの処理

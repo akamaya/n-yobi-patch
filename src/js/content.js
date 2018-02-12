@@ -193,6 +193,7 @@ import R from "./Resources";
             return;
         }
         carousel.autoSave = screenShotSaveData.autoSave;
+        carousel.shortCut = screenShotSaveData.shortCut;
         ScreenShotCarousel.show();
         carousel.resize(screenShotSaveData.size);
     }
@@ -226,7 +227,7 @@ import R from "./Resources";
 
         const observer = new MutationObserver(handleMutations);
         const config = {attributes: true};
-        observer.observe(document.querySelector('#root > div > div[class]:nth-child(2)'), config);
+        observer.observe(R.componentLessonBody.get(0), config);
     }
 
 })();

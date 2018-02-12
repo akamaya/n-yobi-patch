@@ -13,6 +13,12 @@ body {
     border: solid 1px #ffffff;
 }
 
+.customBoxBig {
+    width: 15.5em;
+    height: 7.6em;
+    border: solid 1px #ffffff;
+}
+
 .customBoxHalf {
     width: 15.5em;
     height: 3em;
@@ -21,7 +27,7 @@ body {
 
 .customBoxThree {
     width: 15.5em;
-    height: 19.4em;
+    height: 20.6em;
     border: solid 1px #ffffff;
 }
 

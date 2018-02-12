@@ -47,11 +47,12 @@ export default class FullScreenButton {
 
     _settingESCKey() {
         if (this._on) {
+            $(window).off('keyup');// 2重登録されると2回走るので確実に1つにする
             // ESCで全画面から復帰
-            $(window).on('keydown', e => e.keyCode === 27 ? this.clickFullScreenButton() : false);
+            $(window).on('keyup', e => e.keyCode === 27 ? this.clickFullScreenButton() : false);
         }
         else {
-            $(window).off('keydown');
+            $(window).off('keyup');
         }
 
     }

@@ -8,7 +8,10 @@ export default class ScreenShotCarousel {
 
     constructor() {
         this._autoSave = false;
-        this._carouselSpeed = 100;
+    }
+
+    static get carouselSpeed() {
+        return 100;
     }
 
     get autoSave() {
@@ -33,28 +36,16 @@ export default class ScreenShotCarousel {
         $('#screenShotBox').append(popupCanvas).append(cameraButton).append(leftMoveButton).append(screenShotCarousel).append(rightMoveButton);
 
         // カルーセルの左矢印を押されたときの処理
-        $('#carouselLeftMoveButton').on('click', () => this.moveLeft());
+        $('#carouselLeftMoveButton').on('click', () => ScreenShotCarousel.moveLeft());
 
         // カルーセルの右矢印を押されたときの処理
-        $('#carouselRightMoveButton').on('click', () => this.moveRight());
+        $('#carouselRightMoveButton').on('click', () => ScreenShotCarousel.moveRight());
 
         // スクショボタンを押されたときの処理
+
         const this_ = this;
         $('#screenShotButton').on('click', function () {
-            // 画像をcanvasElementで取得
-            const canvas = ScreenShotCarousel.snapshot();
-            // カルーセルにアイテムを追加
-            const item = this_.push(canvas);
-            // カルーセルの一番後ろを表示
-            this_.moveRightMost();
-
-            if (this_.autoSave) {
-                setTimeout(
-                    function () {
-                        // eq(0).trigger('click')にすると動かない
-                        item.find('a').get(0).click();
-                    }, 1000)
-            }
+            ScreenShotCarousel.clickScreenShotButton(this_._autoSave);
         });
         // 初回横幅計算
         this.resize();
@@ -69,8 +60,42 @@ export default class ScreenShotCarousel {
         $('#screenShotBox').hide();
     }
 
+    static clickScreenShotButton(autoSave) {
+        // 画像をcanvasElementで取得
+        const canvas = ScreenShotCarousel.snapshot();
+        // カルーセルにアイテムを追加
+        const item = ScreenShotCarousel.push(canvas);
+        // カルーセルの一番後ろを表示
+        ScreenShotCarousel.moveRightMost();
+
+        if (autoSave) {
+            setTimeout(
+                function () {
+                    // eq(0).trigger('click')にすると動かない
+                    item.find('a').get(0).click();
+                }, 1000)
+        }
+    }
+
+    set shortCut(flg) {
+        if (flg) {
+            $(window).off('keydown');// 2重登録されると2回走るので確実に1つにする
+            const this_ = this;
+            $(window).on('keydown', function (e) {
+                if (event.ctrlKey) {
+                    if (e.keyCode === 80) {
+                        ScreenShotCarousel.clickScreenShotButton(this_._autoSave);
+                    }
+                }
+            });
+        }
+        else {
+            $(window).off('keydown');
+        }
+    }
+
     // 左移動の矢印押した時の処理
-    moveLeft() {
+    static moveLeft() {
         const carousel = $('#screenShotCarousel');
         const inner = $('#screenShotCarouselInner');
 
@@ -79,7 +104,7 @@ export default class ScreenShotCarousel {
 
         // 中身の個数が少ないときは初期地点
         if (carouselWidth >= innerWidth) {
-            inner.animate({marginLeft: 0}, this._carouselSpeed);
+            inner.animate({marginLeft: 0}, ScreenShotCarousel.carouselSpeed);
             return;
         }
 
@@ -95,11 +120,11 @@ export default class ScreenShotCarousel {
             marginLeftNew = ScreenShotCarousel._carouselItemWidth() * index;
         }
 
-        inner.animate({marginLeft: -marginLeftNew}, this._carouselSpeed);
+        inner.animate({marginLeft: -marginLeftNew}, ScreenShotCarousel.carouselSpeed);
     }
 
     // 右移動の矢印押した時の処理
-    moveRight() {
+    static moveRight() {
         const carousel = $('#screenShotCarousel');
         const inner = $('#screenShotCarouselInner');
 
@@ -108,7 +133,7 @@ export default class ScreenShotCarousel {
 
         // 中身の個数が少ないときは初期地点
         if (carouselWidth >= innerWidth) {
-            inner.animate({marginLeft: 0}, this._carouselSpeed);
+            inner.animate({marginLeft: 0}, ScreenShotCarousel.carouselSpeed);
             return;
         }
 
@@ -136,11 +161,11 @@ export default class ScreenShotCarousel {
             marginLeftNew = ScreenShotCarousel._carouselItemWidth() * index - rem;
         }
 
-        inner.animate({marginLeft: -marginLeftNew}, this._carouselSpeed);
+        inner.animate({marginLeft: -marginLeftNew}, ScreenShotCarousel.carouselSpeed);
     }
 
     // 一番うしろのアイテムまでカルーセルを移動
-    moveRightMost() {
+    static moveRightMost() {
         const carousel = $('#screenShotCarousel');
         const inner = $('#screenShotCarouselInner');
 
@@ -149,21 +174,38 @@ export default class ScreenShotCarousel {
 
         // 中身の個数が少ないときは初期地点
         if (carouselWidth >= innerWidth) {
-            inner.animate({marginLeft: 0}, this._carouselSpeed);
+            inner.animate({marginLeft: 0}, ScreenShotCarousel.carouselSpeed);
             return;
         }
 
         const marginLeftNew = innerWidth - carouselWidth;
 
-        inner.animate({marginLeft: -marginLeftNew}, this._carouselSpeed);
+        inner.animate({marginLeft: -marginLeftNew}, ScreenShotCarousel.carouselSpeed);
     }
 
     // カルーセルにアイテムを追加
-    push(canvas) {
+    static push(canvas) {
         // カルーセル用のDOMを作成
         const item = $('<div class="carouselItem"></div>');
 
-        $(canvas).hover(this.popupOn, ScreenShotCarousel.popupOff);
+        function popupOn() {
+            const popupCanvas = $('#popupCanvas');
+            const videoComponent = $('#comment-layer');
+            popupCanvas.attr('width', videoComponent.width()).attr('height', videoComponent.height());
+
+            popupCanvas.css('top', R.unneiCommentBar.height()).css('left', 0);
+
+            // このthisはcanvas要素
+            popupCanvas.get(0).getContext("2d").drawImage(this, 0, 0, this.width, this.height, 0, 0, popupCanvas.width(), popupCanvas.height());
+
+            popupCanvas.show();
+        }
+
+        function popupOff() {
+            $('#popupCanvas').hide();
+        }
+
+        $(canvas).hover(popupOn, popupOff);
 
         const a = $('<a>保存</a>').attr('href', canvas.toDataURL()).attr('download', ScreenShotCarousel.makeFileName());
 
@@ -201,7 +243,7 @@ export default class ScreenShotCarousel {
         const buttonWidth = ScreenShotCarousel._getButtonWidth() + $('#carouselLeftMoveButton').width() + $('#carouselRightMoveButton').width();
         $('#screenShotCarousel').width(width - buttonWidth - 5);// -5はborder分
         ScreenShotCarousel._resizeInner();
-        this.moveRightMost();
+        ScreenShotCarousel.moveRightMost();
 
         // widthが設定上は変更されているはずなのに変更後の値が取得できないことがあるのでsetTimeoutで苦肉の策
         setTimeout(() => {
@@ -252,22 +294,6 @@ export default class ScreenShotCarousel {
             return size;
         }
         return Math.ceil(button.width());
-    }
-
-    popupOn() {
-        const popupCanvas = $('#popupCanvas');
-        const videoComponent = $('#comment-layer');
-        popupCanvas.attr('width', videoComponent.width()).attr('height', videoComponent.height());
-
-        popupCanvas.css('top', R.unneiCommentBar.height()).css('left', 0);
-
-        popupCanvas.get(0).getContext("2d").drawImage(this, 0, 0, this.width, this.height, 0, 0, popupCanvas.width(), popupCanvas.height());
-
-        popupCanvas.show();
-    }
-
-    static popupOff() {
-        $('#popupCanvas').hide();
     }
 
     static snapshot() {
