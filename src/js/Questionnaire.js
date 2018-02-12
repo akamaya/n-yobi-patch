@@ -55,7 +55,7 @@ export default class Questionnaire {
         }
 
         const seconds = this._questionnaireSaveData.autoCloseSeconds;
-        setTimeout(() => R.questionnaireCloseButton.click(), seconds * 1000);
+        setTimeout(() => R.questionnaireCloseButton.trigger('click'), seconds * 1000);
     }
 
     _scaleDownCeil(base) {
@@ -200,12 +200,12 @@ export default class Questionnaire {
     }
 
     static isLive() {
-        return R.elapsedTime.length === 1;
+        return R.controlBarTime.length === 1;
 
     }
 
     static isArchive() {
-        return R.elapsedTime.length === 2;
+        return R.controlBarTime.length === 2;
 
     }
 

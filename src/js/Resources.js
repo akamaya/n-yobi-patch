@@ -27,6 +27,18 @@ export default class Resources {
         return this.componentLessonBody.children().eq(1);
     }
 
+    static get componentLessonRightColumnHeader() {
+        return this.componentLessonRightColumn.find('header');
+    }
+
+    static get componentLessonRightColumnTitle() {
+        return this.componentLessonRightColumnHeader.find('h2');
+    }
+
+    static get componentLessonRightColumnTime() {
+        return this.componentLessonRightColumnHeader.find('time');
+    }
+
     static get componentLessonLeftColumnGrandson() {
         return this.componentLessonLeftColumn.children().children().eq(0);
     }
@@ -46,6 +58,10 @@ export default class Resources {
     // 旧'.component-lesson-player',
     static get componentLessonPlayer() {
         return this.vjsVideo3.parent().parent();
+    }
+
+    static get componentLessonPlayerParent() {
+        return this.componentLessonPlayer.parent();
     }
 
     // 旧'.component-lesson-left-column-player-container'
@@ -117,9 +133,14 @@ export default class Resources {
         return this.questionnaireBackGround.find('i').eq(0)
     }
 
+    // コントロールバーにあるtime Liveなら1件、アーカイブなら2件取れる
+    static get controlBarTime() {
+        return this.componentLessonLeftColumnPlayerContainer.find('time');
+    }
+
     // 経過時間
     static get elapsedTime() {
-        return this.componentLessonLeftColumnPlayerContainer.find('time');
+        return this.controlBarTime.eq(0);
     }
 
 }

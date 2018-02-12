@@ -190,11 +190,11 @@ import R from "./Resources";
 
     function changeSettingScreenShot() {
         if (screenShotSaveData.power === false) {
-            carousel.hide();
+            ScreenShotCarousel.hide();
             return;
         }
         carousel.autoSave = screenShotSaveData.autoSave;
-        carousel.show();
+        ScreenShotCarousel.show();
         carousel.resize(screenShotSaveData.size);
     }
 
