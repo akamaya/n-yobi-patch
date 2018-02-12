@@ -55,7 +55,7 @@ import R from "./Resources";
             initQuestionnaire();
 
             // chrome拡張のアイコンから設定を変更されたときの通知を受ける
-            chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
+            chrome.runtime.onMessage.addListener(function (msg) {
                 if (msg.type === "videoSize") {
                     videoSizeSaveData.setSaveData(msg.saveData);
                     changeSettingVideoSize();
@@ -97,7 +97,7 @@ import R from "./Resources";
 
 
             // chrome拡張のアイコンから設定を変更されたときの通知を受ける
-            chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
+            chrome.runtime.onMessage.addListener(function (msg) {
                 if (msg.type === "textOpenLink") {
                     textOpenLinkSaveData.setSaveData(msg.saveData);
                     changeSettingTextOpenLinkPrint();
@@ -115,7 +115,7 @@ import R from "./Resources";
         }
 
         // windowサイズが変更されたときの処理
-        $(window).resize(function () {
+        $(window).on('resize', function () {
             // シアターモード中はなにもしない
             if (screenMode.isTheaterMode()) {
                 return;
@@ -138,7 +138,7 @@ import R from "./Resources";
         carousel.insertDom();
 
         // おれおれカルーセルのため画面サイズが変わったら横幅の再計算が必要
-        $(window).resize(function () {
+        $(window).on('resize', function () {
             carousel.resize();
         });
         changeSettingScreenShot();

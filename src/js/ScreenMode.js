@@ -22,7 +22,7 @@ export default class ScreenMode {
     }
 
     isFullScreen() {
-        return this.videoSizeChanger.isFullScreen();
+        return VideoSizeChanger.isFullScreen();
     }
 
     // 画面サイズ変更を元に戻す

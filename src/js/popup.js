@@ -22,7 +22,7 @@ const questionnaireSaveData = new QuestionnaireSaveData();
 questionnaireSaveData.setSaveNotification(noticeQuestionnaireSave);
 
 
-$(document).ready(function () {
+$(function () {
     // 設定を変更したときのイベントを登録
     setVideoSizeEvent();
     setScreenShotEvent();
@@ -73,27 +73,27 @@ function refVideoSizeConfig() {
 
 function setVideoSizeEvent() {
     // on:offボタンを切り替えたときの処理
-    $('#videoSizePower').change(function () {
+    $('#videoSizePower').on('change', function () {
         changeVideoSizePower();
     });
 
     // サイズタイプを切り替えたときの処理
-    $('input[name="videoSizeType"]:radio').change(function () {
+    $('input[name="videoSizeType"]:radio').on('change', function () {
         changeVideoSizeType();
     });
 
     // 固定サイズを入力したときの処理
-    $('#videoSizeFixed').change(function () {
+    $('#videoSizeFixed').on('change', function () {
         changeVideoSizeFixed();
     });
 
     // 初期化ボタンを押したときの処理
-    $('#videoSizeInitButton').click(function () {
+    $('#videoSizeInitButton').on('click', function () {
         pressVideoSizeInitButton();
     });
 
     // 割合サイズを入力したときの処理
-    $('#videoSizeRatio').change(function () {
+    $('#videoSizeRatio').on('change', function () {
         changeVideoSizeRatio();
     });
 
@@ -157,17 +157,17 @@ function refScreenShotConfig() {
 
 function setScreenShotEvent() {
     // on:offボタンを切り替えたときの処理
-    $('#screenShotPower').change(function () {
+    $('#screenShotPower').on('change', function () {
         changeScreenShotPower();
     });
 
     // カルーセルサイズを切り替えたときの処理
-    $('input[name="screenShotCarouselSize"]:radio').change(function () {
+    $('input[name="screenShotCarouselSize"]:radio').on('change', function () {
         changeScreenShotCarouselSize();
     });
 
     // 自動保存を切り替えたときの処理
-    $('input[name="screenShotAutoSave"]:checkbox').change(function () {
+    $('input[name="screenShotAutoSave"]:checkbox').on('change', function () {
         changeScreenShotAutoSave();
     });
 }
@@ -209,7 +209,7 @@ function refFullScreenConfig() {
 
 function setFullScreenEvent() {
     // on:offボタンを切り替えたときの処理
-    $('#fullScreenPower').change(function () {
+    $('#fullScreenPower').on('change', function () {
         changeFullScreenPower();
     });
 
@@ -242,7 +242,7 @@ function refTextOpenLinkConfig() {
 
 function setTextOpenLinkEvent() {
     // on:offボタンを切り替えたときの処理
-    $('#textOpenLinkPower').change(function () {
+    $('#textOpenLinkPower').on('change', function () {
         changeTextOpenLinkPower();
     });
 
@@ -285,52 +285,52 @@ function refQuestionnaireConfig() {
 
 function setQuestionnaireEvent() {
     // on:offボタンを切り替えたときの処理
-    $('#questionnairePower').change(function () {
+    $('#questionnairePower').on('change', function () {
         changeQuestionnairePower();
     });
 
     // 結果を自動で閉じるを切り替えたときの処理
-    $('input[name="questionnaireAutoClose"]:checkbox').change(function () {
+    $('input[name="questionnaireAutoClose"]:checkbox').on('change', function () {
         changeQuestionnaireAutoClose();
     });
 
     // 自動で閉じるまでの時間を入力したときの処理
-    $('#questionnaireAutoCloseSeconds').change(function () {
+    $('#questionnaireAutoCloseSeconds').on('change', function () {
         changeQuestionnaireAutoCloseSeconds();
     });
 
     // 縮小するを切り替えたときの処理
-    $('input[name="questionnaireShrink"]:checkbox').change(function () {
+    $('input[name="questionnaireShrink"]:checkbox').on('change', function () {
         changeQuestionnaireShrink();
     });
 
     // 縮小サイズ(%)を入力したときの処理
-    $('#questionnaireShrinkRatio').change(function () {
+    $('#questionnaireShrinkRatio').on('change', function () {
         changeQuestionnaireShrinkRatio();
     });
 
     // 背景を無色にするを切り替えたときの処理
-    $('input[name="questionnaireChangeBackGroundColor"]:checkbox').change(function () {
+    $('input[name="questionnaireChangeBackGroundColor"]:checkbox').on('change', function () {
         changeQuestionnaireChangeBackGroundColor();
     });
 
     // 端に寄せるを切り替えたときの処理
-    $('input[name="questionnaireMove"]:checkbox').change(function () {
+    $('input[name="questionnaireMove"]:checkbox').on('change', function () {
         changeQuestionnaireMove();
     });
 
     // 位置を切り替えたときの処理
-    $('input[name="questionnaireMovePosition"]:radio').change(function () {
+    $('input[name="questionnaireMovePosition"]:radio').on('change', function () {
         changeQuestionnaireMovePosition();
     });
 
     // 生放送で非表示を切り替えたときの処理
-    $('input[name="questionnaireHiddenLive"]:checkbox').change(function () {
+    $('input[name="questionnaireHiddenLive"]:checkbox').on('change', function () {
         changeQuestionnaireHiddenLive();
     });
 
     // アーカイブで非表示を切り替えたときの処理
-    $('input[name="questionnaireHiddenArchive"]:checkbox').change(function () {
+    $('input[name="questionnaireHiddenArchive"]:checkbox').on('change', function () {
         changeQuestionnaireHiddenArchive();
     });
 

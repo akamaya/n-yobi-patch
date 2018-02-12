@@ -10,12 +10,11 @@ export default class VideoSizeChanger {
         this.data = {
             originWidth: 608,
             originHeight: 342,
-            screenType: 'window',// window or full(未実装)
         };
-        this.videoStyleChanger = this._makeVideoStyleChanger();
-        this.rightColumnStyleChanger = this._makeRightColumnStyleChanger();
-        this.hiddenStyleChanger = this._makeHiddenStyleChanger();
-        this.centerStyleChanger = this._makeCenterStyleChanger();
+        this.videoStyleChanger = VideoSizeChanger._makeVideoStyleChanger();
+        this.rightColumnStyleChanger = VideoSizeChanger._makeRightColumnStyleChanger();
+        this.hiddenStyleChanger = VideoSizeChanger._makeHiddenStyleChanger();
+        this.centerStyleChanger = VideoSizeChanger._makeCenterStyleChanger();
     }
 
     reset() {
@@ -25,16 +24,8 @@ export default class VideoSizeChanger {
         this.centerStyleChanger.revert();
     }
 
-    setWindowScreenType() {
-        this.data.screenType = 'window';
-    }
-
-    setFullScreenType() {
-        this.data.screenType = 'full';
-    }
-
     // ビデオコンポーネントのスタイル変更
-    _makeVideoStyleChanger() {
+    static _makeVideoStyleChanger() {
         const components = [
             //旧 '.component-lesson-left-column',
             R.componentLessonLeftColumn,
@@ -56,7 +47,7 @@ export default class VideoSizeChanger {
     }
 
     // 右側(教科書ゾーン)のスタイル変更
-    _makeRightColumnStyleChanger() {
+    static _makeRightColumnStyleChanger() {
         const components = [
             // 旧 '.component-lesson-right-column' 画面の右側要素
             R.componentLessonRightColumn,
@@ -66,7 +57,7 @@ export default class VideoSizeChanger {
     }
 
     // ヘッダとコメントフォームを全画面時に隠す
-    _makeHiddenStyleChanger() {
+    static _makeHiddenStyleChanger() {
         const components = [
             // 旧 '.component-lesson-header',
             R.componentLessonHeader,
@@ -77,7 +68,7 @@ export default class VideoSizeChanger {
     }
 
     // 画面中央に乗せるパーツのスタイル変更
-    _makeCenterStyleChanger() {
+    static _makeCenterStyleChanger() {
         const components = [
             R.commentLayer,
         ];
@@ -95,16 +86,6 @@ export default class VideoSizeChanger {
     }
 
     changeFullScreen() {
-        if (this.data.screenType === 'window') {
-            this._changeWindowScreen();
-        }
-        else if (this.data.screenType === 'full') {// 未実装
-            this._changeFullScreen();
-        }
-    }
-
-    // windowサイズにフルスクリーン
-    _changeWindowScreen() {
         const videoCss = {
             'position': 'fixed',
             'width': '100%',
@@ -121,19 +102,12 @@ export default class VideoSizeChanger {
         this.rightColumnStyleChanger.setStyle({'visibility': 'hidden'});
 
         this._changeCommentComponent();
+
     }
 
     // フルスクリーン状態かどうか
-    isFullScreen() {
-        if (R.componentLessonHeader.css('z-index') === '-1') {
-            return true;
-        }
-        return false;
-    }
-
-    // 画面サイズにフルスクリーン(未実装)
-    _changeFullScreen() {
-
+    static isFullScreen() {
+        return R.componentLessonHeader.css('z-index') === '-1';
     }
 
     // 指定したサイズに変更
@@ -147,9 +121,6 @@ export default class VideoSizeChanger {
         if (R.componentLessonLeftColumn.length === 0) {
             return;
         }
-
-        const scale = width / this.data.originWidth;
-        const height = Math.ceil(this.data.originHeight * scale);
 
         // 画面サイズを修正
         this.videoStyleChanger.setStyle({'width': width});
@@ -184,7 +155,7 @@ export default class VideoSizeChanger {
 
         const this_ = this;
 
-        function handleMutations(mutations) {
+        function handleMutations() {
             if (this_.videoStyleChanger.isChanged()) {
                 // 旧 '.component-lesson-interaction-bar-event-information'
                 R.componentLessonInteractionBarEventInformation.css({'z-index': 1001});
