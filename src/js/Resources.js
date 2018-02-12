@@ -27,6 +27,11 @@ export default class Resources {
         return this.componentLessonBody.children().eq(1);
     }
 
+    // 右側要素の上ブロック
+    static get componentLessonRightColumnUpperBlock() {
+        return this.componentLessonRightColumnHeader.parent().parent();
+    }
+
     static get componentLessonRightColumnHeader() {
         return this.componentLessonRightColumn.find('header');
     }
@@ -130,7 +135,7 @@ export default class Resources {
 
     // アンケート閉じるボタン
     static get questionnaireCloseButton() {
-        return this.questionnaireBackGround.find('i').eq(0)
+        return this.questionnaireBackGround.find('i').eq(0);
     }
 
     // コントロールバーにあるtime Liveなら1件、アーカイブなら2件取れる
@@ -141,6 +146,11 @@ export default class Resources {
     // 経過時間
     static get elapsedTime() {
         return this.controlBarTime.eq(0);
+    }
+
+    // 授業テキストのiframe
+    static get textIframe() {
+        return this.componentLessonRightColumn.find('iframe');
     }
 
 }

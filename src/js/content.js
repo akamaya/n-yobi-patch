@@ -27,7 +27,6 @@ import R from "./Resources";
     const carousel = new ScreenShotCarousel();
     const fullScreenButton = new FullScreenButton();
     const screenMode = new ScreenMode(videoSizeSaveData);
-    const textOpenLink = new TextOpenLink();
     const questionnaire = new Questionnaire(questionnaireSaveData);
 
     // 放送ページでないならなにもせず終了
@@ -152,7 +151,7 @@ import R from "./Resources";
 
     // テキストURLリンク
     function initTextOpenLink() {
-        textOpenLink.insertDom();
+        TextOpenLink.insertDom();
         changeSettingTextOpenLink();
     }
 
@@ -200,10 +199,10 @@ import R from "./Resources";
 
     function changeSettingTextOpenLink() {
         if (textOpenLinkSaveData.power === false) {
-            textOpenLink.hide();
+            TextOpenLink.hide();
             return;
         }
-        textOpenLink.show();
+        TextOpenLink.show();
     }
 
     function changeSettingQuestionnaire() {

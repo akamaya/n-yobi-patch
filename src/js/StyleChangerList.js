@@ -7,7 +7,6 @@ import $ from 'jquery';
 class StyleChanger {
     constructor(dom) {
         this._dom = dom;
-        this._originStyle = null;
     }
 
     setStyle(styleHash) {
@@ -20,7 +19,7 @@ class StyleChanger {
     }
 
     isChanged() {
-        return $(this._dom).attr('style') ? true : false;
+        return !!$(this._dom).attr('style');
     }
 }
 
