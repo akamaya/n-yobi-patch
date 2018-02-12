@@ -28,7 +28,7 @@ export default class ScreenMode {
     // 画面サイズ変更を元に戻す
     // シアターモードの場合、シアターモードボタンをクリックしないと解除できない。
     reset() {
-        this.videoSizeChanger.reset();
+        VideoSizeChanger.reset();
         if (ScreenMode.isTheaterMode()) {// シアターモードを解除
             R.controlBarTheaterModeIcon.trigger('click');
         }
@@ -82,7 +82,7 @@ export default class ScreenMode {
             this.reserveAction = null;
         }
         else if (ScreenMode.isTheaterMode()) {// シアターモードになった
-            this.videoSizeChanger.reset();// 変更した画面設定を削除
+            VideoSizeChanger.reset();// 変更した画面設定を削除
         }
         else {// シアターモードを解除した
             this.changeVideoSize();// 設定通りに画面サイズを変更
