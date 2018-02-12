@@ -1,6 +1,7 @@
 'use strict';
 
-import $ from 'jQuery';
+import $ from 'jquery';
+import R from './Resources';
 
 // テキストURLリンクを生成
 
@@ -9,17 +10,17 @@ export default class TextOpenLink {
         this._on = false;
     }
 
-    insertDom() {
-        const url = $('#root > div > div[class] > div[class] > div[class] > iframe').attr('src');
+    static insertDom() {
+        const url = R.textIframe.attr('src');
         const tag = `<div class="text-open-link-box"><div>テキストのURL</div><div><a href="${url}" target="_blank">${url}</div></div>`;
-        $('#root > div > div[class] > div[class] > div[class]:nth-child(1)').after(tag);
+        R.componentLessonRightColumnUpperBlock.after(tag);
     }
 
-    show() {
+    static show() {
         $('.text-open-link-box').show();
     }
 
-    hide() {
+    static hide() {
         $('.text-open-link-box').hide();
     }
 

@@ -1,7 +1,7 @@
 // 教材の印刷ページ作成
 'use strict';
 
-import $ from 'jQuery';
+import $ from 'jquery';
 
 export default class LessonPrint {
     constructor(textOpenLinkSaveData) {
@@ -14,7 +14,7 @@ export default class LessonPrint {
             this._printPage();
         }
         else if (location.search.indexOf('n-yobi-patch-answer-open') > -1) {
-            this._answerOpen();
+            LessonPrint._answerOpen();
         }
         else {
             this._addLessonPrintSetting();
@@ -23,7 +23,7 @@ export default class LessonPrint {
         this.onoff();
     }
 
-    _getSections() {
+    static _getSections() {
         // domの生成
         const dataDom = $('div[data-react-props]');
 
@@ -42,11 +42,12 @@ export default class LessonPrint {
 
     _addLessonPrintSetting() {
 
-        const sections = this._getSections();
+        const sections = LessonPrint._getSections();
         if (sections === undefined || sections.length === 0) return;
+        const printList = $('.n-yobi-patch-print-list');
 
         // ヘッダを入れる
-        $('div.lesson div.u-card').prepend('<div class="u-list-header type-link n-yobi-patch-print"><a class="n-yobi-patch-print-header"><h2 class="typo-list-title"><span>印刷</span></h2><div class="u-list-header-show-more"><div class="icon-arrow-lined-down"></div></div></a></div><ul class="u-list has-linked-children n-yobi-patch-print-list"></ul>')
+        $('div.lesson div.u-card').prepend('<div class="u-list-header type-link n-yobi-patch-print"><a class="n-yobi-patch-print-header"><h2 class="typo-list-title"><span>印刷</span></h2><div class="u-list-header-show-more"><div class="icon-arrow-lined-down"></div></div></a></div><ul class="u-list has-linked-children n-yobi-patch-print-list"></ul>');
         /*
                 // 選択した教材を1ページで開くのカラムを入れる
                 $('.n-yobi-patch-print-list').append(`<li class="guide n-yobi-patch-print-section"><div class="n-yobi-patch-print-section-checkbox"><div><input type="checkbox" class="n-yobi-patch-print-section-checkbox-all-guide" checked>教材全てを選択</div><div><input type="checkbox" class="n-yobi-patch-print-section-checkbox-all-exercise" checked>問題全てを選択</div></div><a class="n-yobi-patch-text-link n-yobi-patch-text-link-all-open" target="_blank">選択した教材を<br>1ページで開く</a></li>`);
@@ -93,25 +94,26 @@ export default class LessonPrint {
             else {
                 checkbox = `<div class="n-yobi-patch-print-section-checkbox"><div></div></div>`;
             }
-            $('.n-yobi-patch-print-list').append(`<li class="guide n-yobi-patch-print-section ${sectionClass}"><a class="n-yobi-patch-text-link" id="${linkClass}" href="${url}" target="_blank">教材を開く</a>${checkbox}</li>`);
+            printList.append(`<li class="guide n-yobi-patch-print-section ${sectionClass}"><a class="n-yobi-patch-text-link" id="${linkClass}" href="${url}" target="_blank">教材を開く</a>${checkbox}</li>`);
         }
 
         // タイトルが2行になったときなど高さが変わることがあるので取得して設定
         const sectionList = $('div.section li');
-        const printList = $('.n-yobi-patch-print-list li');
-        for (let i = 0; i < printList.length; i++) {
+        const printListLi = printList.find('li');
+        for (let i = 0; i < printListLi.length; i++) {
             const height = sectionList.eq(i).height();
             if (height) {
-                printList.eq(i).height(height);
+                printListLi.eq(i).height(height);
             }
         }
 
         $('.n-yobi-patch-text-link').on('click', function () {
             if (this.id) {
-                const checkboxClass = this.id;
-                if ($('.' + checkboxClass).length > 0) {
+                const checkboxClass = $('.' + this.id);
+
+                if (checkboxClass.length > 0) {
                     this.href = this.href.split('?n-yobi-patch-answer-open')[0];
-                    if ($('.' + checkboxClass).prop('checked')) {
+                    if (checkboxClass.prop('checked')) {
                         this.href = this.href + '?n-yobi-patch-answer-open';
                     }
                 }
@@ -119,25 +121,26 @@ export default class LessonPrint {
         });
 
         // 閉じてるときにちょろっと出てるダミー要素の追加
-        $('.n-yobi-patch-print-list').append('<li class="guide n-yobi-patch-dummy-section">　</li><li class="guide n-yobi-patch-dummy-section-bottom">　</li>');
+        printList.append('<li class="guide n-yobi-patch-dummy-section">　</li><li class="guide n-yobi-patch-dummy-section-bottom">　</li>');
 
         // クリックしたら開くギミック
+        const printSection = $('.n-yobi-patch-print-section');
         $('.n-yobi-patch-print-header').on('click', function () {
-            if ($('.n-yobi-patch-print-section').css('display') === 'none') {
-                $('.n-yobi-patch-print-section').css('display', 'flex');
+            if (printSection.css('display') === 'none') {
+                printSection.css('display', 'flex');
             }
             else {
-                $('.n-yobi-patch-print-section').css('display', 'none');
+                printSection.css('display', 'none');
             }
         });
 
         // 教材全てを選択
-        $('.n-yobi-patch-print-section-checkbox-all-guide').change(function () {
+        $('.n-yobi-patch-print-section-checkbox-all-guide').on('change', function () {
             $('.n-yobi-patch-print-section-checkbox-guide').prop('checked', $('.n-yobi-patch-print-section-checkbox-all-guide').prop('checked'));
         });
 
         // 問題全てを選択
-        $('.n-yobi-patch-print-section-checkbox-all-exercise').change(function () {
+        $('.n-yobi-patch-print-section-checkbox-all-exercise').on('change', function () {
             $('.n-yobi-patch-print-section-checkbox-exercise').prop('checked', $('.n-yobi-patch-print-section-checkbox-all-exercise').prop('checked'));
         });
 
@@ -154,7 +157,7 @@ export default class LessonPrint {
 
     }
 
-    _answerOpen() {
+    static _answerOpen() {
         $('.explanation').show();
     }
 
@@ -167,7 +170,8 @@ export default class LessonPrint {
         }
 
         // bodyを空にする
-        $('#container').empty();
+        const container = $('#container');
+        container.empty();
         $('header').remove();
         $('footer').remove();
 
@@ -178,11 +182,11 @@ export default class LessonPrint {
             let url;
             if (type === 'g') {
                 url = `https://www.nnn.ed.nico/contents/guides/${id}/content`;
-                $('#container').append(`<div class="guide-content"><iframe id="n-yobi-patch-iframe-${typeid}" src="${url}"></iframe></div>`);
+                container.append(`<div class="guide-content"><iframe id="n-yobi-patch-iframe-${typeid}" src="${url}"></iframe></div>`);
             }
             else if (type === 'e') {
                 url = `https://www.nnn.ed.nico/contents/links/${id}`;
-                $('#container').append(`<iframe id="n-yobi-patch-iframe-${typeid}" src="${url}"></iframe>`);
+                container.append(`<iframe id="n-yobi-patch-iframe-${typeid}" src="${url}"></iframe>`);
             }
 
 
@@ -202,7 +206,7 @@ export default class LessonPrint {
             }
         });
 
-        $(window).resize(function () {
+        $(window).on('resize', function () {
             $('iframe').each(function () {
                 $(this).height(0);// 一度必大きくなると縮小したときに大きいままで固定されてしまうので0を入れてリセット
                 $(this).height(this.contentWindow.document.documentElement.scrollHeight);

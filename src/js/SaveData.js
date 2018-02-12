@@ -21,7 +21,7 @@ export default class SaveData {
 
     // bool型のセーブデータ
     saveBool(key, value) {
-        const boolValue = value ? true : false;
+        const boolValue = !!value;
 
         // 値に変更がないならなにもしない
         if (boolValue === this._saveData[key]) return;

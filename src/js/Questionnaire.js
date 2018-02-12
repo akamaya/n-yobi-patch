@@ -1,10 +1,8 @@
 // アンケートの設定変更機能
 'use strict';
 
-import Resources from './Resources';
+import R from './Resources';
 import StyleChangerList from './StyleChangerList';
-
-const R = new Resources();
 
 export default class Questionnaire {
     constructor(questionnaireSaveData) {
@@ -12,20 +10,20 @@ export default class Questionnaire {
     }
 
     init() {
-        this.observer = this._observe();
+        this._observe();
     }
 
     // アンケート結果が表示されているか？
-    _isResultDisplayed() {
+    static _isResultDisplayed() {
         return R.questionnaireAnswerButton.eq(1).children('span').eq(2).length > 0
     }
 
     // アンケートが非表示の状態からのアンケート表示の監視
     _observe() {
         const this_ = this;
-        const handleMutations = function handleMutations(mutations) {
+        const handleMutations = function handleMutations() {
             // アンケート結果
-            if (this_._isResultDisplayed()) {
+            if (Questionnaire._isResultDisplayed()) {
                 this_._setStyle();
                 this_._setAutoClose();
             }
@@ -57,7 +55,7 @@ export default class Questionnaire {
         }
 
         const seconds = this._questionnaireSaveData.autoCloseSeconds;
-        setTimeout(() => R.questionnaireCloseButton.click(), seconds * 1000);
+        setTimeout(() => R.questionnaireCloseButton.trigger('click'), seconds * 1000);
     }
 
     _scaleDownCeil(base) {
@@ -173,12 +171,12 @@ export default class Questionnaire {
             }
 
             // 生放送で非表示
-            if (this._questionnaireSaveData.hiddenLive && this.isLive()) {
+            if (this._questionnaireSaveData.hiddenLive && Questionnaire.isLive()) {
                 styleRoot['display'] = 'none';
             }
 
             // アーカイブで非表示
-            if (this._questionnaireSaveData.hiddenArchive && this.isArchive()) {
+            if (this._questionnaireSaveData.hiddenArchive && Questionnaire.isArchive()) {
                 styleRoot['display'] = 'none';
             }
 
@@ -201,18 +199,14 @@ export default class Questionnaire {
 
     }
 
-    isLive() {
-        if (R.elapsedTime.length === 1) {
-            return true;
-        }
-        return false;
+    static isLive() {
+        return R.controlBarTime.length === 1;
+
     }
 
-    isArchive() {
-        if (R.elapsedTime.length === 2) {
-            return true;
-        }
-        return false;
+    static isArchive() {
+        return R.controlBarTime.length === 2;
+
     }
 
     // アンケートにスタイルを設定し直す

@@ -1,4 +1,4 @@
-import $ from 'jQuery';
+import $ from 'jquery';
 import FullScreenSaveData from './FullScreenSaveData';
 import VideoSizeSaveData from './VideoSizeSaveData';
 import ScreenShotSaveData from './ScreenShotSaveData';
@@ -11,6 +11,7 @@ import ScreenMode from './ScreenMode';
 import TextOpenLink from './TextOpenLink';
 import Questionnaire from './Questionnaire';
 import LessonPrint from './LessonPrint';
+import R from "./Resources";
 
 (function () {
     'use strict';
@@ -26,21 +27,20 @@ import LessonPrint from './LessonPrint';
     const carousel = new ScreenShotCarousel();
     const fullScreenButton = new FullScreenButton();
     const screenMode = new ScreenMode(videoSizeSaveData);
-    const textOpenLink = new TextOpenLink();
     const questionnaire = new Questionnaire(questionnaireSaveData);
 
     // 放送ページでないならなにもせず終了
-    const urlcheckLessons = new RegExp("://www.nnn.ed.nico/lessons/\\d+");
-    if (urlcheckLessons.test(location.href)) {
+    const urlCheckLessons = new RegExp("://www.nnn.ed.nico/lessons/\\d+");
+    if (urlCheckLessons.test(location.href)) {
         // $(document).readyやchrome.api等々のページ読み込み完了系イベントのあとで
         // ベージコンテンツが生成されるのでDOMチェックはポーリングで
         const id = setInterval(function () {
-            if ($('#comment-layer').length == 0 ||
-                videoSizeSaveData.isLoaded() == false ||
-                screenShotSaveData.isLoaded() == false ||
-                fullScreenSaveData.isLoaded() == false ||
-                textOpenLinkSaveData.isLoaded() == false ||
-                questionnaireSaveData.isLoaded() == false
+            if (R.commentLayer.length === 0 ||
+                videoSizeSaveData.isLoaded() === false ||
+                screenShotSaveData.isLoaded() === false ||
+                fullScreenSaveData.isLoaded() === false ||
+                textOpenLinkSaveData.isLoaded() === false ||
+                questionnaireSaveData.isLoaded() === false
             ) return;
 
             clearInterval(id);
@@ -54,24 +54,24 @@ import LessonPrint from './LessonPrint';
             initQuestionnaire();
 
             // chrome拡張のアイコンから設定を変更されたときの通知を受ける
-            chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-                if (msg.type == "videoSize") {
+            chrome.runtime.onMessage.addListener(function (msg) {
+                if (msg.type === "videoSize") {
                     videoSizeSaveData.setSaveData(msg.saveData);
                     changeSettingVideoSize();
                 }
-                else if (msg.type == "screenShot") {
+                else if (msg.type === "screenShot") {
                     screenShotSaveData.setSaveData(msg.saveData);
                     changeSettingScreenShot();
                 }
-                else if (msg.type == "fullScreen") {
+                else if (msg.type === "fullScreen") {
                     fullScreenSaveData.setSaveData(msg.saveData);
                     changeSettingFullScreen();
                 }
-                else if (msg.type == "textOpenLink") {
+                else if (msg.type === "textOpenLink") {
                     textOpenLinkSaveData.setSaveData(msg.saveData);
                     changeSettingTextOpenLink();
                 }
-                else if (msg.type == "questionnaire") {
+                else if (msg.type === "questionnaire") {
                     questionnaireSaveData.setSaveData(msg.saveData);
                     changeSettingQuestionnaire();
                 }
@@ -88,7 +88,7 @@ import LessonPrint from './LessonPrint';
     const urlcheckContents = new RegExp("://www.nnn.ed.nico/contents/links/\\d+");
     if (urlcheckCourses.test(location.href) || urlcheckContents.test(location.href)) {
         const id = setInterval(function () {
-            if (textOpenLinkSaveData.isLoaded() == false) return;
+            if (textOpenLinkSaveData.isLoaded() === false) return;
             clearInterval(id);
 
 
@@ -96,8 +96,8 @@ import LessonPrint from './LessonPrint';
 
 
             // chrome拡張のアイコンから設定を変更されたときの通知を受ける
-            chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-                if (msg.type == "textOpenLink") {
+            chrome.runtime.onMessage.addListener(function (msg) {
+                if (msg.type === "textOpenLink") {
                     textOpenLinkSaveData.setSaveData(msg.saveData);
                     changeSettingTextOpenLinkPrint();
                 }
@@ -114,13 +114,13 @@ import LessonPrint from './LessonPrint';
         }
 
         // windowサイズが変更されたときの処理
-        $(window).resize(function () {
+        $(window).on('resize', function () {
             // シアターモード中はなにもしない
-            if (screenMode.isTheaterMode()) {
+            if (ScreenMode.isTheaterMode()) {
                 return;
             }
             // フルスクリーン中ならなにもしない
-            if (screenMode.isFullScreen()) {
+            if (ScreenMode.isFullScreen()) {
                 return;
             }
             // 画面割合で表示中なら画面サイズを変更する
@@ -137,11 +137,11 @@ import LessonPrint from './LessonPrint';
         carousel.insertDom();
 
         // おれおれカルーセルのため画面サイズが変わったら横幅の再計算が必要
-        $(window).resize(function () {
+        $(window).on('resize', function () {
             carousel.resize();
         });
         changeSettingScreenShot();
-    };
+    }
 
     // 全画面系の初期化
     function initFullScreen() {
@@ -151,7 +151,7 @@ import LessonPrint from './LessonPrint';
 
     // テキストURLリンク
     function initTextOpenLink() {
-        textOpenLink.insertDom();
+        TextOpenLink.insertDom();
         changeSettingTextOpenLink();
     }
 
@@ -189,20 +189,20 @@ import LessonPrint from './LessonPrint';
 
     function changeSettingScreenShot() {
         if (screenShotSaveData.power === false) {
-            carousel.hide();
+            ScreenShotCarousel.hide();
             return;
         }
         carousel.autoSave = screenShotSaveData.autoSave;
-        carousel.show();
+        ScreenShotCarousel.show();
         carousel.resize(screenShotSaveData.size);
     }
 
     function changeSettingTextOpenLink() {
         if (textOpenLinkSaveData.power === false) {
-            textOpenLink.hide();
+            TextOpenLink.hide();
             return;
         }
-        textOpenLink.show();
+        TextOpenLink.show();
     }
 
     function changeSettingQuestionnaire() {
@@ -215,10 +215,10 @@ import LessonPrint from './LessonPrint';
 
     // シアターモードの監視
     function observeTheaterMode() {
-        function handleMutations(mutations) {
+        function handleMutations() {
             screenMode.theaterModeButtonClickEventHandle();
 
-            if (screenMode.isTheaterMode()) {
+            if (ScreenMode.isTheaterMode()) {
                 fullScreenButton.off();// ESCボタンの解除
             }
             carousel.resize();

@@ -1,13 +1,12 @@
 'use strict';
 
-import $ from 'jQuery';
+import $ from 'jquery';
 
 // domのstyle変更を保持しておいて、後から一発で戻すクラス
 
 class StyleChanger {
     constructor(dom) {
         this._dom = dom;
-        this._originStyle = null;
     }
 
     setStyle(styleHash) {
@@ -20,7 +19,7 @@ class StyleChanger {
     }
 
     isChanged() {
-        return $(this._dom).attr('style') ? true : false;
+        return !!$(this._dom).attr('style');
     }
 }
 

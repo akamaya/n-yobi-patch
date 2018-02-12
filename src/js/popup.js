@@ -1,6 +1,6 @@
 'use strict';
 
-import $ from 'jQuery';
+import $ from 'jquery';
 import FullScreenSaveData from './FullScreenSaveData';
 import VideoSizeSaveData from './VideoSizeSaveData';
 import ScreenShotSaveData from './ScreenShotSaveData';
@@ -22,7 +22,7 @@ const questionnaireSaveData = new QuestionnaireSaveData();
 questionnaireSaveData.setSaveNotification(noticeQuestionnaireSave);
 
 
-$(document).ready(function () {
+$(function () {
     // 設定を変更したときのイベントを登録
     setVideoSizeEvent();
     setScreenShotEvent();
@@ -64,8 +64,7 @@ function refVideoSizeConfig() {
     $('#videoSizeFixed').prop('value', videoSizeSaveData.fixedSize);
     $('#videoSizeRatio').prop('value', videoSizeSaveData.ratioSize);
 
-    $('#videoSizePower').prop('disabled', false);
-    $('#videoSizePower').prop('checked', videoSizeSaveData.power);
+    $('#videoSizePower').prop('disabled', false).prop('checked', videoSizeSaveData.power);
 
 
     changeVideoSizePower();
@@ -74,27 +73,27 @@ function refVideoSizeConfig() {
 
 function setVideoSizeEvent() {
     // on:offボタンを切り替えたときの処理
-    $('#videoSizePower').change(function () {
+    $('#videoSizePower').on('change', function () {
         changeVideoSizePower();
     });
 
     // サイズタイプを切り替えたときの処理
-    $('input[name="videoSizeType"]:radio').change(function () {
+    $('input[name="videoSizeType"]:radio').on('change', function () {
         changeVideoSizeType();
     });
 
     // 固定サイズを入力したときの処理
-    $('#videoSizeFixed').change(function () {
+    $('#videoSizeFixed').on('change', function () {
         changeVideoSizeFixed();
     });
 
     // 初期化ボタンを押したときの処理
-    $('#videoSizeInitButton').click(function () {
+    $('#videoSizeInitButton').on('click', function () {
         pressVideoSizeInitButton();
-    })
+    });
 
     // 割合サイズを入力したときの処理
-    $('#videoSizeRatio').change(function () {
+    $('#videoSizeRatio').on('change', function () {
         changeVideoSizeRatio();
     });
 
@@ -103,7 +102,7 @@ function setVideoSizeEvent() {
 // on:offボタンを切り替えたときの処理
 function changeVideoSizePower() {
     const power = $('#videoSizePower').is(':checked');
-    const boxRight = $('#videoSizeBox .customBoxRight');
+    const boxRight = $('#videoSizeBox').find('.customBoxRight');
     if (power) {
         boxRight.removeClass('disabled');
         boxRight.find('input').prop('disabled', false);
@@ -116,9 +115,7 @@ function changeVideoSizePower() {
 }
 
 function changeVideoSizeType() {
-    const value = $('input[name="videoSizeType"]:checked').prop('value');
-
-    videoSizeSaveData.type = value;
+    videoSizeSaveData.type = $('input[name="videoSizeType"]:checked').prop('value');
 }
 
 function changeVideoSizeFixed() {
@@ -148,8 +145,7 @@ function refScreenShotConfig() {
 
     if (screenShotSaveData.isLoaded() === false) return;
 
-    $('#screenShotPower').prop('disabled', false);
-    $('#screenShotPower').prop('checked', screenShotSaveData.power);
+    $('#screenShotPower').prop('disabled', false).prop('checked', screenShotSaveData.power);
 
     $('input[name="screenShotCarouselSize"][value="' + screenShotSaveData.size + '"]').prop('checked', true);
     $('input[name="screenShotAutoSave"]').prop('checked', screenShotSaveData.autoSave);
@@ -161,17 +157,17 @@ function refScreenShotConfig() {
 
 function setScreenShotEvent() {
     // on:offボタンを切り替えたときの処理
-    $('#screenShotPower').change(function () {
+    $('#screenShotPower').on('change', function () {
         changeScreenShotPower();
     });
 
     // カルーセルサイズを切り替えたときの処理
-    $('input[name="screenShotCarouselSize"]:radio').change(function () {
+    $('input[name="screenShotCarouselSize"]:radio').on('change', function () {
         changeScreenShotCarouselSize();
     });
 
     // 自動保存を切り替えたときの処理
-    $('input[name="screenShotAutoSave"]:checkbox').change(function () {
+    $('input[name="screenShotAutoSave"]:checkbox').on('change', function () {
         changeScreenShotAutoSave();
     });
 }
@@ -179,7 +175,7 @@ function setScreenShotEvent() {
 // on:offボタンを切り替えたときの処理
 function changeScreenShotPower() {
     const power = $('#screenShotPower').is(':checked');
-    const boxRight = $('#screenShotBox .customBoxRight');
+    const boxRight = $('#screenShotBox').find('.customBoxRight');
     if (power) {
         boxRight.removeClass('disabled');
         boxRight.find('input').prop('disabled', false);
@@ -193,15 +189,12 @@ function changeScreenShotPower() {
 
 // カルーセルサイズを切り替えたときの処理
 function changeScreenShotCarouselSize() {
-    const value = $('input[name="screenShotCarouselSize"]:checked').prop('value');
-
-    screenShotSaveData.size = value;
+    screenShotSaveData.size = $('input[name="screenShotCarouselSize"]:checked').prop('value');
 }
 
 // 自動保存を切り替えたときの処理
 function changeScreenShotAutoSave() {
-    const value = $('input[name="screenShotAutoSave"]').prop('checked');
-    screenShotSaveData.autoSave = value;
+    screenShotSaveData.autoSave = $('input[name="screenShotAutoSave"]').prop('checked');
 }
 
 
@@ -209,15 +202,14 @@ function refFullScreenConfig() {
 
     if (fullScreenSaveData.isLoaded() === false) return;
 
-    $('#fullScreenPower').prop('disabled', false);
-    $('#fullScreenPower').prop('checked', fullScreenSaveData.power);
+    $('#fullScreenPower').prop('disabled', false).prop('checked', fullScreenSaveData.power);
 
     changeFullScreenPower();
 }
 
 function setFullScreenEvent() {
     // on:offボタンを切り替えたときの処理
-    $('#fullScreenPower').change(function () {
+    $('#fullScreenPower').on('change', function () {
         changeFullScreenPower();
     });
 
@@ -226,7 +218,7 @@ function setFullScreenEvent() {
 // on:offボタンを切り替えたときの処理
 function changeFullScreenPower() {
     const power = $('#fullScreenPower').is(':checked');
-    const boxRight = $('#fullScreenBox .customBoxRight');
+    const boxRight = $('#fullScreenBox').find('.customBoxRight');
     if (power) {
         boxRight.removeClass('disabled');
         boxRight.find('input').prop('disabled', false);
@@ -243,15 +235,14 @@ function refTextOpenLinkConfig() {
 
     if (textOpenLinkSaveData.isLoaded() === false) return;
 
-    $('#textOpenLinkPower').prop('disabled', false);
-    $('#textOpenLinkPower').prop('checked', textOpenLinkSaveData.power);
+    $('#textOpenLinkPower').prop('disabled', false).prop('checked', textOpenLinkSaveData.power);
 
     changeTextOpenLinkPower();
 }
 
 function setTextOpenLinkEvent() {
     // on:offボタンを切り替えたときの処理
-    $('#textOpenLinkPower').change(function () {
+    $('#textOpenLinkPower').on('change', function () {
         changeTextOpenLinkPower();
     });
 
@@ -260,7 +251,7 @@ function setTextOpenLinkEvent() {
 // on:offボタンを切り替えたときの処理
 function changeTextOpenLinkPower() {
     const power = $('#textOpenLinkPower').is(':checked');
-    const boxRight = $('#textOpenLinkBox .customBoxRight');
+    const boxRight = $('#textOpenLinkBox').find('.customBoxRight');
     if (power) {
         boxRight.removeClass('disabled');
         boxRight.find('input').prop('disabled', false);
@@ -276,8 +267,7 @@ function refQuestionnaireConfig() {
 
     if (questionnaireSaveData.isLoaded() === false) return;
 
-    $('#questionnairePower').prop('disabled', false);
-    $('#questionnairePower').prop('checked', questionnaireSaveData.power);
+    $('#questionnairePower').prop('disabled', false).prop('checked', questionnaireSaveData.power);
 
     $('input[name="questionnaireAutoClose"]').prop('checked', questionnaireSaveData.autoClose);
     $('#questionnaireAutoCloseSeconds').prop('value', questionnaireSaveData.autoCloseSeconds);
@@ -295,52 +285,52 @@ function refQuestionnaireConfig() {
 
 function setQuestionnaireEvent() {
     // on:offボタンを切り替えたときの処理
-    $('#questionnairePower').change(function () {
+    $('#questionnairePower').on('change', function () {
         changeQuestionnairePower();
     });
 
     // 結果を自動で閉じるを切り替えたときの処理
-    $('input[name="questionnaireAutoClose"]:checkbox').change(function () {
+    $('input[name="questionnaireAutoClose"]:checkbox').on('change', function () {
         changeQuestionnaireAutoClose();
     });
 
     // 自動で閉じるまでの時間を入力したときの処理
-    $('#questionnaireAutoCloseSeconds').change(function () {
+    $('#questionnaireAutoCloseSeconds').on('change', function () {
         changeQuestionnaireAutoCloseSeconds();
     });
 
     // 縮小するを切り替えたときの処理
-    $('input[name="questionnaireShrink"]:checkbox').change(function () {
+    $('input[name="questionnaireShrink"]:checkbox').on('change', function () {
         changeQuestionnaireShrink();
     });
 
     // 縮小サイズ(%)を入力したときの処理
-    $('#questionnaireShrinkRatio').change(function () {
+    $('#questionnaireShrinkRatio').on('change', function () {
         changeQuestionnaireShrinkRatio();
     });
 
     // 背景を無色にするを切り替えたときの処理
-    $('input[name="questionnaireChangeBackGroundColor"]:checkbox').change(function () {
+    $('input[name="questionnaireChangeBackGroundColor"]:checkbox').on('change', function () {
         changeQuestionnaireChangeBackGroundColor();
     });
 
     // 端に寄せるを切り替えたときの処理
-    $('input[name="questionnaireMove"]:checkbox').change(function () {
+    $('input[name="questionnaireMove"]:checkbox').on('change', function () {
         changeQuestionnaireMove();
     });
 
     // 位置を切り替えたときの処理
-    $('input[name="questionnaireMovePosition"]:radio').change(function () {
+    $('input[name="questionnaireMovePosition"]:radio').on('change', function () {
         changeQuestionnaireMovePosition();
     });
 
     // 生放送で非表示を切り替えたときの処理
-    $('input[name="questionnaireHiddenLive"]:checkbox').change(function () {
+    $('input[name="questionnaireHiddenLive"]:checkbox').on('change', function () {
         changeQuestionnaireHiddenLive();
     });
 
     // アーカイブで非表示を切り替えたときの処理
-    $('input[name="questionnaireHiddenArchive"]:checkbox').change(function () {
+    $('input[name="questionnaireHiddenArchive"]:checkbox').on('change', function () {
         changeQuestionnaireHiddenArchive();
     });
 
@@ -348,8 +338,7 @@ function setQuestionnaireEvent() {
 
 
 function changeQuestionnaireAutoClose() {
-    const value = $('input[name="questionnaireAutoClose"]:checkbox').prop('checked');
-    questionnaireSaveData.autoClose = value;
+    questionnaireSaveData.autoClose = $('input[name="questionnaireAutoClose"]:checkbox').prop('checked');
 }
 
 function changeQuestionnaireAutoCloseSeconds() {
@@ -362,18 +351,18 @@ function changeQuestionnaireAutoCloseSeconds() {
 }
 
 function changeQuestionnaireShrink() {
-    const value = $('input[name="questionnaireShrink"]:checkbox').prop('checked');
-    questionnaireSaveData.shrink = value;
+    questionnaireSaveData.shrink = $('input[name="questionnaireShrink"]:checkbox').prop('checked');
 }
 
 function changeQuestionnaireShrinkRatio() {
-    const valueString = $('#questionnaireShrinkRatio').prop('value');
+    const ratio = $('#questionnaireShrinkRatio');
+    const valueString = ratio.prop('value');
     let value = Number(valueString);
 
     if (isNaN(value)) return;
 
     if (value < 50) {
-        $('#questionnaireShrinkRatio').val(50);
+        ratio.val(50);
         value = 50;
     }
 
@@ -381,35 +370,30 @@ function changeQuestionnaireShrinkRatio() {
 }
 
 function changeQuestionnaireChangeBackGroundColor() {
-    const value = $('input[name="questionnaireChangeBackGroundColor"]:checkbox').prop('checked');
-    questionnaireSaveData.changeBackGroundColor = value;
+    questionnaireSaveData.changeBackGroundColor = $('input[name="questionnaireChangeBackGroundColor"]:checkbox').prop('checked');
 }
 
 function changeQuestionnaireMove() {
-    const value = $('input[name="questionnaireMove"]:checkbox').prop('checked');
-    questionnaireSaveData.move = value;
+    questionnaireSaveData.move = $('input[name="questionnaireMove"]:checkbox').prop('checked');
 }
 
 function changeQuestionnaireMovePosition() {
-    const value = $('input[name="questionnaireMovePosition"]:checked').prop('value');
-    questionnaireSaveData.movePosition = value;
+    questionnaireSaveData.movePosition = $('input[name="questionnaireMovePosition"]:checked').prop('value');
 }
 
 function changeQuestionnaireHiddenLive() {
-    const value = $('input[name="questionnaireHiddenLive"]:checkbox').prop('checked');
-    questionnaireSaveData.hiddenLive = value;
+    questionnaireSaveData.hiddenLive = $('input[name="questionnaireHiddenLive"]:checkbox').prop('checked');
 }
 
 function changeQuestionnaireHiddenArchive() {
-    const value = $('input[name="questionnaireHiddenArchive"]:checkbox').prop('checked');
-    questionnaireSaveData.hiddenArchive = value;
+    questionnaireSaveData.hiddenArchive = $('input[name="questionnaireHiddenArchive"]:checkbox').prop('checked');
 }
 
 
 // on:offボタンを切り替えたときの処理
 function changeQuestionnairePower() {
     const power = $('#questionnairePower').is(':checked');
-    const boxRight = $('#questionnaireBox .customBoxRight');
+    const boxRight = $('#questionnaireBox').find('.customBoxRight');
     if (power) {
         boxRight.removeClass('disabled');
         boxRight.find('input').prop('disabled', false);
