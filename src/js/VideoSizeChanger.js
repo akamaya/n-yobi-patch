@@ -52,12 +52,13 @@ export default class VideoSizeChanger {
         return new StyleChangerList(components);
     }
 
-    // ヘッダとコメントフォームを全画面時に隠す
+    // ヘッダ、コメントフォーム、スクショボックスを全画面時に隠す
     static _makeHiddenStyleChanger() {
         const components = [
             // 旧 '.component-lesson-header',
             R.componentLessonHeader,
             R.commentForm,
+            '#screenShotBox',
         ];
 
         return new StyleChangerList(components);
