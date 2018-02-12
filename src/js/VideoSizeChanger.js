@@ -11,17 +11,13 @@ export default class VideoSizeChanger {
             originWidth: 608,
             originHeight: 342,
         };
-        this.videoStyleChanger = VideoSizeChanger._makeVideoStyleChanger();
-        this.rightColumnStyleChanger = VideoSizeChanger._makeRightColumnStyleChanger();
-        this.hiddenStyleChanger = VideoSizeChanger._makeHiddenStyleChanger();
-        this.centerStyleChanger = VideoSizeChanger._makeCenterStyleChanger();
     }
 
-    reset() {
-        this.videoStyleChanger.revert();
-        this.rightColumnStyleChanger.revert();
-        this.hiddenStyleChanger.revert();
-        this.centerStyleChanger.revert();
+    static reset() {
+        VideoSizeChanger._makeVideoStyleChanger().revert();
+        VideoSizeChanger._makeRightColumnStyleChanger().revert();
+        VideoSizeChanger._makeHiddenStyleChanger().revert();
+        VideoSizeChanger._makeCenterStyleChanger().revert();
     }
 
     // ビデオコンポーネントのスタイル変更
@@ -97,9 +93,9 @@ export default class VideoSizeChanger {
             'display': 'block',
         };
 
-        this.videoStyleChanger.setStyle(videoCss);
-        this.hiddenStyleChanger.setStyle({'z-index': '-1', 'display': 'none'});
-        this.rightColumnStyleChanger.setStyle({'visibility': 'hidden'});
+        VideoSizeChanger._makeVideoStyleChanger().setStyle(videoCss);
+        VideoSizeChanger._makeHiddenStyleChanger().setStyle({'z-index': '-1', 'display': 'none'});
+        VideoSizeChanger._makeRightColumnStyleChanger().setStyle({'visibility': 'hidden'});
 
         this._changeCommentComponent();
 
@@ -123,10 +119,10 @@ export default class VideoSizeChanger {
         }
 
         // 画面サイズを修正
-        this.videoStyleChanger.setStyle({'width': width});
+        VideoSizeChanger._makeVideoStyleChanger().setStyle({'width': width});
 
         // 右テキストの位置を修正
-        this.rightColumnStyleChanger.setStyle({'margin-left': (width + 32) + 'px'});
+        VideoSizeChanger._makeRightColumnStyleChanger().setStyle({'margin-left': (width + 32) + 'px'});
     }
 
     changeVideoRatio(ratio) {
@@ -146,17 +142,15 @@ export default class VideoSizeChanger {
             'left': '50%',
             'transform': 'translate(-50%,-50%)',
         };
-        this.centerStyleChanger.setStyle(comeCss);
+        VideoSizeChanger._makeCenterStyleChanger().setStyle(comeCss);
     }
 
     // 全画面中の運営コメ監視
     // 運営コメはdomの追加と削除を繰り返すので親domを監視して追加があればz-indexをセットする
     _observeUnneiComment() {
 
-        const this_ = this;
-
         function handleMutations() {
-            if (this_.videoStyleChanger.isChanged()) {
+            if (VideoSizeChanger._makeVideoStyleChanger().isChanged()) {
                 // 旧 '.component-lesson-interaction-bar-event-information'
                 R.componentLessonInteractionBarEventInformation.css({'z-index': 1001});
 
