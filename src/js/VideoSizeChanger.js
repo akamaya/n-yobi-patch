@@ -2,10 +2,8 @@
 
 // videoサイズ変更を管理する
 
-import Resources from './Resources';
+import R from './Resources';
 import StyleChangerList from './StyleChangerList';
-
-const R = new Resources();
 
 export default class VideoSizeChanger {
     constructor() {

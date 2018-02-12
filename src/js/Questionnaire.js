@@ -1,10 +1,8 @@
 // アンケートの設定変更機能
 'use strict';
 
-import Resources from './Resources';
+import R from './Resources';
 import StyleChangerList from './StyleChangerList';
-
-const R = new Resources();
 
 export default class Questionnaire {
     constructor(questionnaireSaveData) {

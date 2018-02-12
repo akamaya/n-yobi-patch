@@ -1,6 +1,7 @@
 'use strict';
 
 import $ from 'jquery';
+import R from "./Resources";
 
 // 全画面ボタンを生成
 
@@ -13,7 +14,7 @@ export default class FullScreenButton {
         this._callback = callback;
         const icon = chrome.extension.getURL('images/fullScreenIcon.png');
         const tag = '<div class="component-lesson-player-controller-fullScreen"><button type="submit"><img src="' + icon + '" alt="全画面"/></button></i></div>';
-        $('#root > div > div[class] > div[class] > div > div > div[class] > div[class] > div > div[class] > div[class]').eq(7).append(tag);
+        R.controlBar.append(tag);
 
         $('.component-lesson-player-controller-fullScreen button').on('click', () => this.clickFullScreenButton());
     }
@@ -29,7 +30,7 @@ export default class FullScreenButton {
     }
 
     clickFullScreenButton() {
-        this._on = this._on ? false : true;
+        this._on = !this._on;
         this._settingESCKey();
         this._fireButtonCallback();
     }
@@ -47,7 +48,7 @@ export default class FullScreenButton {
     _settingESCKey() {
         if (this._on) {
             // ESCで全画面から復帰
-            $(window).on('keydown', e => e.keyCode == 27 ? this.clickFullScreenButton() : false);
+            $(window).on('keydown', e => e.keyCode === 27 ? this.clickFullScreenButton() : false);
         }
         else {
             $(window).off('keydown');

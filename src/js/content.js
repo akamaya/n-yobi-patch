@@ -11,9 +11,7 @@ import ScreenMode from './ScreenMode';
 import TextOpenLink from './TextOpenLink';
 import Questionnaire from './Questionnaire';
 import LessonPrint from './LessonPrint';
-import Resources from "./Resources";
-
-const R = new Resources();
+import R from "./Resources";
 
 (function () {
     'use strict';
