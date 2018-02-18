@@ -188,12 +188,14 @@ import R from "./Resources";
     }
 
     function changeSettingScreenShot() {
+        const sd = screenShotSaveData;
+        ScreenShotCarousel.shortCutSetting(sd.power, sd.shortCut, sd.shortCutKey1, sd.shortCutKey2, sd.autoSave);
         if (screenShotSaveData.power === false) {
             ScreenShotCarousel.hide();
             return;
         }
+
         carousel.autoSave = screenShotSaveData.autoSave;
-        carousel.shortCut = screenShotSaveData.shortCut;
         ScreenShotCarousel.show();
         carousel.resize(screenShotSaveData.size);
     }

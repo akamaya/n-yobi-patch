@@ -10,6 +10,8 @@ export default class ScreenShotSaveData extends SaveData {
             power: true,// 機能のon/offボタン
             size: 'large',// カルーセルサイズ
             shortCut: true,// ショートカット
+            shortCutKey1: 17,// 17 = ctrl
+            shortCutKey2: 73,// 73 = I
             autoSave: false,// 自動保存
         };
         super('ScreenShot', initialValue);
@@ -29,6 +31,22 @@ export default class ScreenShotSaveData extends SaveData {
 
     set shortCut(value) {
         this.saveBool('shortCut', value);
+    }
+
+    get shortCutKey1() {
+        return Number(this.getSaveData('shortCutKey1'));
+    }
+
+    set shortCutKey1(value) {
+        this.saveNumeric('shortCutKey1', value);
+    }
+
+    get shortCutKey2() {
+        return Number(this.getSaveData('shortCutKey2'));
+    }
+
+    set shortCutKey2(value) {
+        this.saveNumeric('shortCutKey2', value);
     }
 
     get autoSave() {

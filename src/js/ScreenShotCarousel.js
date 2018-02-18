@@ -69,24 +69,20 @@ export default class ScreenShotCarousel {
         ScreenShotCarousel.moveRightMost();
 
         if (autoSave) {
-            setTimeout(
-                function () {
-                    // eq(0).trigger('click')にすると動かない
-                    item.find('a').get(0).click();
-                }, 1000)
+            setTimeout(function () {
+                // eq(0).trigger('click')にすると動かない
+                item.find('a').get(0).click();
+            }, 1000)
         }
     }
 
-    set shortCut(flg) {
-        if (flg) {
+    static shortCutSetting(power, check, key1, key2, autoSave) {
+        if (power && check && (key1 !== 0 || key2 !== 0)) {
             $(window).off('keydown');// 2重登録されると2回走るので確実に1つにする
-            const this_ = this;
             $(window).on('keydown', function (e) {
-                if (event.ctrlKey) {
-                    if (e.keyCode === 80) {
-                        ScreenShotCarousel.clickScreenShotButton(this_._autoSave);
-                    }
-                }
+                if (key1 === 17 && !event.ctrlKey && e.keyCode !== 17) return;
+                if (key2 !== 0 && e.keyCode !== key2) return;
+                ScreenShotCarousel.clickScreenShotButton(autoSave);
             });
         }
         else {

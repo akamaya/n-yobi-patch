@@ -57,7 +57,6 @@ export default class LessonPrint {
         */
         // 印刷側にカラムをいれる
         for (const section of sections) {
-            console.log("aaa")
             const type = section.resource_type;// exercise,guide
             let url = section.content_url;
 

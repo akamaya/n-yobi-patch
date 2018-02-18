@@ -150,6 +150,8 @@ function refScreenShotConfig() {
     $('input[name="screenShotCarouselSize"][value="' + screenShotSaveData.size + '"]').prop('checked', true);
     $('input[name="screenShotShortCut"]').prop('checked', screenShotSaveData.shortCut);
     $('input[name="screenShotAutoSave"]').prop('checked', screenShotSaveData.autoSave);
+    $('select[name="screenShotShortCutKey1"]').val(screenShotSaveData.shortCutKey1);
+    $('select[name="screenShotShortCutKey2"]').val(screenShotSaveData.shortCutKey2);
 
     changeScreenShotPower();
     changeScreenShotCarouselSize();
@@ -172,6 +174,16 @@ function setScreenShotEvent() {
         changeScreenShotShortCut();
     });
 
+    // ショートカットkey1を切り替えた時の処理
+    $('select[name="screenShotShortCutKey1"]').on('change', function () {
+        changeScreenShotShortCutKey1();
+    });
+
+    // ショートカットkey2を切り替えた時の処理
+    $('select[name="screenShotShortCutKey2"]').on('change', function () {
+        changeScreenShotShortCutKey2();
+    });
+
     // 自動保存を切り替えたときの処理
     $('input[name="screenShotAutoSave"]:checkbox').on('change', function () {
         changeScreenShotAutoSave();
@@ -185,10 +197,12 @@ function changeScreenShotPower() {
     if (power) {
         boxRight.removeClass('disabled');
         boxRight.find('input').prop('disabled', false);
+        boxRight.find('select').prop('disabled', false);
     }
     else {
         boxRight.addClass('disabled');
         boxRight.find('input').prop('disabled', true);
+        boxRight.find('select').prop('disabled', true);
     }
     screenShotSaveData.power = power;
 }
@@ -201,6 +215,16 @@ function changeScreenShotCarouselSize() {
 // ショートカットを切り替えた時の処理
 function changeScreenShotShortCut() {
     screenShotSaveData.shortCut = $('input[name="screenShotShortCut"]:checked').prop('checked');
+}
+
+// ショートカットkey1を切り替えた時の処理
+function changeScreenShotShortCutKey1() {
+    screenShotSaveData.shortCutKey1 = $('select[name="screenShotShortCutKey1"]').val();
+}
+
+// ショートカットkey2を切り替えた時の処理
+function changeScreenShotShortCutKey2() {
+    screenShotSaveData.shortCutKey2 = $('select[name="screenShotShortCutKey2"]').val();
 }
 
 // 自動保存を切り替えたときの処理
