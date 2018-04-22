@@ -55,7 +55,7 @@ import R from "./Resources";
         domChecker = () => R.commentLayer.length !== 0;
     }
 
-    // 教材ページ
+    // 教材一覧ページ
     const urlcheckCourses = new RegExp("://www.nnn.ed.nico/courses/\\d+/chapters/\\d+");
     if (urlcheckCourses.test(location.href)) {
         pageType = 'courses';
@@ -67,7 +67,23 @@ import R from "./Resources";
 
         init.textOpenLink = initTextOpenLink;
 
+        domChecker = () => $('div.lesson div.u-card').length !== 0;
     }
+    // 教材ページ。解答を開いて表示に使用
+    const urlcheckContentsLinks = new RegExp("://www.nnn.ed.nico/contents/links/\\d+");
+    if (urlcheckContentsLinks.test(location.href)) {
+        pageType = 'contentsLinks';
+        saveData.textOpenLink = new TextOpenLinkSaveData();
+
+        changeSetting.textOpenLink = changeSettingTextOpenLink;
+
+        pageParts.lessonPrint = new LessonPrint(saveData.textOpenLink);
+
+        init.textOpenLink = initTextOpenLink;
+
+        domChecker = () => true;
+    }
+
 
     if (!pageType) {
         return;
@@ -79,9 +95,10 @@ import R from "./Resources";
         return new Promise(function (resolve) {
             const id = setInterval(function () {
                 // コメント用のレイヤーが作成されていればDomが生成完了とみなす
-                if (R.commentLayer.length === 0) return;
-                clearInterval(id);
-                resolve(true);
+                if (checker()) {
+                    clearInterval(id);
+                    resolve(true);
+                }
             }, 500);
         });
     }

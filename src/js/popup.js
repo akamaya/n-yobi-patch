@@ -10,8 +10,6 @@ import ScreenShotSaveData from './ScreenShotSaveData';
 
 
 $(function () {
-    // 保存された設定の読み込みは非同期のため、onload前に読んでおく
-
     const saveData = {
         videoSize: new VideoSizeSaveData(),
         screenShot: new ScreenShotSaveData(),

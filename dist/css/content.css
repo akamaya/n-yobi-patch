@@ -1,4 +1,4 @@
-.component-lesson-player-controller-fullScreen{
+.component-lesson-player-controller-fullScreen {
     width: 24px;
     height: 24px;
     margin-right: 14px;
@@ -21,46 +21,50 @@
     cursor: pointer;
     background-color: transparent;
     border-style: none;
-    
+
 }
 
 .text-open-link-box {
     padding: 8px 0px 8px 0px;
     background-color: white;
-    box-shadow: 0 1px 1px rgba(0,0,0,.16);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .16);
     font-size: 1.6rem;
 }
-.text-open-link-box div{
+
+.text-open-link-box div {
     margin: 6px 5%;
 }
-.text-open-link-box a{
+
+.text-open-link-box a {
     color: #4183c4;
     text-decoration: none;
 }
 
-.n-yobi-patch-print-section{
+.n-yobi-patch-print-section {
     min-height: 81px;
-    display: none;/* jsでflexに変更される*/
+    display: none; /* jsでflexに変更される*/
     align-items: center;
     justify-content: center;
 }
-li.n-yobi-patch-print-section-clear{
+
+li.n-yobi-patch-print-section-clear {
     min-height: 94px;
 }
 
-.n-yobi-patch-dummy-section{
-    box-shadow: 0 1px 1px rgba(0,0,0,0.16);
+.n-yobi-patch-dummy-section {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.16);
 }
-.n-yobi-patch-dummy-section-bottom{
+
+.n-yobi-patch-dummy-section-bottom {
     background-color: #e9e9e9;
 }
 
-.u-list.has-linked-children>li>a.n-yobi-patch-text-link{
+.u-list.has-linked-children > li > a.n-yobi-patch-text-link {
     height: 32px;
     width: 8em;
     /*margin: 20px 20px 0 0;
     margin-left: auto;*/
-    margin:0px 0px 0px 20px;
+    margin: 0px 0px 0px 20px;
     border: solid 1px #4f73e3;
     border-radius: 10px;
     color: #4f73e3;
@@ -72,20 +76,24 @@ li.n-yobi-patch-print-section-clear{
     justify-content: center;
 }
 
-.n-yobi-patch-print-section-checkbox{
+.n-yobi-patch-print-section-checkbox {
     width: 50%;
     height: 80%;
     margin: 10px 0;
     /*text-align: center;*/
     font-size: 1.0rem;
-    display:flex;
+    display: flex;
     flex-flow: column;
     justify-content: space-around;
     /*align-items: center;*/
 }
 
-.n-yobi-patch-answer-open{
+.n-yobi-patch-answer-open {
     margin: 0 0 0 20px;
+}
+
+a.n-yobi-patch-print-header, a.n-yobi-patch-print-header:hover {
+    color: black;
 }
 
 
