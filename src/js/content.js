@@ -214,7 +214,7 @@ import R from "./Resources";
         if (pageParts.lessonPrint) {
             pageParts.lessonPrint.onoff();
         }
-        
+
         if (saveData.textOpenLink.power === false) {
             TextOpenLink.hide();
             return;
