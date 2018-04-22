@@ -10,6 +10,10 @@ export default class ScreenShotCarousel {
         this._autoSave = false;
     }
 
+    init() {
+
+    }
+
     static get carouselSpeed() {
         return 100;
     }

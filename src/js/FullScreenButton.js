@@ -10,6 +10,10 @@ export default class FullScreenButton {
         this._on = false;
     }
 
+    init() {
+
+    }
+
     insertDom(callback) {
         this._callback = callback;
         const icon = chrome.extension.getURL('images/fullScreenIcon.png');

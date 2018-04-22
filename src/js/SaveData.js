@@ -4,15 +4,9 @@
 
 export default class SaveData {
     constructor(saveName, initialValue) {
-        this._isLoaded = false;// 設定のロード完了フラグ
         this._saveData = {};
         this._saveName = saveName;
         this._initialValue = initialValue;
-        this.load();
-    }
-
-    isLoaded() {
-        return this._isLoaded;
     }
 
     getSaveData(key) {
@@ -93,18 +87,13 @@ export default class SaveData {
         return JSON.stringify(this._saveData);
     }
 
-    load(callback) {
-        const _this = this;
-        const callbackWrap = function (items) {
-
-            _this.setSaveData(items[_this._saveName]);
-
-            // コールバックがあれば呼び出し
-            if (callback) {
-                callback();
-            }
-        };
-        chrome.storage.local.get(_this._saveName, callbackWrap);
+    async load() {
+        return new Promise((resolve) => {
+            chrome.storage.local.get(this._saveName, (items) => {
+                this.setSaveData(items[this._saveName]);
+                resolve(true);
+            });
+        });
     }
 
     save() {
