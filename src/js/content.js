@@ -52,12 +52,12 @@ import R from "./Resources";
         pageParts.questionnaire = new Questionnaire(saveData.questionnaire);
 
 
-        domChecker = () => R.commentLayer.length !== 0;
+        domChecker = () => R.vjsVideo3.length !== 0;
     }
 
     // 教材一覧ページ
-    const urlcheckCourses = new RegExp("://www.nnn.ed.nico/courses/\\d+/chapters/\\d+");
-    if (urlcheckCourses.test(location.href)) {
+    const urlCheckCourses = new RegExp("://www.nnn.ed.nico/courses/\\d+/chapters/\\d+");
+    if (urlCheckCourses.test(location.href)) {
         pageType = 'courses';
         saveData.textOpenLink = new TextOpenLinkSaveData();
 
@@ -69,9 +69,10 @@ import R from "./Resources";
 
         domChecker = () => $('div.lesson div.u-card').length !== 0;
     }
+
     // 教材ページ。解答を開いて表示に使用
-    const urlcheckContentsLinks = new RegExp("://www.nnn.ed.nico/contents/links/\\d+");
-    if (urlcheckContentsLinks.test(location.href)) {
+    const urlCheckContentsLinks = new RegExp("://www.nnn.ed.nico/contents/links/\\d+");
+    if (urlCheckContentsLinks.test(location.href)) {
         pageType = 'contentsLinks';
         saveData.textOpenLink = new TextOpenLinkSaveData();
 
@@ -83,7 +84,6 @@ import R from "./Resources";
 
         domChecker = () => true;
     }
-
 
     if (!pageType) {
         return;
@@ -115,7 +115,6 @@ import R from "./Resources";
         // シアターモードボタンの監視
         observeTheaterMode();
     });
-
 
     // 動画サイズ変更系の初期化
     function initVideoSize() {
@@ -212,6 +211,10 @@ import R from "./Resources";
     }
 
     function changeSettingTextOpenLink() {
+        if (pageParts.lessonPrint) {
+            pageParts.lessonPrint.onoff();
+        }
+        
         if (saveData.textOpenLink.power === false) {
             TextOpenLink.hide();
             return;
@@ -221,10 +224,6 @@ import R from "./Resources";
 
     function changeSettingQuestionnaire() {
         pageParts.questionnaire.reset();
-    }
-
-    function changeSettingTextOpenLinkPrint() {
-        pageParts.lessonPrint.onoff();
     }
 
     // シアターモードの監視
