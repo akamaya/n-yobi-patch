@@ -115,7 +115,7 @@ export default class Resources {
 
     // アンケートボディ
     static get questionnaireBody() {
-        return this.questionnaireFrame.children('div').eq(1).children().eq(0).children('div').children();
+        return this.questionnaireHeader.parent().children('div').eq(0).children();
     }
 
     // アンケート質問
