@@ -44,7 +44,7 @@ export default class LessonPrint {
         const sections = LessonPrint._getSections();
         if (sections === undefined || sections.length === 0) return;
         // ヘッダを入れる
-        $('div.lesson div.u-card').prepend('<div class="u-list-header n-yobi-patch-print"><a class="n-yobi-patch-print-header"><h2 class="typo-list-title"><span>印刷</span></h2><div class="u-list-header-show-more"><div class="icon-arrow-lined-down"></div></div></a></div><ul class="u-list has-linked-children n-yobi-patch-print-list"></ul>');
+        $('div.lesson div.u-card').prepend('<a class="n-yobi-patch-print-header"><div class="u-list-header n-yobi-patch-print"><h2 class="typo-list-title"><span>印刷</span></h2><div class="u-list-header-show-more"><div class="icon-arrow-lined-down"></div></div></div></a><ul class="u-list has-linked-children n-yobi-patch-print-list"></ul>');
         const printList = $('.n-yobi-patch-print-list');
         /*
                 // 選択した教材を1ページで開くのカラムを入れる
@@ -66,7 +66,7 @@ export default class LessonPrint {
                 url = `https://www.nnn.ed.nico/contents/guides/${section.id}/content`;
             }
             else if (type === 'exercise') {
-                url.match(/(\d+)$/);
+                url.match(/links\/(\d+)/);
                 id = 'e' + RegExp.$1;
             }
             else {
