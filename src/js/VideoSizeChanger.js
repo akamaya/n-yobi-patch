@@ -18,6 +18,7 @@ export default class VideoSizeChanger {
         VideoSizeChanger._makeRightColumnStyleChanger().revert();
         VideoSizeChanger._makeHiddenStyleChanger().revert();
         VideoSizeChanger._makeCenterStyleChanger().revert();
+        VideoSizeChanger._makeCommentBoxStyleChanger().revert();
     }
 
     // ビデオコンポーネントのスタイル変更
@@ -35,9 +36,17 @@ export default class VideoSizeChanger {
 
             //旧'.component-lesson-player',
             R.componentLessonPlayer,
-
         ];
 
+        return new StyleChangerList(components);
+    }
+
+    // コメント入力ボックスのスタイル変更
+    static _makeCommentBoxStyleChanger() {
+        const components = [
+            // コメント入力フォーム(生放送のみ)
+            R.commentForm,
+        ];
 
         return new StyleChangerList(components);
     }
@@ -121,6 +130,7 @@ export default class VideoSizeChanger {
 
         // 画面サイズを修正
         VideoSizeChanger._makeVideoStyleChanger().setStyle({'width': width});
+        VideoSizeChanger._makeCommentBoxStyleChanger().setStyle({'width': width});
 
         // 右テキストの位置を修正
         VideoSizeChanger._makeRightColumnStyleChanger().setStyle({'margin-left': (width + 32) + 'px'});

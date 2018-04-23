@@ -88,20 +88,20 @@ export default class Questionnaire {
                 styleFrame['width'] = this._scaleDownCeil(600);
                 styleFrame['height'] = ratio + '%';
 
-                styleAnswerFrame['padding-left'] = this._scaleDownFloor(12);
-                styleAnswerFrame['padding-right'] = this._scaleDownFloor(12);
+                styleAnswerFrame['padding-left'] = this._scaleDownFloor(8);// ホントは12だけどwindowsで縦並びになってしまうので
+                styleAnswerFrame['padding-right'] = this._scaleDownFloor(8);// ホントは12だけどwindowsで縦並びになってしまうので
 
                 styleHeader['margin-left'] = this._scaleDownFloor(-24);
                 styleHeader['margin-right'] = this._scaleDownFloor(-24);
 
-                styleBody['padding'] = this._scaleDownFloor(12);
+                styleBody['padding'] = this._scaleDownFloor(8);// ホントは12だけどwindowsで縦並びになってしまうので
 
                 styleQuestion['font-size'] = 1 + Math.floor(8 * ratio / 100) / 10 + 'rem';
 
                 styleAnswerButton['width'] = this._scaleDownCeil(260);
                 styleAnswerButton['height'] = this._scaleDownCeil(108);
                 styleAnswerButton['margin-bottom'] = this._scaleDownFloor(12);
-                styleAnswerButton['margin-right'] = this._scaleDownFloor(12);
+                styleAnswerButton['margin-right'] = this._scaleDownFloor(8);// ホントは12だけどwindowsで縦並びになってしまうので
                 styleAnswerButton['padding'] = this._scaleDownFloor(16);
 
             }
